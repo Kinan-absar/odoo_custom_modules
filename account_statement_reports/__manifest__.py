@@ -1,0 +1,21 @@
+{
+    'name': 'Customer & Vendor Statement Reports',
+    'version': '1.0',
+    'summary': 'Account statements for customers and vendors',
+    'description': 'Generate customer and vendor statements with due, overdue, and paid entries.',
+    'author': 'Absar',
+    'license': 'LGPL-3',
+    'depends': ['account'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/statement_security.xml',
+        'views/menuitems.xml',
+        'wizard/customer_statement_wizard.xml',
+        'wizard/vendor_statement_wizard.xml',
+        'report/reports.xml',
+        'report/customer_statement_template.xml',
+        'report/vendor_statement_template.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

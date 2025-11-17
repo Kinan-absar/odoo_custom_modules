@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Customer Statement PDF Report -->
+    <report
+        id="customer_statement_pdf"
+        model="customer.statement.wizard"
+        string="Customer Statement"
+        report_type="qweb-pdf"
+        name="account_statement_reports.customer_statement_document"
+        file="account_statement_reports.customer_statement_document"
+    />
+
+    <!-- Vendor Statement PDF Report -->
+    <report
+        id="vendor_statement_pdf"
+        model="vendor.statement.wizard"
+        string="Vendor Statement"
+        report_type="qweb-pdf"
+        name="account_statement_reports.vendor_statement_document"
+        file="account_statement_reports.vendor_statement_document"
+    />
+</odoo>

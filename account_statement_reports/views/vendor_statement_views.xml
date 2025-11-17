@@ -1,0 +1,17 @@
+<odoo>
+    <!-- Smart button on vendor form -->
+    <record id="view_partner_form_vendor_statement" model="ir.ui.view">
+        <field name="name">res.partner.vendor.statement.button</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="%(action_vendor_statement_wizard)d"
+                        type="action"
+                        string="Vendor Statement"
+                        attrs="{'invisible': [('supplier_rank', '=', 0)]}"
+                        class="oe_highlight"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

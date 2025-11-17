@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_vendor_statement_wizard" model="ir.ui.view">
+        <field name="name">vendor.statement.wizard.form</field>
+        <field name="model">vendor.statement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Statement">
+                <group>
+                    <field name="partner_id" domain="[('supplier_rank', '>', 0)]"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="print_format"/>
+                </group>
+                <footer>
+                    <button name="action_print_pdf" type="object" string="Print PDF" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vendor_statement_wizard" model="ir.actions.act_window">
+        <field name="name">Vendor Statement</field>
+        <field name="res_model">vendor.statement.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
