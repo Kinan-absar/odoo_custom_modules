@@ -9,13 +9,13 @@
     <menuitem id="menu_customer_statement"
               name="Customer Statement"
               parent="menu_statement_root"
-              action="action_customer_statement_wizard"
+              action="account_statement_reports.action_customer_statement_wizard"
               sequence="1"/>
 
     <!-- Vendor Statement -->
     <menuitem id="menu_vendor_statement"
               name="Vendor Statement"
               parent="menu_statement_root"
-              action="action_vendor_statement_wizard"
+              action="account_statement_reports.action_vendor_statement_wizard"
               sequence="2"/>
 </odoo>
