@@ -23,7 +23,7 @@ class StatementMixin(models.TransientModel):
             ('move_id.state', '=', 'posted'),
             ('date', '>=', self.date_from),
             ('date', '<=', self.date_to),
-            ('account_id.internal_type', 'in', ['receivable', 'payable']),
+            ('account_type', 'in', ['asset_receivable', 'liability_payable']),
         ], order='date asc')
 
         lines = []
