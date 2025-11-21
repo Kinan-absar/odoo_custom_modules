@@ -1,55 +1,92 @@
-from odoo import models, fields, api
-from datetime import date
+# -*- coding: utf-8 -*-
+from odoo import models, fields
+from datetime import timedelta
 
-class StatementMixin(models.TransientModel):
-    _name = 'statement.mixin'
-    _description = 'Statement Base Logic'
-    _abstract = True
 
-    date_from = fields.Date(required=True, default=lambda self: date.today().replace(day=1))
-    date_to = fields.Date(required=True, default=fields.Date.today)
+class StatementMixin(models.AbstractModel):
+    _name = "statement.mixin"
+    _description = "Common Statement Logic"
 
-    partner_id = fields.Many2one('res.partner', string='Partner', required=True)
+    # ------------------------------------------------------
+    # OPENING BALANCE
+    # ------------------------------------------------------
+    def _get_opening_balance(self, partner, account_type, date_from):
+        """Compute balance before the chosen start date."""
+        if not date_from:
+            return 0.0
 
-    print_format = fields.Selection([
-        ('pdf', 'PDF'),
-        ('xlsx', 'Excel'),
-    ], default='pdf', required=True)
+        aml = self.env["account.move.line"].search([
+            ("partner_id", "=", partner.id),
+            ("account_id.account_type", "=", account_type),
+            ("parent_state", "=", "posted"),
+            ("date", "<", date_from),
+        ])
 
-    def _get_lines(self):
-        """Fetch account move line entries for the statement."""
-        amls = self.env['account.move.line'].search([
-            ('partner_id', '=', self.partner_id.id),
-            ('move_id.state', '=', 'posted'),
-            ('date', '>=', self.date_from),
-            ('date', '<=', self.date_to),
-            ('account_type', 'in', ['asset_receivable', 'liability_payable']),
-        ], order='date asc')
+        return sum((l.debit or 0.0) - (l.credit or 0.0) for l in aml)
 
-        lines = []
-        balance = 0
+    # ------------------------------------------------------
+    # BUILD STATEMENT WITH RUNNING BALANCE
+    # ------------------------------------------------------
+    def _get_statement_lines_with_balance(self, partner, account_type, date_from, date_to):
+        """Returns full list of statement rows including running balance."""
+        opening_balance = self._get_opening_balance(partner, account_type, date_from)
 
-        for line in amls:
-            debit = line.debit
-            credit = line.credit
-            balance += debit - credit
+        # Query lines inside date range
+        domain = [
+            ("partner_id", "=", partner.id),
+            ("account_id.account_type", "=", account_type),
+            ("parent_state", "=", "posted"),
+        ]
+        if date_from:
+            domain.append(("date", ">=", date_from))
+        if date_to:
+            domain.append(("date", "<=", date_to))
 
-            lines.append({
-                'date': line.date,
-                'name': line.move_id.name or line.name,
-                'ref': line.move_id.ref,
-                'debit': debit,
-                'credit': credit,
-                'balance': balance,
+        aml = self.env["account.move.line"].search(domain, order="date asc, id asc")
+
+        running_balance = opening_balance
+        results = []
+
+        # ------------------------------------------------------
+        # OPENING BALANCE ROW (fake date ensures top position)
+        # ------------------------------------------------------
+        if date_from:
+            fake_date = fields.Date.to_date(date_from) - timedelta(days=1)
+        else:
+            fake_date = None
+
+        results.append({
+            "date": fake_date,
+            "move": "Opening Balance",
+            "journal": "",
+            "due_date": None,
+            "debit": opening_balance if opening_balance > 0 else 0.0,
+            "credit": -opening_balance if opening_balance < 0 else 0.0,
+            "balance": opening_balance,
+        })
+
+        # ------------------------------------------------------
+        # NORMAL TRANSACTION LINES
+        # ------------------------------------------------------
+        for line in aml:
+            debit = line.debit or 0.0
+            credit = line.credit or 0.0
+            running_balance += (debit - credit)
+
+            results.append({
+                "date": line.date,
+                "move": line.move_id.name,
+                "journal": line.journal_id.name,
+                "due_date": line.date_maturity,
+                "debit": debit,
+                "credit": credit,
+                "balance": running_balance,
             })
 
-        return lines
+        return results
 
-    def _get_report_data(self):
-        """Return structured data for report templates."""
-        return {
-            'partner': self.partner_id,
-            'date_from': self.date_from,
-            'date_to': self.date_to,
-            'lines': self._get_lines(),
-        }
+    # ------------------------------------------------------
+    # TOTALS (we don't use them in UI, but kept for compatibility)
+    # ------------------------------------------------------
+    def _compute_totals(self, lines):
+        return {"total_due": 0.0, "total_overdue": 0.0}
