@@ -1,34 +1,31 @@
 <odoo>
-    <!-- =======================================================
-         Add VENDOR MENU ITEMS TO PORTAL HEADER
-         ======================================================= -->
 
-    <template id="vendor_portal_navbar" inherit_id="portal.portal_header">
-        <xpath expr="//div[@id='top_menu']" position="inside">
+    <!-- Add Vendor links to the portal navigation (Odoo 18) -->
+    <template id="vendor_portal_navigation" inherit_id="portal.portal_navigation">
+        <xpath expr="//ul" position="inside">
 
-            <!-- Show only if user is a vendor -->
             <t t-if="request.env.user.partner_id.supplier_rank &gt; 0">
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/vendor">
+                <li>
+                    <a href="/vendor">
                         <span t-translate="yes">Vendor Home</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/vendor/pos">
+                <li>
+                    <a href="/vendor/pos">
                         <span t-translate="yes">My Purchase Orders</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/vendor/invoices">
+                <li>
+                    <a href="/vendor/invoices">
                         <span t-translate="yes">My Invoices</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/vendor/invoice/upload">
+                <li>
+                    <a href="/vendor/invoice/upload">
                         <span t-translate="yes">Upload Invoice</span>
                     </a>
                 </li>
