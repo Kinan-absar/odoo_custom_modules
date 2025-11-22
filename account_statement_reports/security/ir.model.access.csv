@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-customer_statement_wizard_access,customer.statement.wizard,model_customer_statement_wizard,account.group_account_user,1,0,1,0
-vendor_statement_wizard_access,vendor.statement.wizard,model_vendor_statement_wizard,account.group_account_user,1,0,1,0
