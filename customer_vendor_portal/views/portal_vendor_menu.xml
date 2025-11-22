@@ -1,14 +1,4 @@
 <odoo>
-    <template id="vendor_portal_menu" inherit_id="portal.portal_user_dropdown">
-        <xpath expr="//ul" position="inside">
-            <li>
-                <a href="/vendor">
-                    <span t-translate="yes">Vendor Portal</span>
-                </a>
-            </li>
-        </xpath>
-    </template>
-
     <!-- =======================================================
          Add VENDOR MENU ITEMS TO PORTAL HEADER
          ======================================================= -->
