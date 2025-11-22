@@ -1,0 +1,64 @@
+# English translations for customer_vendor_portal
+msgid ""
+msgstr ""
+"Project-Id-Version: customer_vendor_portal 1.0\n"
+"Report-Msgid-Bugs-To:\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Kinan\n"
+"Language-Team: EN\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# ----------------------------------------------------
+# Vendor Portal Translations
+# ----------------------------------------------------
+msgid "Vendor Portal"
+msgstr "Vendor Portal"
+
+msgid "Vendor Home"
+msgstr "Vendor Home"
+
+msgid "My Purchase Orders"
+msgstr "My Purchase Orders"
+
+msgid "My Invoices"
+msgstr "My Invoices"
+
+msgid "Upload Invoice"
+msgstr "Upload Invoice"
+
+msgid "No invoices found."
+msgstr "No invoices found."
+
+msgid "Purchase Order"
+msgstr "Purchase Order"
+
+msgid "Download PDF"
+msgstr "Download PDF"
+
+msgid "Submit"
+msgstr "Submit"
+
+# ----------------------------------------------------
+# Customer Portal Translations
+# ----------------------------------------------------
+msgid "My Statement"
+msgstr "My Statement"
+
+msgid "My Orders"
+msgstr "My Orders"
+
+msgid "My Financial Statement"
+msgstr "My Financial Statement"
+
+msgid "My Sales Orders"
+msgstr "My Sales Orders"
+
+msgid "No sales orders found."
+msgstr "No sales orders found."
+
+msgid "No statement found."
+msgstr "No statement found."

@@ -1,0 +1,51 @@
+<odoo>
+    <template id="vendor_portal_menu" inherit_id="portal.portal_user_dropdown">
+        <xpath expr="//ul" position="inside">
+            <li>
+                <a href="/vendor">
+                    <span t-translate="yes">Vendor Portal</span>
+                </a>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- =======================================================
+         Add VENDOR MENU ITEMS TO PORTAL HEADER
+         ======================================================= -->
+
+    <template id="vendor_portal_navbar" inherit_id="portal.portal_header">
+        <xpath expr="//div[@id='top_menu']" position="inside">
+
+            <!-- Show only if user is a vendor -->
+            <t t-if="request.env.user.partner_id.supplier_rank &gt; 0">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/vendor">
+                        <span t-translate="yes">Vendor Home</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/vendor/pos">
+                        <span t-translate="yes">My Purchase Orders</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/vendor/invoices">
+                        <span t-translate="yes">My Invoices</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/vendor/invoice/upload">
+                        <span t-translate="yes">Upload Invoice</span>
+                    </a>
+                </li>
+
+            </t>
+
+        </xpath>
+    </template>
+
+</odoo>
