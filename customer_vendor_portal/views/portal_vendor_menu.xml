@@ -1,34 +1,43 @@
 <odoo>
-    <!-- Add vendor menu items to the existing left sidebar -->
     <template id="vendor_sidebar_menu" inherit_id="portal.portal_sidebar">
-        <xpath expr="//ul" position="inside">
-            <t t-if="request.env.user.partner_id.supplier_rank &gt; 0">
+        <xpath expr="//div[@class='container o_portal_sidebar']" position="replace">
+            <div class="container o_portal_sidebar">
 
-                <li>
-                    <a href="/vendor">
-                        <span t-translate="yes">Vendor Home</span>
-                    </a>
-                </li>
+                <t t-if="request.env.user.partner_id.supplier_rank &gt; 0">
 
-                <li>
-                    <a href="/vendor/pos">
-                        <span t-translate="yes">My Purchase Orders</span>
-                    </a>
-                </li>
+                    <h5 class="mt-3" t-translate="yes">Vendor Menu</h5>
 
-                <li>
-                    <a href="/vendor/invoices">
-                        <span t-translate="yes">My Invoices</span>
-                    </a>
-                </li>
+                    <ul class="list-unstyled ms-2">
 
-                <li>
-                    <a href="/vendor/invoice/upload">
-                        <span t-translate="yes">Upload Invoice</span>
-                    </a>
-                </li>
+                        <li>
+                            <a href="/vendor">
+                                <span t-translate="yes">Vendor Home</span>
+                            </a>
+                        </li>
 
-            </t>
+                        <li>
+                            <a href="/vendor/pos">
+                                <span t-translate="yes">My Purchase Orders</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/vendor/invoices">
+                                <span t-translate="yes">My Invoices</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/vendor/invoice/upload">
+                                <span t-translate="yes">Upload Invoice</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </t>
+
+            </div>
         </xpath>
     </template>
 </odoo>
