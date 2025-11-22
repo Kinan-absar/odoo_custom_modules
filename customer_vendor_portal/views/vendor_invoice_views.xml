@@ -43,18 +43,18 @@
     <!-- ===========================================================
          BACKEND TREE VIEW
          =========================================================== -->
-    <record id="view_vendor_invoice_tree" model="ir.ui.view">
+    <record id="view_vendor_invoice_list" model="ir.ui.view">
         <field name="name">portal.vendor.invoice.tree</field>
         <field name="model">portal.vendor.invoice</field>
         <field name="arch" type="xml">
-            <tree string="Vendor Invoices">
+            <list string="Vendor Invoices">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="po_id"/>
                 <field name="invoice_date"/>
                 <field name="amount_total"/>
                 <field name="state"/>
-            </tree>
+            </list>
         </field>
     </record>
 
