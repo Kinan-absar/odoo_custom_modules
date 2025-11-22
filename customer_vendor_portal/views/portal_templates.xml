@@ -164,7 +164,7 @@
 
                     <div class="form-group mb-3">
                         <label t-translate="yes">Purchase Order</label>
-                        <select class="form-control" name="po_id" required>
+                        <select class="form-control" name="po_id" required="required">
                             <t t-foreach="purchase_orders" t-as="po">
                                 <option t-att-value="po.id">
                                     <t t-esc="po.name"/>
@@ -175,12 +175,12 @@
 
                     <div class="form-group mb-3">
                         <label t-translate="yes">Invoice Date</label>
-                        <input type="date" name="invoice_date" class="form-control" required/>
+                        <input type="date" name="invoice_date" class="form-control" required="required"/>
                     </div>
 
                     <div class="form-group mb-3">
                         <label t-translate="yes">Amount</label>
-                        <input type="number" name="amount_total" class="form-control" required step="0.01"/>
+                        <input type="number" name="amount_total" class="form-control" required="required" step="0.01"/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -190,7 +190,7 @@
 
                     <div class="form-group mb-3">
                         <label t-translate="yes">Invoice File</label>
-                        <input type="file" name="invoice_file" class="form-control" required/>
+                        <input type="file" name="invoice_file" class="form-control" required="required"/>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
