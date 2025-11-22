@@ -1,6 +1,6 @@
 <odoo>
-    <!-- Add vendor menu items to the LEFT sidebar (Community) -->
-    <template id="vendor_sidebar_menu" inherit_id="portal.user_sidebar">
+    <!-- Add vendor menu items to the existing left sidebar -->
+    <template id="vendor_sidebar_menu" inherit_id="portal.portal_sidebar">
         <xpath expr="//ul" position="inside">
             <t t-if="request.env.user.partner_id.supplier_rank &gt; 0">
 
