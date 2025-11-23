@@ -228,36 +228,6 @@
 
 
     <!-- ============================
-         CUSTOMER PORTAL MENU
-    =============================== -->
-    <template id="customer_portal_menu" inherit_id="portal.portal_my_home" name="Customer Enhanced Menu">
-        <xpath expr="//div[@class='o_portal_nav']" position="inside">
-
-            <div class="row mt-3">
-                <div class="col-md-3 mb-3">
-                    <a href="/my/statements" class="btn btn-primary w-100">
-                        <span t-translate="yes">My Statement</span>
-                    </a>
-                </div>
-
-                <div class="col-md-3 mb-3">
-                    <a href="/my/customer_invoices" class="btn btn-secondary w-100">
-                        <span t-translate="yes">My Invoices</span>
-                    </a>
-                </div>
-
-                <div class="col-md-3 mb-3">
-                    <a href="/my/sales_orders" class="btn btn-info w-100">
-                        <span t-translate="yes">My Orders</span>
-                    </a>
-                </div>
-            </div>
-
-        </xpath>
-    </template>
-
-
-    <!-- ============================
          CUSTOMER STATEMENT PAGE
     =============================== -->
     <template id="customer_statement_page" name="Customer Statement Page">
@@ -387,5 +357,40 @@
             </div>
         </t>
     </template>
+
+ <!-- ============================
+         CUSTOMER PORTAL MENU
+    =============================== -->
+    <data>
+    <template id="customer_portal_menu" inherit_id="portal.portal_my_home" name="Customer Enhanced Menu">
+
+        <xpath expr="//div[contains(@class, 'o_portal_docs')]" position="before">
+
+            <div class="row mt-3">
+
+                <div class="col-md-3 mb-3">
+                    <a href="/my/statements" class="btn btn-primary w-100">
+                        <span t-translate="yes">My Statement</span>
+                    </a>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <a href="/my/customer_invoices" class="btn btn-secondary w-100">
+                        <span t-translate="yes">My Invoices</span>
+                    </a>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <a href="/my/sales_orders" class="btn btn-info w-100">
+                        <span t-translate="yes">My Orders</span>
+                    </a>
+                </div>
+
+            </div>
+
+        </xpath>
+
+    </template>
+</data>
 
 </odoo>
