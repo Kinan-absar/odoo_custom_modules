@@ -1,11 +1,15 @@
 <odoo>
+
+    <!-- ============================
+         VENDOR HOMEPAGE
+    =============================== -->
     <template id="vendor_homepage" name="Vendor Portal Homepage">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
                 <h2 t-translate="yes">Welcome Vendor</h2>
                 <p>
                     <span t-translate="yes">Hello</span>,
-                    <t t-esc="vendor_name"/>!
+                    <t t-esc="vendor_name"/>
                 </p>
 
                 <div class="mt-4">
@@ -20,6 +24,11 @@
             </div>
         </t>
     </template>
+
+
+    <!-- ============================
+         VENDOR PO LIST
+    =============================== -->
     <template id="vendor_po_list" name="Vendor PO List">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
@@ -58,6 +67,11 @@
             </div>
         </t>
     </template>
+
+
+    <!-- ============================
+         VENDOR PO DETAIL
+    =============================== -->
     <template id="vendor_po_detail" name="Vendor PO Detail">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
@@ -100,21 +114,25 @@
                     </tbody>
                 </table>
 
-                <a t-att-href="'/my/po/%s/pdf' % po.id"
+                <a t-att-href="'/vendor/po/%s/pdf' % po.id"
                    class="btn btn-primary mt-3">
                     <span t-translate="yes">Download PDF</span>
                 </a>
             </div>
         </t>
     </template>
+
+
+    <!-- ============================
+         VENDOR INVOICE LIST
+    =============================== -->
     <template id="vendor_invoice_list" name="Vendor Invoice List">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
 
                 <h3 t-translate="yes">My Invoices</h3>
 
-                <a href="/vendor/invoice/upload"
-                   class="btn btn-success mb-3">
+                <a href="/vendor/invoice/upload" class="btn btn-success mb-3">
                     <span t-translate="yes">Upload New Invoice</span>
                 </a>
 
@@ -143,16 +161,22 @@
                     </table>
 
                     <t t-call="portal.pager"/>
-
                 </t>
+
                 <t t-else="">
                     <div class="alert alert-info">
                         <span t-translate="yes">No invoices found.</span>
                     </div>
                 </t>
+
             </div>
         </t>
     </template>
+
+
+    <!-- ============================
+         VENDOR INVOICE UPLOAD
+    =============================== -->
     <template id="vendor_invoice_upload_form" name="Vendor Invoice Upload Form">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
@@ -202,8 +226,11 @@
         </t>
     </template>
 
-     <!-- Add new items to the customer portal menu -->
-    <template id="customer_portal_menu" inherit_id="portal.portal_dashboard" name="Customer Enhanced Menu">
+
+    <!-- ============================
+         CUSTOMER PORTAL MENU
+    =============================== -->
+    <template id="customer_portal_menu" inherit_id="portal.portal_my_home" name="Customer Enhanced Menu">
         <xpath expr="//div[@class='o_portal_nav']" position="inside">
 
             <div class="row mt-3">
@@ -229,7 +256,11 @@
         </xpath>
     </template>
 
-        <template id="customer_statement_page" name="Customer Statement Page">
+
+    <!-- ============================
+         CUSTOMER STATEMENT PAGE
+    =============================== -->
+    <template id="customer_statement_page" name="Customer Statement Page">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
                 <h3 t-translate="yes">My Financial Statement</h3>
@@ -268,7 +299,11 @@
         </t>
     </template>
 
-        <template id="customer_invoice_list" name="Customer Invoice List">
+
+    <!-- ============================
+         CUSTOMER INVOICES
+    =============================== -->
+    <template id="customer_invoice_list" name="Customer Invoice List">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
                 <h3 t-translate="yes">My Invoices</h3>
@@ -298,16 +333,22 @@
                     </table>
 
                 </t>
+
                 <t t-else="">
                     <div class="alert alert-warning">
                         <span t-translate="yes">No invoices found.</span>
                     </div>
                 </t>
+
             </div>
         </t>
     </template>
 
-        <template id="customer_sales_list" name="Customer Sales Orders">
+
+    <!-- ============================
+         CUSTOMER SALES ORDERS
+    =============================== -->
+    <template id="customer_sales_list" name="Customer Sales Orders">
         <t t-call="portal.layout">
             <div class="container mt-4 mb-4">
 
@@ -336,6 +377,7 @@
                     </table>
 
                 </t>
+
                 <t t-else="">
                     <div class="alert alert-info">
                         <span t-translate="yes">No sales orders found.</span>
@@ -345,4 +387,5 @@
             </div>
         </t>
     </template>
+
 </odoo>
