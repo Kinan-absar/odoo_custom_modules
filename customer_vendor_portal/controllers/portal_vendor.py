@@ -19,7 +19,7 @@ class VendorPortal(CustomerPortal):
         values = {
             'vendor_name': user.partner_id.name,
         }
-        return request.render('customer_vendor_portal.vendor_homepage', values)
+        return request.redirect('/my/home')
 
     # ---------------------------------------------------------
     # PURCHASE ORDER LIST
@@ -125,8 +125,11 @@ class VendorPortal(CustomerPortal):
     # ---------------------------------------------------------
     # SUBMIT INVOICE (POST)
     # ---------------------------------------------------------
-    @http.route(['/vendor/invoice/upload'], type='http', auth='public', methods=['POST'], website=True, csrf=True)
+    @http.route(['/vendor/invoice/upload'], type='http', auth='public',
+                methods=['POST'], website=True, csrf=True)
     def vendor_invoice_upload(self, **post):
+        import base64
+
         user = request.env.user
         partner = user.partner_id
 
@@ -143,11 +146,14 @@ class VendorPortal(CustomerPortal):
         attachment_id = False
 
         if file:
+            file_content = file.read()
+
             attachment_id = request.env['ir.attachment'].sudo().create({
                 'name': file.filename,
-                'datas': file.read().encode('base64').decode(),
+                'datas': base64.b64encode(file_content).decode(),
                 'type': 'binary',
                 'res_model': 'portal.vendor.invoice',
+                'res_id': 0,
             }).id
 
         request.env['portal.vendor.invoice'].sudo().create({
@@ -158,6 +164,8 @@ class VendorPortal(CustomerPortal):
             'notes': notes,
             'attachment_id': attachment_id,
             'portal_user_id': user.id,
+            'vendor_invoice_number': post.get('vendor_invoice_number'),
         })
 
         return request.redirect('/vendor/invoices?submitted=1')
+

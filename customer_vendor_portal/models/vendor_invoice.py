@@ -74,7 +74,7 @@ class VendorInvoice(models.Model):
         string='Portal User',
         help='The vendor portal user who submitted this invoice.',
     )
-
+    vendor_invoice_number = fields.Char(string="Vendor Invoice Number")
     # Sequence generation
     @api.model
     def create(self, vals):

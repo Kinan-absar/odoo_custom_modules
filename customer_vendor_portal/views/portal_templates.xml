@@ -1,28 +1,37 @@
 <odoo>
+           
+        <!-- VENDOR buttons (Only visible to vendors) -->
+    <template id="vendor_buttons" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@id='portal_vendor_category']" position="inside">
+            <t t-if="request.env.user.partner_id.supplier_rank > 0">
 
-    <!-- ============================
-         VENDOR HOMEPAGE
-    =============================== -->
-    <template id="vendor_homepage" name="Vendor Portal Homepage">
-        <t t-call="portal.portal_layout">
-            <div class="container mt-4 mb-4">
-                <h2 t-translate="yes">Welcome Vendor</h2>
-                <p>
-                    <span t-translate="yes">Hello</span>,
-                    <t t-esc="vendor_name"/>
-                </p>
-
-                <div class="mt-4">
-                    <a href="/vendor/pos" class="btn btn-primary me-2">
-                        <span t-translate="yes">My Purchase Orders</span>
-                    </a>
-
-                    <a href="/vendor/invoices" class="btn btn-secondary">
-                        <span t-translate="yes">My Invoices</span>
-                    </a>
-                </div>
+            <div class="col-md-3 mb-3">
+                <a href="/vendor/pos"
+                class="btn btn-primary">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span t-translate="yes">My Purchase Orders</span>
+                </a>
             </div>
-        </t>
+
+            <div class="col-md-3 mb-3">
+                <a href="/vendor/invoices"
+                class="btn btn-secondary w-100">
+                    <i class="fa fa-file-text-o"></i>
+                    <span t-translate="yes">My Invoices</span>
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="/vendor/invoice/upload"
+                class="btn btn-info w-100">
+                    <i class="fa fa-upload"></i>
+                    <span t-translate="yes">Upload Invoice</span>
+                </a>
+        </div>
+
+
+            </t>
+        </xpath>
     </template>
 
 
@@ -142,6 +151,7 @@
                             <tr>
                                 <th t-translate="yes">Reference</th>
                                 <th t-translate="yes">PO</th>
+                                <th t-translate="yes">Bill Number</th>
                                 <th t-translate="yes">Amount</th>
                                 <th t-translate="yes">Date</th>
                                 <th t-translate="yes">Status</th>
@@ -152,6 +162,7 @@
                                 <tr>
                                     <td><t t-esc="inv.name"/></td>
                                     <td><t t-esc="inv.po_id.name"/></td>
+                                    <td><t t-esc="inv.vendor_invoice_number"/></td>
                                     <td><t t-esc="inv.amount_total"/></td>
                                     <td><t t-esc="inv.invoice_date"/></td>
                                     <td><t t-esc="inv.state"/></td>
@@ -195,6 +206,10 @@
                                 </option>
                             </t>
                         </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label t-translate="yes">Invoice Number</label>
+                         <input type="text" name="vendor_invoice_number" class="form-control" required="required"/>
                     </div>
 
                     <div class="form-group mb-3">
@@ -269,7 +284,36 @@
         </t>
     </template>
 
+    
+    <template id="extend_account_portal_my_invoices"
+          inherit_id="account.portal_my_invoices">
 
+        <!-- Add PO & Bill Number columns in the correct position -->
+        <xpath expr="//thead/tr/th[1]" position="after">
+            <th>PO</th>
+            <th>Bill Number</th>
+        </xpath>
+
+        <!-- Add PO & Bill Number for each row -->
+        <xpath expr="//tbody//tr/td[1]" position="after">
+            <td>
+                <t t-if="invoice.move_type == 'in_invoice'">
+                    <t t-esc="invoice.invoice_line_ids and invoice.invoice_line_ids[0].purchase_line_id.order_id.name or '-'"/>
+                </t>
+            </td>
+            <td>
+                <t t-if="invoice.move_type == 'in_invoice'">
+                    <t t-esc="invoice.ref or '-'"/>
+                </t>
+            </td>
+        </xpath>
+
+    </template>
+
+
+
+
+    
     <!-- ============================
          CUSTOMER INVOICES
     =============================== -->
@@ -358,15 +402,10 @@
         </t>
     </template>
 
- <!-- ============================
-         CUSTOMER PORTAL MENU
-    =============================== -->
-    <data>
-    <template id="customer_portal_menu" inherit_id="portal.portal_my_home" name="Customer Enhanced Menu">
-
-        <xpath expr="//div[contains(@class, 'o_portal_docs')]" position="before">
-
-            <div class="row mt-3">
+    <!-- CUSTOMER buttons (Only visible to customers) -->
+    <template id="customer_buttons" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@id='portal_client_category']" position="inside">
+            <t t-if="not request.env.user.has_group('customer_vendor_portal.group_vendor_portal')">
 
                 <div class="col-md-3 mb-3">
                     <a href="/my/statements" class="btn btn-primary w-100">
@@ -386,11 +425,22 @@
                     </a>
                 </div>
 
-            </div>
-
+            </t>
         </xpath>
-
     </template>
-</data>
+        <!-- HIDE CUSTOMER CATEGORY FOR VENDORS -->
+    <template id="hide_customer_category" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@id='portal_client_category']" position="attributes">
+            <attribute name="t-if">not request.env.user.partner_id.supplier_rank &gt; 0</attribute>
+        </xpath>
+    </template>
+
+    <!-- HIDE VENDOR CATEGORY FOR CUSTOMERS -->
+    <template id="hide_vendor_category" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[@id='portal_vendor_category']" position="attributes">
+            <attribute name="t-if">request.env.user.partner_id.supplier_rank &gt; 0</attribute>
+        </xpath>
+    </template>
+
 
 </odoo>
