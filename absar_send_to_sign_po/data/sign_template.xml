@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- Signature template using the blank PDF -->
     <record id="po_signature_template" model="sign.template">
         <field name="name">PO Signature Template</field>
         <field name="attachment_id" ref="absar_send_to_sign_po.blank_pdf_attachment"/>
         <field name="active">True</field>
-    </record>
-
-    <!-- Signature box on last page -->
-    <record id="po_signature_template_field" model="sign.item">
-        <field name="template_id" ref="absar_send_to_sign_po.po_signature_template"/>
-
-        <!-- Correct item type for Odoo 18 -->
-        <field name="item_type_id" ref="sign.item_type_signature_request"/>
-
-        <field name="required">True</field>
-
-        <!-- Position -->
-        <field name="posX">50</field>
-        <field name="posY">50</field>
-        <field name="width">200</field>
-        <field name="height">50</field>
-
-        <!-- -1 = last page -->
-        <field name="page">-1</field>
     </record>
 </odoo>
