@@ -55,6 +55,16 @@ class VendorInvoice(models.Model):
         help='Uploaded invoice file (PDF or image).',
     )
 
+    # ---------------------------------------------------------
+    # 👇 NEW FIELD — Needed to show/hide Download button
+    # ---------------------------------------------------------
+    has_attachment = fields.Boolean(compute="_compute_has_attachment", store=False)
+
+    def _compute_has_attachment(self):
+        for rec in self:
+            rec.has_attachment = bool(rec.attachment_id)
+    # ---------------------------------------------------------
+
     state = fields.Selection([
         ('submitted', 'Submitted'),
         ('review', 'Under Review'),
@@ -74,7 +84,24 @@ class VendorInvoice(models.Model):
         string='Portal User',
         help='The vendor portal user who submitted this invoice.',
     )
+
     vendor_invoice_number = fields.Char(string="Vendor Invoice Number")
+
+    # ---------------------------------------------------------
+    # 👇 NEW METHOD — Backend-safe file download
+    # ---------------------------------------------------------
+    def action_download_attachment(self):
+        self.ensure_one()
+        if not self.attachment_id:
+            raise UserError(_("No attachment found to download."))
+
+        return {
+            'type': 'ir.actions.act_url',
+            'target': 'self',
+            'url': f'/web/content/{self.attachment_id.id}?download=1',
+        }
+    # ---------------------------------------------------------
+
     # Sequence generation
     @api.model
     def create(self, vals):

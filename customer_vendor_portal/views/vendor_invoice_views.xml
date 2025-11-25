@@ -12,11 +12,19 @@
 
                     <group>
                         <field name="name" readonly="1"/>
+                        <field name="vendor_invoice_number"/> <!-- 🔥 NEW FIELD -->
                         <field name="partner_id" readonly="1"/>
                         <field name="po_id" readonly="1"/>
                         <field name="invoice_date" readonly="1"/>
                         <field name="amount_total" readonly="1"/>
-                        <field name="attachment_id" readonly="1"/>
+                        <field name="attachment_id" invisible="1"/>
+                        <button name="action_download_attachment"
+                                string="Download Invoice File"
+                                type="object"
+                                class="btn btn-primary"
+                                modifiers="{
+                                    'invisible': [['has_attachment', '=', False]]
+                                }"/>
                         <field name="state"/>
                     </group>
 
@@ -49,6 +57,7 @@
         <field name="arch" type="xml">
             <list string="Vendor Invoices">
                 <field name="name"/>
+                <field name="vendor_invoice_number"/> <!-- 🔥 NEW FIELD -->
                 <field name="partner_id"/>
                 <field name="po_id"/>
                 <field name="invoice_date"/>
@@ -57,6 +66,22 @@
             </list>
         </field>
     </record>
+    <record id="extend_vendor_invoice_tree" model="ir.ui.view">
+        <field name="name">extend.vendor.invoice.tree.color</field>
+        <field name="model">portal.vendor.invoice</field>
+        <field name="inherit_id" ref="customer_vendor_portal.view_vendor_invoice_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state"
+                    widget="badge"
+                    decoration-info="state == 'submitted'"
+                    decoration-success="state == 'approved'"
+                    decoration-danger="state == 'rejected'"
+                    decoration-warning="state == 'review'"/>
+            </xpath>
+        </field>
+    </record>
+
 
     <!-- ===========================================================
          BACKEND SEARCH VIEW
@@ -84,7 +109,7 @@
     <record id="action_vendor_invoice" model="ir.actions.act_window">
         <field name="name">Vendor Invoices</field>
         <field name="res_model">portal.vendor.invoice</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <!-- ===========================================================
