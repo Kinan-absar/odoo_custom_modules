@@ -5,9 +5,9 @@
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
 
-            <!-- Add a new 'Signers' page/tab -->
-            <xpath expr="//page[@name='general']" position="after">
-                <page name="signers" string="PO Signers">
+            <!-- Insert a new tab AFTER General Information -->
+            <xpath expr="//notebook/page[@name='general_info']" position="after">
+                <page name="po_signers" string="PO Signers">
                     <group>
                         <field name="project_director_partner_id"/>
                         <field name="ceo_partner_id"/>
