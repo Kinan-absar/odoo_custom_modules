@@ -1,0 +1,10 @@
+<odoo>
+    <record id="blank_pdf_attachment" model="ir.attachment">
+        <field name="name">blank.pdf</field>
+        <field name="type">binary</field>
+        <field name="mimetype">application/pdf</field>
+        <field name="datas" file="absar_send_to_sign_po/static/src/pdf/blank.pdf"/>
+        <field name="res_model">sign.template</field>
+        <field name="res_id">0</field>
+    </record>
+</odoo>

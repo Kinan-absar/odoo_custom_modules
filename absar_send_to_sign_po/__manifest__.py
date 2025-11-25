@@ -7,10 +7,13 @@
     'category': 'Purchases',
     'depends': ['purchase', 'sign', 'mail'],
     'data': [
+        'data/blank_pdf.xml',
+        'data/sign_template.xml',
+        'data/cron.xml',
         'views/purchase_order_view.xml',
         'views/res_company_view.xml',
-        'data/cron.xml',
-    ],
+        ],
+
     'installable': True,
     'application': False,
 }

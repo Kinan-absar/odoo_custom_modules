@@ -1,0 +1,20 @@
+<odoo>
+    <!-- Signature template using the base64 PDF -->
+    <record id="po_signature_template" model="sign.template">
+        <field name="name">PO Signature Template</field>
+        <field name="document_id" ref="absar_send_to_sign_po.blank_pdf_attachment"/>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Signature box at bottom of last page -->
+    <record id="po_signature_template_field" model="sign.item">
+        <field name="template_id" ref="absar_send_to_sign_po.po_signature_template"/>
+        <field name="item_type_id" ref="sign.item_type_signature"/>
+        <field name="required">True</field>
+        <field name="posX">50</field>
+        <field name="posY">50</field>
+        <field name="width">200</field>
+        <field name="height">50</field>
+        <field name="page">-1</field> 
+    </record>
+</odoo>
