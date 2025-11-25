@@ -1,0 +1,12 @@
+<odoo>
+    <record id="ir_cron_sign_po_workflow" model="ir.cron">
+        <field name="name">Check PO Signature Workflow</field>
+        <field name="model_id" ref="model_purchase_order"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_signature_workflow()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

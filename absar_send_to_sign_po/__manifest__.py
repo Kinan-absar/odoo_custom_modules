@@ -8,6 +8,8 @@
     'depends': ['purchase', 'sign', 'mail'],
     'data': [
         'views/purchase_order_view.xml',
+        'views/res_config_settings_view.xml',
+        'data/cron.xml',
     ],
     'installable': True,
     'application': False,
