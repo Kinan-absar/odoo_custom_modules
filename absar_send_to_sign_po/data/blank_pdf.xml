@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="blank_pdf_attachment" model="ir.attachment">
         <field name="name">blank.pdf</field>
