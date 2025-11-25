@@ -2,11 +2,11 @@
     <record id="res_config_settings_view_form_sign_po" model="ir.ui.view">
         <field name="name">res.config.settings.send.to.sign.po</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="purchase.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="base.view_general_configuration"/>
         <field name="arch" type="xml">
 
-            <!-- Insert inside the Purchase settings block -->
-            <xpath expr="//div[hasclass('app_settings_block')]" position="inside">
+            <!-- Add our block inside the GENERAL SETTINGS tab -->
+            <xpath expr="//div[hasclass('settings')]//div[hasclass('o_setting_container')]" position="inside">
 
                 <div class="o_setting_box">
                     <div class="o_setting_left">
