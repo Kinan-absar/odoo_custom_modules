@@ -7,15 +7,22 @@
         <field name="active">True</field>
     </record>
 
-    <!-- Signature box at bottom of last page -->
+    <!-- Signature box on last page -->
     <record id="po_signature_template_field" model="sign.item">
         <field name="template_id" ref="absar_send_to_sign_po.po_signature_template"/>
-        <field name="item_type_id" ref="sign.item_type_signature"/>
+
+        <!-- Correct item type for Odoo 18 -->
+        <field name="item_type_id" ref="sign.item_type_signature_request"/>
+
         <field name="required">True</field>
+
+        <!-- Position -->
         <field name="posX">50</field>
         <field name="posY">50</field>
         <field name="width">200</field>
         <field name="height">50</field>
-        <field name="page">-1</field> 
+
+        <!-- -1 = last page -->
+        <field name="page">-1</field>
     </record>
 </odoo>
