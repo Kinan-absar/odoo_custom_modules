@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="group_employee_portal_user" model="res.groups">
+            <field name="name">Employee Portal User</field>
+        </record>
+    </data>
+</odoo>
