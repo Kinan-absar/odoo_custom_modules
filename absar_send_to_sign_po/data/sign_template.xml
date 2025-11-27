@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-    <record id="po_signature_template" model="sign.template">
-        <field name="name">PO Signature Template</field>
-        <field name="attachment_id" ref="absar_send_to_sign_po.blank_pdf_attachment"/>
-        <field name="active">True</field>
-    </record>
-</odoo>
