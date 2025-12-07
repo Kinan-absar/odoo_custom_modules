@@ -61,15 +61,11 @@
 
         # --- BACKEND VIEWS ---
         'views/employee_request_views.xml',
+        'views/material_request_views.xml',
         'views/attendance_views.xml',
         'views/menus.xml',
         'views/work_location_inherit.xml',
         
-        # --------------------------------------------------
-        # MATERIAL REQUEST (BACKEND)
-        # --------------------------------------------------
-        'views/material_request_views.xml',
-
         # --------------------------------------------------
         # EMPLOYEE PORTAL (FRONTEND)
         # --------------------------------------------------
