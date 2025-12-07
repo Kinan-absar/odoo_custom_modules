@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="employee_portal_attendance">
+
+        <!-- USE ONLY YOUR CUSTOM LAYOUT -->
+        <t t-call="employee_portal_suite.employee_portal_layout">
+
+            <div class="container mt-4 attendance_page">
+
+                <h2>Attendance</h2>
+
+                <div id="geo_message" class="alert d-none"></div>
+
+                <button id="btn_checkin" class="btn btn-success mb-2">Check In</button>
+                <button id="btn_checkout" class="btn btn-danger mb-2 ms-2">Check Out</button>
+
+            </div>
+
+        </t>
+
+    </template>
+
+</odoo>

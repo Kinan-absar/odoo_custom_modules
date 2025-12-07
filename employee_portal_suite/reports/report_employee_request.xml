@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="report_employee_request_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Employee Request</h2>
+
+                <table class="table table-sm mt-3">
+                    <tr>
+                        <th>Request Number:</th>
+                        <td><span t-field="doc.name"/></td>
+                    </tr>
+                    <tr>
+                        <th>Employee:</th>
+                        <td><span t-field="doc.employee_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <th>Manager:</th>
+                        <td><span t-field="doc.manager_id.name"/></td>
+                    </tr>
+                    <tr>
+                        <th>Request Type:</th>
+                        <td><span t-field="doc.request_type"/></td>
+                    </tr>
+                    <tr>
+                        <th>Date:</th>
+                        <td><span t-field="doc.request_date"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Description</h4>
+                <p t-field="doc.description"/>
+
+                <h4 class="mt-4">Approval History</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <th>Stage</th>
+                        <th>Approved By</th>
+                        <th>Date</th>
+                    </tr>
+                    <tr>
+                        <td>Manager</td>
+                        <td><t t-esc="doc.manager_approved_by.name or ''"/></td>
+                        <td><t t-esc="doc.manager_approved_date or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td>HR</td>
+                        <td><t t-esc="doc.hr_approved_by.name or ''"/></td>
+                        <td><t t-esc="doc.hr_approved_date or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td>Finance</td>
+                        <td><t t-esc="doc.finance_approved_by.name or ''"/></td>
+                        <td><t t-esc="doc.finance_approved_date or ''"/></td>
+                    </tr>
+                    <tr>
+                        <td>CEO</td>
+                        <td><t t-esc="doc.ceo_approved_by.name or ''"/></td>
+                        <td><t t-esc="doc.ceo_approved_date or ''"/></td>
+                    </tr>
+                </table>
+
+            </div>
+        </t>
+    </template>
+
+</odoo>

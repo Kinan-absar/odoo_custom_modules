@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="employee_portal_work_location_form_geo" model="ir.ui.view">
+        <field name="name">employee.portal.work.location.form.geo</field>
+        <field name="model">hr.work.location</field>
+
+        <!-- CORRECT VIEW ID HERE -->
+        <field name="inherit_id" ref="hr.hr_work_location_form_view"/>
+
+        <field name="arch" type="xml">
+
+            <!-- Insert under the first group (after name/address/location_type) -->
+            <xpath expr="//group[field[@name='name']]" position="after">
+                <group string="GPS Settings">
+                    <field name="latitude"/>
+                    <field name="longitude"/>
+                    <field name="allowed_radius_meters"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

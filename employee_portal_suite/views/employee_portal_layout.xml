@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<template id="employee_portal_layout">
+
+<t t-call="web.layout">
+
+    <style>
+
+        /* ===== BASE NAVBAR ===== */
+        .ep-navbar {
+            background: #0f1b2b;
+            padding: 14px 0;
+            border-bottom: 2px solid #1abc9c;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ep-navbar .nav-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        /* ===== LINKS ===== */
+        .ep-link {
+            color: #d9e2ec;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: 0.2s;
+            text-decoration: none;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+        .ep-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .ep-approve {
+            background: #f7c843;
+            color: #0f1b2b !important;
+            font-weight: 600;
+        }
+
+        .ep-approve:hover {
+            background: #ffdd57;
+        }
+
+        /* ===== LOGOUT BUTTON ===== */
+        .ep-logout {
+            background: #e74c3c;
+            padding: 8px 15px;
+            border-radius: 4px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .ep-logout:hover {
+            background: #ff6b6b;
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+        .ep-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .ep-nav-toggle {
+                display: block;
+            }
+
+            .ep-nav-links {
+                display: none;
+                flex-direction: column;
+                background: #0e1829;
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            body.nav-open .ep-nav-links {
+                display: flex;
+            }
+
+            .ep-link, .ep-sub-link {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .ep-dropdown-menu {
+                width: 100% !important;
+                position: relative;
+            }
+
+            .ep-logout {
+                width: 100%;
+                text-align: center;
+                margin-left: 0;
+            }
+        }
+
+        /* ===== DROPDOWN ===== */
+        .ep-dropdown {
+            position: relative;
+        }
+
+        .ep-dropdown-toggle {
+            background: none;
+            border: none;
+            color: gold;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 8px 12px;
+        }
+
+        .ep-dropdown-menu {
+            display: none;
+            position: absolute;
+            background: #1c2a3b;
+            padding: 5px 0;
+            min-width: 180px;
+            z-index: 100;
+        }
+
+        .ep-dropdown:hover .ep-dropdown-menu {
+            display: block;
+        }
+
+        .ep-sub-link {
+            display: block;
+            padding: 8px 15px !important;
+        }
+
+    </style>
+
+    <t t-call-assets="web.assets_frontend"/>
+
+    <!-- ===== NAVIGATION BAR ===== -->
+    <nav class="ep-navbar">
+        <div class="container nav-container">
+
+            <!-- MOBILE BURGER -->
+            <button class="ep-nav-toggle" onclick="document.body.classList.toggle('nav-open')">☰</button>
+
+            <!-- NAV LINKS -->
+            <div class="ep-nav-links">
+
+                <a href="/my" class="ep-link">Dashboard</a>
+
+                <a href="/my/employee/requests" class="ep-link">Employee Requests</a>
+                <a href="/my/employee/requests/new" class="ep-link">New Employee Request</a>
+
+                <a href="/my/employee/material" class="ep-link">Material Requests</a>
+                <a href="/my/employee/material/new" class="ep-link">New Material Request</a>
+
+                <a href="/my/employee/attendance" class="ep-link">Attendance</a>
+
+                <!-- ===== DROPDOWN: APPROVALS ===== -->
+                <t t-if="
+                    request.env.user.has_group('employee_portal_suite.group_employee_portal_manager')
+                    or request.env.user.has_group('employee_portal_suite.group_employee_portal_hr')
+                    or request.env.user.has_group('employee_portal_suite.group_employee_portal_finance')
+                    or request.env.user.has_group('employee_portal_suite.group_employee_portal_ceo')
+                    or request.env.user.has_group('employee_portal_suite.group_mr_purchase_rep')
+                    or request.env.user.has_group('employee_portal_suite.group_mr_store_manager')
+                    or request.env.user.has_group('employee_portal_suite.group_mr_project_manager')
+                    or request.env.user.has_group('employee_portal_suite.group_mr_projects_director')
+                ">
+                    <div class="ep-dropdown">
+                        <button class="ep-dropdown-toggle">Approvals ▾</button>
+
+                        <div class="ep-dropdown-menu">
+
+                            <!-- Employee Approvals -->
+                            <t t-if="
+                                request.env.user.has_group('employee_portal_suite.group_employee_portal_manager')
+                                or request.env.user.has_group('employee_portal_suite.group_employee_portal_hr')
+                                or request.env.user.has_group('employee_portal_suite.group_employee_portal_finance')
+                                or request.env.user.has_group('employee_portal_suite.group_employee_portal_ceo')
+                            ">
+                                <a href="/my/employee/approvals" class="ep-sub-link ep-link">Employee Approvals</a>
+                            </t>
+
+                            <!-- Material Approvals -->
+                            <t t-if="
+                                request.env.user.has_group('employee_portal_suite.group_mr_purchase_rep')
+                                or request.env.user.has_group('employee_portal_suite.group_mr_store_manager')
+                                or request.env.user.has_group('employee_portal_suite.group_mr_project_manager')
+                                or request.env.user.has_group('employee_portal_suite.group_mr_projects_director')
+                                or request.env.user.has_group('employee_portal_suite.group_employee_portal_ceo')
+                            ">
+                                <a href="/my/employee/material/approvals" class="ep-sub-link ep-link">Material Approvals</a>
+                            </t>
+
+                        </div>
+                    </div>
+                </t>
+
+            </div>
+
+            <!-- LOGOUT BUTTON -->
+            <a class="ep-logout" href="/web/session/logout">Logout</a>
+
+        </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <div class="container mt-4 mb-5">
+        <t t-raw="0"/>
+    </div>
+
+</t>
+</template>
+
+</odoo>

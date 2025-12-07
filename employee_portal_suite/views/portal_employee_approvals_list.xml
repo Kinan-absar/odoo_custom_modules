@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_employee_approvals_list" name="Employee Approvals Page">
+        <t t-call="employee_portal_suite.employee_portal_layout">
+
+            <div class="container mt-4">
+
+                <!-- EMPLOYEE REQUEST APPROVALS ONLY -->
+                <h3 class="mt-4">Employee Requests</h3>
+
+                <t t-if="requests">
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th>Request #</th>
+                                <th>Employee</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="requests" t-as="req">
+                                <tr>
+                                    <td><t t-esc="req.name"/></td>
+                                    <td><t t-esc="req.employee_id.name"/></td>
+                                    <td><t t-esc="req.request_type"/></td>
+                                    <td><t t-esc="req.get_readable_status()"/></td>
+                                    <td><t t-esc="req.request_date"/></td>
+                                    <td>
+                                        <a t-att-href="'/my/employee/approvals/%s' % req.id"
+                                           class="btn btn-primary btn-sm">Review</a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+
+                <t t-if="not requests">
+                    <p>No pending employee approvals.</p>
+                </t>
+
+            </div>
+
+        </t>
+    </template>
+
+</odoo>
