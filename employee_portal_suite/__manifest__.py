@@ -59,6 +59,13 @@
         'data/request_sequence.xml',
         'data/attendance_cron.xml',
 
+        # --------------------------------------------------
+        # REPORTS
+        # --------------------------------------------------
+        'reports/report_action.xml',
+        'reports/report_employee_request.xml',
+        'reports/report_material_request.xml',
+
         # --- BACKEND VIEWS ---
         'views/employee_request_views.xml',
         'views/material_request_views.xml',
@@ -95,12 +102,6 @@
         'views/portal_material_approvals_list.xml',
         'views/portal_manager_request_detail.xml',
 
-        # --------------------------------------------------
-        # REPORTS
-        # --------------------------------------------------
-        'reports/report_action.xml',
-        'reports/report_employee_request.xml',
-        'reports/report_material_request.xml',
     ],
 
     # ------------------------------------------------------------------
