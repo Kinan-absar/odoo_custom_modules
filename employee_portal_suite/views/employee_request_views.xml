@@ -116,6 +116,7 @@
                     </div>
 
                 </sheet>
+                <chatter/>
             </form>
 
         </field>
