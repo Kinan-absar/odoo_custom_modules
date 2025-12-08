@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
+    <!-- Completely wrap the signature summary page in our employee layout
+         WITHOUT touching portal.portal_layout internally -->
     <template id="portal_sign_summary_override"
               inherit_id="sign.sign_portal_my_request"
-              name="Employee Portal Layout for Sign Summary">
+              name="Employee Portal Wrapper for Signature Summary">
 
-        <!-- Wrap the entire content inside portal layout -->
-        <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">
+        <!-- Surround the whole page output with the employee layout -->
+        <xpath expr="." position="replace">
             <t t-call="employee_portal_suite.employee_portal_layout">
-                
-                <!-- IMPORTANT: restore the inner content -->
                 <div id="wrap" class="o_portal_wrap">
                     <t t-raw="0"/>
                 </div>
-
             </t>
         </xpath>
 
