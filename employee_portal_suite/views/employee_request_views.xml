@@ -10,11 +10,7 @@
         <field name="arch" type="xml">
 
             <form string="Employee Request" create="1" edit="1">
-                <sheet>
-
-                    <!-- BUTTON BOX -->
-                    <div class="oe_button_box" name="button_box">
-
+                <header>
                         <button type="object" name="action_submit"
                                 string="Submit"
                                 class="oe_stat_button"
@@ -44,7 +40,8 @@
                                 string="Reject"
                                 class="oe_stat_button btn-danger"
                                 invisible="state == 'approved'"/>
-                    </div>
+                </header>
+                <sheet>
 
                     <!-- TITLE + STATUS -->
                     <div class="oe_title">
