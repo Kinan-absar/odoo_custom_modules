@@ -72,7 +72,15 @@ class EmployeePortalMain(CustomerPortal):
             stage_domain = [('id', '=', 0)]  # this user has no MR approval role
 
         material_pending_count = request.env['material.request'].sudo().search_count(stage_domain)
-
+        # -------------------------------
+        # 4. Documents to Sign
+        # -------------------------------
+        pending_sign_count = 0
+        if "sign.request.item" in request.env:
+            pending_sign_count = request.env["sign.request.item"].sudo().search_count([
+                ('partner_id', '=', user.partner_id.id),
+                ('state', '=', 'sent')
+            ])
         # ------------------------------------------------------
         # Render
         # ------------------------------------------------------
@@ -81,4 +89,5 @@ class EmployeePortalMain(CustomerPortal):
             "my_material_count": my_material_count,
             "employee_pending_count": employee_pending_count,
             "material_pending_count": material_pending_count,
+            "pending_sign_count": pending_sign_count,
         })

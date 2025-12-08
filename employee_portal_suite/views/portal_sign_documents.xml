@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_sign_documents_page">
+        <t t-call="employee_portal_suite.employee_portal_layout">
+
+            <div class="container mt-4">
+
+                <h3>Documents to Sign</h3>
+
+                <t t-if="not sign_items">
+                    <p>No documents require your signature.</p>
+                </t>
+
+                <t t-if="sign_items">
+                    <table class="table table-hover mt-3">
+                        <thead>
+                            <tr>
+                                <th>Document</th>
+                                <th>Request</th>
+                                <th>Status</th>
+                                <th>Open</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-foreach="sign_items" t-as="item">
+                                <tr>
+                                    <td><t t-esc="item.sign_request_id.reference"/></td>
+                                    <td><t t-esc="item.sign_request_id.name"/></td>
+                                    <td><t t-esc="item.state"/></td>
+                                    <td>
+                                        <a t-att-href="item.sign_request_id.get_sign_url()"
+                                           class="btn btn-primary btn-sm"
+                                           target="_blank">
+                                            Sign
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+
+            </div>
+
+        </t>
+    </template>
+
+</odoo>

@@ -68,6 +68,15 @@
                         </div>
                     </div>
                 </t>
+                <div class="o_portal_card">
+                    <a href="/my/employee/sign">
+                        <span class="portal_count">
+                            <t t-esc="pending_sign_count"/>
+                        </span>
+                        <span class="portal_label">Documents to Sign</span>
+                    </a>
+                </div>
+
             </div>
 
 
