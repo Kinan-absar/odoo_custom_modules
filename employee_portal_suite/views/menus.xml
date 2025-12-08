@@ -4,7 +4,8 @@
     <!-- Main Root Menu -->
     <menuitem id="menu_employee_portal_root"
               name="Employee Portal"
-              sequence="10"/>
+              sequence="10"
+              web_icon="employee_portal_suite,static/description/icon.png"/>
 
     <!-- DIRECT: Employee Requests -->
     <menuitem id="menu_employee_request_items"
