@@ -110,11 +110,6 @@
 
                     </notebook>
 
-                    <!-- CHATTER -->
-                    <div class="oe_chatter">
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div>
-
                 </sheet>
                 <chatter/>
             </form>
