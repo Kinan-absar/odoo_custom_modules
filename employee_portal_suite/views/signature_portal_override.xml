@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Override Odoo's default sign template to use employee layout -->
+    <template id="sign_portal_inherit" inherit_id="sign.portal_document" name="Employee Layout for Sign">
+        <xpath expr="//t[@t-call='portal.portal_layout']" replace="t">
+            <t t-call="employee_portal_suite.employee_portal_layout">
+                <t t-raw="0"/>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
