@@ -27,7 +27,7 @@
                             <t t-foreach="sign_items" t-as="item">
                                 <tr>
                                     <td><t t-esc="item.sign_request_id.reference"/></td>
-                                    <td><t t-esc="item.sign_request_id.name"/></td>
+                                    <td><t t-esc="item.sign_request_id.display_name"/></td>
                                     <td><t t-esc="item.state"/></td>
                                     <td>
                                         <a t-att-href="item.sign_request_id.get_sign_url()"
