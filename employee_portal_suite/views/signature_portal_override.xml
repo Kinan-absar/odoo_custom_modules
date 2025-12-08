@@ -5,9 +5,10 @@
               inherit_id="sign.sign_portal_my_request"
               name="Employee Portal Layout for Sign Summary">
 
-        <!-- بدل ما نبدّل الـlayout بالكامل، نحقن المحتوى داخل البورتال تبعنا -->
-        <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
+        <!-- REPLACE ONLY THE CONTENT INSIDE portal.portal_layout -->
+        <xpath expr="//t[@t-call='portal.portal_layout']/*" position="replace">
             <t t-call="employee_portal_suite.employee_portal_layout">
+                <!-- Put the original content back inside your layout -->
                 <t t-raw="0"/>
             </t>
         </xpath>
