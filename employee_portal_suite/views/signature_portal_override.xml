@@ -1,44 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <template id="sign_doc_sign_portal_override"
-              inherit_id="sign.doc_sign"
-              name="Use Employee Portal Layout for Signing">
 
-        <!-- Replace the entire content area (everything inside web.layout) -->
-        <xpath expr="//div[@class='o_sign_document']" position="replace">
+    <template id="portal_sign_summary_override"
+              inherit_id="sign.sign_portal_my_request"
+              name="Employee Portal Layout for Sign Summary">
+
+        <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">
             <t t-call="employee_portal_suite.employee_portal_layout">
-
-                <div class="container mt-4">
-                    <h2>Document Signature</h2>
-
-                    <!-- original signing body -->
-                    <div class="o_sign_document">
-                        <header>
-                            <div class="o_sign_info justify-content-between d-flex">
-                                <div class="o_logo_wrapper justify-content-start d-flex">
-                                    <div class="o_logo d-flex">
-                                        <a href="/"><img t-attf-src="/logo.png?company={{ company_id }}" alt="Logo"/></a>
-                                    </div>
-                                    <div class="o_odoo">
-                                        <a href="https://www.odoo.com/app/sign">
-                                            <img src="/sign/static/img/odoo_signed.png" alt="Signed"/>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="justify-content-end d-flex">
-                                    <t t-call="sign.signer_status_wrapper"/>
-                                </div>
-                            </div>
-                        </header>
-
-                        <!-- original signing component -->
-                        <t t-call="sign._doc_sign"/>
-                    </div>
-
-                </div>
-
+                <t t-raw="0"/>
             </t>
         </xpath>
 
     </template>
+
 </odoo>
