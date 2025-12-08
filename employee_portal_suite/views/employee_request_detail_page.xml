@@ -6,6 +6,13 @@
 
             <div class="container my-4">
                 <h2 class="mb-4">Request Details</h2>
+                <!-- DOWNLOAD PDF BUTTON -->
+                <t t-if="request_rec.state in ['approved', 'rejected']">
+                    <a t-att-href="'/report/pdf/employee_portal_suite.report_employee_request_document/%s' % request_rec.id"
+                    class="btn btn-outline-primary mb-3" target="_blank">
+                        Download PDF
+                    </a>
+                </t>
 
                 <!-- ========================= -->
                 <!-- MAIN REQUEST INFORMATION -->

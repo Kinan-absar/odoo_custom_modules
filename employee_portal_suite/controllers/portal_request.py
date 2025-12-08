@@ -1,8 +1,33 @@
 from odoo import http
 from odoo.http import request
 
+def _er_status_badge(rec):
+    state = rec.state
+
+    # APPROVED
+    if state == "approved":
+        return '<span class="badge bg-success">Fully Approved</span>'
+
+    # REJECTED
+    if state == "rejected":
+        return '<span class="badge bg-danger">Rejected</span>'
+
+    # PENDING STAGES
+    stage_labels = {
+        'manager': 'Pending Manager',
+        'hr': 'Pending HR',
+        'finance': 'Pending Finance',
+        'ceo': 'Pending CEO',
+    }
+
+    if state in stage_labels:
+        return f'<span class="badge bg-warning text-dark">{stage_labels[state]}</span>'
+
+    return '<span class="badge bg-secondary">Unknown</span>'
 
 class EmployeePortalRequests(http.Controller):
+
+    
 
     # ---------------------------------------------------------
     # Helper
@@ -103,10 +128,11 @@ class EmployeePortalRequests(http.Controller):
     # MANAGER — APPROVAL LIST
     # ---------------------------------------------------------
     @http.route('/my/employee/approvals', type='http', auth='user', website=True)
-    def portal_approvals(self, **kw):
+    def employee_approvals(self, **kw):
         user = request.env.user
+        EmployeeReq = request.env['employee.request'].sudo()
 
-        # Only portal managers/HR/Finance/CEO can see this
+        # Allow only employee approval groups
         if not (
             user.has_group("employee_portal_suite.group_employee_portal_manager")
             or user.has_group("employee_portal_suite.group_employee_portal_hr")
@@ -115,34 +141,73 @@ class EmployeePortalRequests(http.Controller):
         ):
             return request.redirect('/my')
 
-        employee = user.employee_id
-        filtered = []
+        emp = user.employee_id
+        current_filter = kw.get("filter", "pending")
 
-        # search all requests in approval pipeline
-        requests = request.env['employee.request'].sudo().search([
+        # ---------------------------------------------------------
+        # 1) PENDING LIST — requests waiting for THIS user
+        # ---------------------------------------------------------
+        pending_list = []
+
+        for rec in EmployeeReq.search([
             ('state', 'in', ['manager', 'hr', 'finance', 'ceo'])
+        ]):
+
+            if rec.state == "manager" and user.has_group("employee_portal_suite.group_employee_portal_manager"):
+                if rec.manager_id == emp:
+                    pending_list.append(rec)
+
+            elif rec.state == "hr" and user.has_group("employee_portal_suite.group_employee_portal_hr"):
+                pending_list.append(rec)
+
+            elif rec.state == "finance" and user.has_group("employee_portal_suite.group_employee_portal_finance"):
+                pending_list.append(rec)
+
+            elif rec.state == "ceo" and user.has_group("employee_portal_suite.group_employee_portal_ceo"):
+                pending_list.append(rec)
+
+        # ---------------------------------------------------------
+        # 2) APPROVED LIST — requests user approved
+        # ---------------------------------------------------------
+        approved_list = EmployeeReq.search([
+            "|", "|", "|",
+            ("manager_approved_by", "=", user.id),
+            ("hr_approved_by", "=", user.id),
+            ("finance_approved_by", "=", user.id),
+            ("ceo_approved_by", "=", user.id),
         ])
 
-        for req in requests:
+        # ---------------------------------------------------------
+        # 3) REJECTED LIST — requests user rejected
+        # ---------------------------------------------------------
+        rejected_list = EmployeeReq.search([
+            ("state", "=", "rejected"),
+            ("rejected_by", "=", user.id),
+        ])
 
-            # manager stage
-            if req.state == 'manager' and req.manager_id == employee and user.has_group('employee_portal_suite.group_employee_portal_manager'):
-                filtered.append(req)
+        # ---------------------------------------------------------
+        # 4) ALL LIST
+        # ---------------------------------------------------------
+        all_reqs = list({*pending_list, *approved_list, *rejected_list})
 
-            # HR stage
-            if req.state == 'hr' and user.has_group('employee_portal_suite.group_employee_portal_hr'):
-                filtered.append(req)
-
-            # Finance stage
-            if req.state == 'finance' and user.has_group('employee_portal_suite.group_employee_portal_finance'):
-                filtered.append(req)
-
-            # CEO stage
-            if req.state == 'ceo' and user.has_group('employee_portal_suite.group_employee_portal_ceo'):
-                filtered.append(req)
+        # ---------------------------------------------------------
+        # 5) Apply filter
+        # ---------------------------------------------------------
+        shown_reqs = {
+            "pending": pending_list,
+            "approved": approved_list,
+            "rejected": rejected_list,
+            "all": all_reqs,
+        }.get(current_filter, pending_list)
 
         return request.render("employee_portal_suite.portal_employee_approvals_list", {
-            "requests": filtered,
+            "pending_reqs": pending_list,
+            "approved_reqs": approved_list,
+            "rejected_reqs": rejected_list,
+            "all_reqs": all_reqs,
+            "shown_reqs": shown_reqs,
+            "current_filter": current_filter,
+            "status_badge": _er_status_badge,
         })
 
 
@@ -167,7 +232,8 @@ class EmployeePortalRequests(http.Controller):
             return request.redirect('/my')
 
         return request.render("employee_portal_suite.portal_manager_request_detail", {
-            "request_rec": rec
+            "request_rec": rec,
+            "status_badge": _er_status_badge,
         })
 
    # ---------------------------------------------------------

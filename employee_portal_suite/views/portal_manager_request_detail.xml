@@ -7,6 +7,13 @@
             <div class="container mt-4">
 
                 <h2>Review Employee Request</h2>
+                <!-- DOWNLOAD PDF BUTTON -->
+                <t t-if="request_rec.state in ['approved', 'rejected']">
+                    <a t-att-href="'/report/pdf/employee_portal_suite.report_employee_request_document/%s' % request_rec.id"
+                    class="btn btn-outline-primary mb-3" target="_blank">
+                        Download PDF
+                    </a>
+                </t>
 
                 <div class="card p-4 mt-3">
                     <h4 class="mb-3">Request Information</h4>
@@ -16,7 +23,7 @@
                     <p><strong>Type:</strong> <t t-esc="request_rec.request_type"/></p>
                     <p><strong>Date:</strong> <t t-esc="request_rec.request_date"/></p>
                     <p><strong>Description:</strong> <t t-esc="request_rec.description"/></p>
-                    <p><strong>Status:</strong> <t t-esc="request_rec.get_readable_status()"/></p>
+                    <p><strong>Status:</strong> <t t-raw="status_badge(request_rec)"/></p>
 
                     <t t-if="request_rec.request_type == 'leave'">
                         <p><strong>Leave From:</strong> <t t-esc="request_rec.leave_from"/></p>
