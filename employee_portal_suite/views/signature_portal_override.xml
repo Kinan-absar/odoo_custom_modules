@@ -2,14 +2,14 @@
 <odoo>
 
     <template id="portal_sign_summary_override"
-              inherit_id="sign.sign_portal_my_request">
+              inherit_id="sign.sign_portal_my_request"
+              name="Employee Portal Layout for Sign Summary">
 
-        <xpath expr="//*[@id='wrap']" position="replace">
-            <div id="wrap">
-                <t t-call="employee_portal_suite.employee_portal_layout">
-                    <t t-raw="0"/>
-                </t>
-            </div>
+        <!-- بدل ما نبدّل الـlayout بالكامل، نحقن المحتوى داخل البورتال تبعنا -->
+        <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
+            <t t-call="employee_portal_suite.employee_portal_layout">
+                <t t-raw="0"/>
+            </t>
         </xpath>
 
     </template>
