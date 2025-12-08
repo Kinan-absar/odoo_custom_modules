@@ -10,7 +10,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="card shadow-sm p-3">
                             <h5>My Employee Requests</h5>
-                            <p><t t-esc="my_request_count"/></p>
+                            <p>Count: <t t-esc="my_request_count"/></p>
                             <a href="/my/employee/requests" class="btn btn-primary  btn-sm" style="width:180px;">View</a>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-6 mb-3">
                         <div class="card shadow-sm p-3">
                             <h5>My Material Requests</h5>
-                            <p>Total: <t t-esc="my_material_count"/></p>
+                            <p>Count: <t t-esc="my_material_count"/></p>
                             <a href="/my/employee/material" class="btn btn-primary  btn-sm" style="width:180px;">View</a>
                         </div>
                     </div>

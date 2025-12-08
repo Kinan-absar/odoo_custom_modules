@@ -5,67 +5,80 @@ from odoo.addons.portal.controllers.portal import CustomerPortal
 
 class EmployeePortalMain(CustomerPortal):
 
+    # ---------------------------------------------------------
+    # EMPLOYEE PORTAL DASHBOARD (MAIN /my/employee)
+    # ---------------------------------------------------------
     @http.route('/my/employee', type='http', auth='user', website=True)
-    def portal_dashboard(self, **kwargs):
+    def employee_portal_dashboard(self, **kw):
         user = request.env.user
         employee = user.employee_id
 
-        # Only portal employees can access
-        if not user.has_group("base.group_portal") or not employee:
-            return request.redirect('/my/home')
-
         # ------------------------------------------------------
-        # 1) Employee Requests Count (My Requests)
+        # 1. My Employee Requests
         # ------------------------------------------------------
         my_request_count = request.env['employee.request'].sudo().search_count([
             ('employee_id', '=', employee.id)
         ])
 
         # ------------------------------------------------------
-        # 2) Material Requests Count (My Materials)
+        # 2. My Material Requests
         # ------------------------------------------------------
         my_material_count = request.env['material.request'].sudo().search_count([
             ('employee_id.user_id', '=', user.id)
         ])
 
         # ------------------------------------------------------
-        # 3) Pending Approvals Count (Manager / HR / Finance / CEO)
+        # 3. Employee Pending Approvals
         # ------------------------------------------------------
-        pending_count = 0
+        employee_pending_count = 0
 
-        # Manager: ONLY requests where THIS employee is manager_id
-        if user.has_group('employee_portal_suite.group_employee_portal_manager'):
-            pending_count += request.env['employee.request'].sudo().search_count([
-                ('state', '=', 'manager'),
-                ('manager_id', '=', employee.id)
-            ])
+        pending_recs = request.env['employee.request'].sudo().search([
+            ('state', 'in', ['manager', 'hr', 'finance', 'ceo'])
+        ])
 
-        # HR
-        if user.has_group('employee_portal_suite.group_employee_portal_hr'):
-            pending_count += request.env['employee.request'].sudo().search_count([
-                ('state', '=', 'hr')
-            ])
+        for rec in pending_recs:
 
-        # Finance
-        if user.has_group('employee_portal_suite.group_employee_portal_finance'):
-            pending_count += request.env['employee.request'].sudo().search_count([
-                ('state', '=', 'finance')
-            ])
+            # Manager approval (only if direct manager)
+            if rec.state == 'manager' and user.has_group('employee_portal_suite.group_employee_portal_manager'):
+                if rec.manager_id == employee:
+                    employee_pending_count += 1
 
-        # CEO
-        if user.has_group('employee_portal_suite.group_employee_portal_ceo'):
-            pending_count += request.env['employee.request'].sudo().search_count([
-                ('state', '=', 'ceo')
-            ])
+            # HR approval
+            elif rec.state == 'hr' and user.has_group('employee_portal_suite.group_employee_portal_hr'):
+                employee_pending_count += 1
+
+            # Finance approval
+            elif rec.state == 'finance' and user.has_group('employee_portal_suite.group_employee_portal_finance'):
+                employee_pending_count += 1
+
+            # CEO approval
+            elif rec.state == 'ceo' and user.has_group('employee_portal_suite.group_employee_portal_ceo'):
+                employee_pending_count += 1
 
         # ------------------------------------------------------
-        # Render dashboard
+        # 4. Material Pending Approvals
+        # ------------------------------------------------------
+        if user.has_group('employee_portal_suite.group_mr_purchase_rep'):
+            stage_domain = [('state', '=', 'purchase')]
+        elif user.has_group('employee_portal_suite.group_mr_store_manager'):
+            stage_domain = [('state', '=', 'store')]
+        elif user.has_group('employee_portal_suite.group_mr_project_manager'):
+            stage_domain = [('state', '=', 'project_manager')]
+        elif user.has_group('employee_portal_suite.group_mr_projects_director'):
+            stage_domain = [('state', '=', 'director')]
+        elif user.has_group('employee_portal_suite.group_employee_portal_ceo'):
+            stage_domain = [('state', '=', 'ceo')]
+        else:
+            stage_domain = [('id', '=', 0)]  # this user has no MR approval role
+
+        material_pending_count = request.env['material.request'].sudo().search_count(stage_domain)
+
+        # ------------------------------------------------------
+        # Render
         # ------------------------------------------------------
         return request.render("employee_portal_suite.employee_portal_dashboard", {
-            "user": user,
-            "employee": employee,
             "my_request_count": my_request_count,
             "my_material_count": my_material_count,
-            "pending_count": pending_count,
+            "employee_pending_count": employee_pending_count,
+            "material_pending_count": material_pending_count,
         })
-
