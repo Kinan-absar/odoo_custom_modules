@@ -5,11 +5,15 @@
               inherit_id="sign.sign_portal_my_request"
               name="Employee Portal Layout for Sign Summary">
 
-        <!-- REPLACE ONLY THE CONTENT INSIDE portal.portal_layout -->
-        <xpath expr="//t[@t-call='portal.portal_layout']/*" position="replace">
+        <!-- Wrap the entire content inside portal layout -->
+        <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">
             <t t-call="employee_portal_suite.employee_portal_layout">
-                <!-- Put the original content back inside your layout -->
-                <t t-raw="0"/>
+                
+                <!-- IMPORTANT: restore the inner content -->
+                <div id="wrap" class="o_portal_wrap">
+                    <t t-raw="0"/>
+                </div>
+
             </t>
         </xpath>
 
