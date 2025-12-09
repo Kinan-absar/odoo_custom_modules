@@ -41,3 +41,10 @@ class SignRedirectOverride(Sign):
             return request.redirect("/my/employee/sign")
 
         return res
+        
+class SignRedirectAfterSummary(Sign):
+
+    @http.route(['/my/signature/<int:request_item_id>'], type='http', auth='user', website=True)
+    def portal_signature_view(self, request_item_id, **kwargs):
+
+        return request.redirect('/my/employee/sign')
