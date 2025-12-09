@@ -30,11 +30,12 @@
                                     <td><t t-esc="item.sign_request_id.display_name"/></td>
                                     <td><t t-esc="item.state"/></td>
                                     <td>
-                                        <a t-att-href="item.access_url"
-                                           class="btn btn-primary btn-sm"
-                                           target="_blank">
+                                        <a t-att-href="'/sign/document/%s/%s' % (item.sign_request_id.id, item.sign_request_id.access_token)"
+                                        class="btn btn-primary btn-sm"
+                                        target="_blank">
                                             Sign
                                         </a>
+
                                     </td>
                                 </tr>
                             </t>
