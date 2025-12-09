@@ -103,7 +103,7 @@
                                         </a>
                                     </t>
                                     <!-- REJECTION: VIEW REASON BUTTON -->
-                                    <t t-if="your_status.startswith('🔴')">
+                                    <t t-if="workflow_status.startswith('🔴')">
                                         <button type="button"
                                                 class="btn btn-sm btn-danger ms-1"
                                                 t-att-data-item="item.id"
