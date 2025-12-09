@@ -159,7 +159,7 @@ async function showRefusalReason(btn) {
 
         let reason;
 
-        if (data.ok && data.reason && data.reason.trim()) {
+        if (data.ok &amp; data.reason &amp; data.reason.trim()) {
             reason = data.reason;
         } else {
             reason = "No refusal reason was provided.";
