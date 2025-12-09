@@ -6,20 +6,21 @@ from odoo.addons.portal.controllers.portal import CustomerPortal
 class EmployeePortalSignDocs(CustomerPortal):
 
     @http.route('/my/employee/sign', type='http', auth='user', website=True)
-    def portal_employee_sign_docs(self, **kwargs):
+    def portal_employee_sign_docs(self, filter="pending", **kwargs):
         user = request.env.user
+        SignItem = request.env["sign.request.item"].sudo()
 
-        # If Sign module not installed
-        if "sign.request.item" not in request.env:
-            sign_items = []
-        else:
-            # get items assigned to current user AND still waiting to sign
-            sign_items = request.env["sign.request.item"].sudo().search([
-                ('partner_id', '=', user.partner_id.id),
-                ('state', '=', 'sent')    # IMPORTANT: correct state
-            ])
+        # Filter mapping
+        domain_map = {
+            "pending": [('partner_id', '=', user.partner_id.id), ('state', '=', 'sent')],
+            "signed":  [('partner_id', '=', user.partner_id.id), ('state', '=', 'completed')],
+            "rejected": [('partner_id', '=', user.partner_id.id), ('state', '=', 'canceled')],
+        }
+
+        domain = domain_map.get(filter, domain_map["pending"])
+        sign_items = SignItem.search(domain)
 
         return request.render("employee_portal_suite.portal_sign_documents_page", {
-            "sign_items": sign_items
+            "sign_items": sign_items,
+            "current_filter": filter,
         })
-
