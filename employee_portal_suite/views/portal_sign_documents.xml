@@ -102,54 +102,15 @@
                                             Download
                                         </a>
                                     </t>
-                                    <!-- REJECTION INFO MODAL -->
-                                    <t t-if="doc['your_status'].startswith('🔴')">
-                                    <div class="modal fade"
-                                        t-att-id="'rejectModal_%s' % item.id"
-                                        tabindex="-1"
-                                        aria-hidden="true">
-                                    
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-
-                                        <div class="modal-header bg-danger text-white">
-                                            <h5 class="modal-title">Rejection Details</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-
-                                        <div class="modal-body">
-
-                                            <p>
-                                                <strong>Rejected By:</strong>
-                                                <t t-esc="doc['refusal_by']"/>
-                                            </p>
-
-                                            <p>
-                                                <strong>Date:</strong>
-                                                <t t-esc="doc['refusal_date']"/>
-                                            </p>
-
-                                            <p>
-                                                <strong>Reason:</strong><br/>
-                                                <span class="text-danger">
-                                                    <t t-esc="doc['refusal_reason']"/>
-                                                </span>
-                                            </p>
-
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Close
-                                            </button>
-                                        </div>
-
-                                        </div>
-                                    </div>
-
-                                    </div>
+                                    <!-- REJECTION: VIEW REASON BUTTON -->
+                                    <t t-if="your_status.startswith('🔴')">
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger ms-1"
+                                                t-att-data-item="item.id"
+                                                onclick="showRefusalReason(this)">
+                                            View Reason
+                                        </button>
                                     </t>
-
 
                                 </td>
 
@@ -161,6 +122,49 @@
             </t>
         </div>
     </t>
+    <!-- REFUSAL REASON MODAL -->
+<div id="refusalModal" class="modal" tabindex="-1" style="display:none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title">Refusal Reason</h5>
+            <button type="button" class="btn-close" onclick="hideRefusalModal()"></button>
+        </div>
+
+        <div class="modal-body">
+            <p id="refusalText"></p>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="hideRefusalModal()">Close</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function showRefusalReason(btn) {
+    const itemId = btn.dataset.item;
+
+    ajax.jsonRpc(
+        "/my/employee/sign/refusal_reason/" + itemId,
+        "call",
+        {}
+    ).then(function (res) {
+        document.getElementById("refusalText").innerText =
+            res.ok ? res.reason : "No reason found.";
+
+        document.getElementById("refusalModal").style.display = "block";
+    });
+}
+
+function hideRefusalModal() {
+    document.getElementById("refusalModal").style.display = "none";
+}
+</script>
+
 </template>
 
 </odoo>
