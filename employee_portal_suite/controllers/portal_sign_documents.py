@@ -106,15 +106,16 @@ class EmployeePortalSignDocs(CustomerPortal):
             "documents": documents,
             "current_filter": filter,
         })
-        
+
     @http.route('/my/employee/sign/refusal_reason/<int:item_id>', type='json', auth='user')
     def portal_get_refusal_reason(self, item_id):
+
         Log = request.env['sign.log'].sudo()
 
-        # get last refusal action for this signer
+        # The correct filter: action = 'refuse'
         log = Log.search([
             ('sign_request_item_id', '=', item_id),
-            ('request_state', '=', 'refused'),
+            ('action', '=', 'refuse'),
         ], limit=1, order='id desc')
 
         if not log:
@@ -122,5 +123,6 @@ class EmployeePortalSignDocs(CustomerPortal):
 
         return {
             "ok": True,
-            "reason": log.message or "No reason provided."
+            "reason": log.message or "No reason provided.",
         }
+
