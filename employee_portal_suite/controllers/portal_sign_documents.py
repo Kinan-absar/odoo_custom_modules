@@ -27,17 +27,17 @@ class EmployeePortalSignDocs(CustomerPortal):
     def _compute_workflow_status(self, sign_request):
         items = sign_request.request_item_ids
 
-        # fully signed
+        # Fully signed
         if all(it.state == "completed" for it in items):
             return "🟢 Fully Signed"
 
-        # rejected
+        # Rejected
         canceled = next((it for it in items if it.state == "canceled"), None)
         if canceled:
             name = canceled.partner_id.name or "Unknown"
             return f"🔴 Rejected by {name}"
 
-        # signing order
+        # Correct signing order using signer_sequence
         items_sorted = items.sorted(lambda x: x.signer_sequence or 0)
 
         # find next signer
@@ -63,7 +63,7 @@ class EmployeePortalSignDocs(CustomerPortal):
         partner = user.partner_id
         SignItem = request.env["sign.request.item"].sudo()
 
-        # Base domain ONLY items belonging to the user
+        # Base: only user’s requests
         base_items = SignItem.search([
             ("partner_id", "=", partner.id)
         ])
@@ -72,18 +72,26 @@ class EmployeePortalSignDocs(CustomerPortal):
 
         for item in base_items:
             req = item.sign_request_id
-            items_sorted = req.request_item_ids.sorted(lambda x: x.sequence)
 
-            # RULE: only first pending signer sees the document in "pending"
-            first_pending = next((it for it in items_sorted if it.state not in ("completed", "canceled")), None)
+            # FIXED: use signer_sequence
+            items_sorted = req.request_item_ids.sorted(lambda x: x.signer_sequence or 0)
 
-            # If it's pending filter → user sees only if they are FIRST PENDING
-            if filter == "pending" and first_pending and first_pending.id != item.id:
-                continue
+            # FIRST pending signer
+            first_pending = next(
+                (it for it in items_sorted if it.state not in ("completed", "canceled")),
+                None
+            )
 
-            # If not pending filter → show only user's items
+            # Show only user's turn in Pending
+            if filter == "pending":
+                if not first_pending or first_pending.id != item.id:
+                    continue
+
+            # Signed filter
             if filter == "signed" and item.state != "completed":
                 continue
+
+            # Rejected filter
             if filter == "rejected" and item.state != "canceled":
                 continue
 
@@ -92,7 +100,7 @@ class EmployeePortalSignDocs(CustomerPortal):
                 "filename": req.reference,
                 "date": req.create_date.date(),
                 "your_status": self._compute_personal_status(item),
-                "workflow_status": self._compute_workflow_status(req, item),
+                "workflow_status": self._compute_workflow_status(req),  # FIXED
                 "access_token": item.access_token,
             })
 
