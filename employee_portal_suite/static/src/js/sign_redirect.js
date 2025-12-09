@@ -1,29 +1,25 @@
-/** Final working redirect for Odoo 18 Sign */
+/** Safe redirect override for Odoo 18 Sign (OWL patch) */
 odoo.define('employee_portal_suite.sign_redirect', function (require) {
     "use strict";
 
+    const { patch } = require("@web/core/utils/patch");
     let DocumentSignable;
+
     try {
-        DocumentSignable = require("@sign/components/sign_request/document_signable");
+        DocumentSignable = require("@sign/components/sign_request/document_signable").default;
     } catch (err) {
-        // Not on a signing page → do nothing
+        // Not on sign page → exit safely
         return;
     }
 
-    if (!DocumentSignable || !DocumentSignable.default) {
-        return;
-    }
+    patch(DocumentSignable.prototype, "employee_portal_suite_redirect", {
+        async onSignatureCompleted(...args) {
 
-    const Original = DocumentSignable.default.prototype.onSignatureCompleted;
+            // Run original behavior
+            await this._super(...args);
 
-    DocumentSignable.default.prototype.onSignatureCompleted = async function () {
-
-        // Wait for Odoo to finish saving the signature
-        if (Original) {
-            await Original.apply(this, arguments);
-        }
-
-        // Now redirect safely
-        window.location.href = "/my/employee/sign";
-    };
+            // Redirect AFTER signature is saved
+            window.location.href = "/my/employee/sign";
+        },
+    });
 });
