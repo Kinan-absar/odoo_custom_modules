@@ -5,7 +5,7 @@
               inherit_id="sign.sign_portal_my_request">
 
         <!-- Inject CSS to hide unwanted elements -->
-        <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
+        <xpath expr="//t[@t-call]" position="inside">
             <style>
                 header.o_header_standard {
                     display: none !important;
@@ -28,7 +28,7 @@
         </xpath>
 
         <!-- Insert the BACK BUTTON right before the document title -->
-        <xpath expr="//h3" position="before">
+        <xpath expr="(//h3)[1]" position="before">
             <a href="/my/employee"
                class="btn btn-secondary ep-back-btn">
                 ← Back to Employee Portal
