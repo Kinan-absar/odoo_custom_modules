@@ -106,9 +106,8 @@
                                     <t t-if="workflow_status.startswith('🔴')">
                                         <button type="button"
                                                 class="btn btn-sm btn-danger ms-1"
-                                                t-att-data-item="item.id"
-                                                onclick="showRefusalReason(this)">
-                                            View Reason
+                                                t-attf-href="/my/signature/{{ item.id }}?portal=1">
+                                            View Details
                                         </button>
                                     </t>
 
@@ -122,56 +121,6 @@
             </t>
         </div>
     </t>
-    <!-- REFUSAL REASON MODAL -->
-<div id="refusalModal" class="modal" tabindex="-1" style="display:none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-        <div class="modal-header">
-            <h5 class="modal-title">Refusal Reason</h5>
-            <button type="button" class="btn-close" onclick="hideRefusalModal()"></button>
-        </div>
-
-        <div class="modal-body">
-            <p id="refusalText"></p>
-        </div>
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" onclick="hideRefusalModal()">Close</button>
-        </div>
-
-    </div>
-  </div>
-</div>
-
-<script>
-function showRefusalReason(btn) {
-    const itemId = btn.dataset.item;
-
-    fetch(`/my/employee/sign/refusal_reason/${itemId}`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({})
-    })
-    .then(r => r.json())
-    .then(data => {
-
-        if (data.ok and data.reason) {
-            alert("Rejection Reason:\n\n" + data.reason);
-        } else {
-            alert("No refusal reason found.");
-        }
-
-    })
-    .catch(() => alert("Error retrieving refusal reason."));
-}
-</script>
-
-
-
-
-
-
 </template>
 
 </odoo>

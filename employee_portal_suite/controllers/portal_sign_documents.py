@@ -106,23 +106,3 @@ class EmployeePortalSignDocs(CustomerPortal):
             "documents": documents,
             "current_filter": filter,
         })
-
-    @http.route('/my/employee/sign/refusal_reason/<int:item_id>', type='json', auth='user')
-    def portal_get_refusal_reason(self, item_id):
-
-        Log = request.env['sign.log'].sudo()
-
-        # The correct filter: action = 'refuse'
-        log = Log.search([
-            ('sign_request_item_id', '=', item_id),
-            ('action', '=', 'refuse'),
-        ], limit=1, order='id desc')
-
-        if not log:
-            return {"ok": False, "reason": ""}
-
-        return {
-            "ok": True,
-            "reason": log.message or "No reason provided.",
-        }
-
