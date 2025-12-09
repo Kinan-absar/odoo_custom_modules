@@ -24,34 +24,35 @@ class EmployeePortalSignDocs(CustomerPortal):
     # -------------------------------
     # Workflow: respecting signing order
     # -------------------------------
-    def _compute_workflow_status(self, sign_request, current_item):
-        items = sign_request.request_item_ids.sorted(lambda x: x.sequence)
-        user_partner = request.env.user.partner_id
+    def _compute_workflow_status(self, sign_request):
+        items = sign_request.request_item_ids
 
-        # Fully signed
+        # fully signed
         if all(it.state == "completed" for it in items):
             return "🟢 Fully Signed"
 
-        # Rejected by someone
-        rejected = next((it for it in items if it.state == "canceled"), None)
-        if rejected:
-            return f"🔴 Rejected by {rejected.partner_id.name}"
+        # rejected
+        canceled = next((it for it in items if it.state == "canceled"), None)
+        if canceled:
+            name = canceled.partner_id.name or "Unknown"
+            return f"🔴 Rejected by {name}"
 
-        # Find next signer in sequence who must sign
-        next_item = next((it for it in items if it.state != "completed"), None)
+        # signing order
+        items_sorted = items.sorted(lambda x: x.signer_sequence or 0)
 
-        # If this is MY turn
-        if next_item and next_item.id == current_item.id:
-            return "🖊️ You Must Sign"
+        # find next signer
+        next_item = next((it for it in items_sorted if it.state != "completed"), None)
 
-        # If I already signed → show next step
-        if current_item.state == "completed":
-            if next_item:
+        if next_item:
+            current_user_partner = request.env.user.partner_id
+
+            if next_item.partner_id.id == current_user_partner.id:
+                return "🖊️ You Must Sign"
+            else:
                 return f"⏳ Waiting: {next_item.partner_id.name}"
-            return "🟢 Fully Signed"
 
-        # If it's NOT my turn yet → do NOT show who is before me
-        return "⏳ Waiting Your Turn"
+        return "⚪ Unknown"
+
 
     # -------------------------------
     # Main route
