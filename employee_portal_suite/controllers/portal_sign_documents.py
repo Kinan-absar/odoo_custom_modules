@@ -27,21 +27,20 @@ class EmployeePortalSignDocs(CustomerPortal):
     def _compute_workflow_status(self, sign_request):
         items = sign_request.request_item_ids
 
-        # Fully signed
+        # fully signed
         if all(it.state == "completed" for it in items):
             return "🟢 Fully Signed"
 
-        # Rejected
+        # rejected
         canceled = next((it for it in items if it.state == "canceled"), None)
         if canceled:
-            name = canceled.partner_id.name or "Unknown"
-            return f"🔴 Rejected by {name}"
+            return f"🔴 Rejected by {canceled.partner_id.name}"
 
-        # Correct signing order using signer_sequence
-        items_sorted = items.sorted(lambda x: x.signer_sequence or 0)
+        # correct signing order → mail_sent_order
+        items_sorted = items.sorted(lambda x: x.mail_sent_order or 0)
 
-        # find next signer
-        next_item = next((it for it in items_sorted if it.state != "completed"), None)
+        # find the next signer
+        next_item = next((it for it in items_sorted if it.state not in ("completed", "canceled")), None)
 
         if next_item:
             current_user_partner = request.env.user.partner_id
@@ -53,7 +52,6 @@ class EmployeePortalSignDocs(CustomerPortal):
 
         return "⚪ Unknown"
 
-
     # -------------------------------
     # Main route
     # -------------------------------
@@ -63,44 +61,42 @@ class EmployeePortalSignDocs(CustomerPortal):
         partner = user.partner_id
         SignItem = request.env["sign.request.item"].sudo()
 
-        # Base: only user’s requests
-        base_items = SignItem.search([
-            ("partner_id", "=", partner.id)
-        ])
+        # retrieve only items that belong to this user
+        my_items = SignItem.search([("partner_id", "=", partner.id)])
 
         documents = []
 
-        for item in base_items:
+        for item in my_items:
             req = item.sign_request_id
 
-            # FIXED: use signer_sequence
-            items_sorted = req.request_item_ids.sorted(lambda x: x.signer_sequence or 0)
+            # sorted order by mail_sent_order
+            items_sorted = req.request_item_ids.sorted(lambda x: x.mail_sent_order or 0)
 
-            # FIRST pending signer
-            first_pending = next(
-                (it for it in items_sorted if it.state not in ("completed", "canceled")),
-                None
-            )
+            # first signer that must act (pending)
+            first_pending = next((
+                it for it in items_sorted
+                if it.state not in ("completed", "canceled")
+            ), None)
 
-            # Show only user's turn in Pending
+            # FILTER LOGIC
             if filter == "pending":
+                # user ONLY sees docs when it's their turn
                 if not first_pending or first_pending.id != item.id:
                     continue
 
-            # Signed filter
             if filter == "signed" and item.state != "completed":
                 continue
 
-            # Rejected filter
             if filter == "rejected" and item.state != "canceled":
                 continue
 
+            # build document row
             documents.append({
                 "item": item,
                 "filename": req.reference,
                 "date": req.create_date.date(),
                 "your_status": self._compute_personal_status(item),
-                "workflow_status": self._compute_workflow_status(req),  # FIXED
+                "workflow_status": self._compute_workflow_status(req),
                 "access_token": item.access_token,
             })
 
