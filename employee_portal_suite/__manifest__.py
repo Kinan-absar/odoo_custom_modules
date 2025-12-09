@@ -103,6 +103,7 @@
         'views/portal_material_approvals_list.xml',
         'views/portal_manager_request_detail.xml',
         'views/portal_sign_documents.xml',
+        'views/sign_portal_clean.xml',
 
     ],
 

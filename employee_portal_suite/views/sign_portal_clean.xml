@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Override the portal signature summary layout -->
+    <template id="clean_sign_summary"
+              inherit_id="sign.sign_portal_my_request">
+
+        <!-- Hide the default Odoo website header -->
+        <xpath expr="//header[contains(@class,'o_header_standard')]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <!-- Hide Odoo default footer -->
+        <xpath expr="//footer" position="replace">
+            <footer t-if="False"/>
+        </xpath>
+
+        <!-- Hide breadcrumb section -->
+        <xpath expr="//nav[@aria-label='Breadcrumb']" position="replace">
+            <div t-if="False"/>
+        </xpath>
+
+        <!-- OPTIONAL: remove the big top spacing that appears if header is removed -->
+        <xpath expr="//div[@id='wrapwrap']" position="attributes">
+            <attribute name="style">margin-top:0 !important;</attribute>
+        </xpath>
+
+    </template>
+
+</odoo>
