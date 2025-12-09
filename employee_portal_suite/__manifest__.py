@@ -111,6 +111,7 @@
     # ------------------------------------------------------------------
     'assets': {
         'web.assets_frontend': [
+            "employee_portal_suite/static/src/js/sign_redirect.js",
             'employee_portal_suite/static/src/js/attendance_geo.js',
         ],
     },
