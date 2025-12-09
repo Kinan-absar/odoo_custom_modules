@@ -87,7 +87,6 @@
 
         # Attendance Page
         'views/employee_attendance_page.xml',
-        'views/signature_portal_override.xml',
 
         # --------------------------------------------------
         # MATERIAL REQUEST PORTAL (FRONTEND)
