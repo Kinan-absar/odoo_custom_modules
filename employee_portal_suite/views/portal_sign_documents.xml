@@ -106,7 +106,7 @@
                                     <t t-if="workflow_status.startswith('🔴')">
                                         <button type="button"
                                                 class="btn btn-sm btn-danger ms-1"
-                                                t-attf-href="/my/signature/{{ item.id }}?portal=1">
+                                                t-attf-href="/my/signature/{{ item.id }}?access_token={{ item.access_token }}">
                                             View Details
                                         </button>
                                     </t>
