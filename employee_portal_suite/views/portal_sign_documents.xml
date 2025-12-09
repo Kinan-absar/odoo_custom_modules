@@ -145,33 +145,34 @@
 </div>
 
 <script>
-function showRefusalReason(btn) {
+async function showRefusalReason(btn) {
     const itemId = btn.dataset.item;
 
-    fetch(`/my/employee/sign/refusal_reason/${itemId}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({})
-    })
-    .then(r => r.json())
-    .then(res => {
-        document.getElementById("refusalText").innerText =
-            res.ok ? res.reason : "No refusal reason found.";
+    try {
+        const response = await fetch(`/my/employee/sign/refusal_reason/${itemId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({})
+        });
 
-        document.getElementById("refusalModal").style.display = "block";
-    })
-    .catch(err => {
-        console.error("Fetch error:", err);
-        alert("Failed to load refusal reason.");
-    });
-}
+        const data = await response.json();
 
-function hideRefusalModal() {
-    document.getElementById("refusalModal").style.display = "none";
+        let reason;
+
+        if (data.ok && data.reason && data.reason.trim()) {
+            reason = data.reason;
+        } else {
+            reason = "No refusal reason was provided.";
+        }
+
+        alert(reason);
+
+    } catch (err) {
+        alert("Error retrieving refusal reason.");
+    }
 }
 </script>
+
 
 
 
