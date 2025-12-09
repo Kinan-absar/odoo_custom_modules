@@ -102,14 +102,54 @@
                                             Download
                                         </a>
                                     </t>
-                                    <!-- DOWNLOAD REJECTED PDF -->
-                                    <t t-if="item.sign_request_id.state == 'canceled'">
-                                        <a class="btn btn-sm btn-outline-danger ms-1"
-                                        t-attf-href="/sign/download/{{ item.sign_request_id.id }}/{{ item.sign_request_id.access_token }}/rejected"
-                                        target="_blank">
-                                            Rejected PDF
-                                        </a>
+                                    <!-- REJECTION INFO MODAL -->
+                                    <t t-if="doc['your_status'].startswith('🔴')">
+                                    <div class="modal fade"
+                                        t-att-id="'rejectModal_%s' % item.id"
+                                        tabindex="-1"
+                                        aria-hidden="true">
+                                    
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+
+                                        <div class="modal-header bg-danger text-white">
+                                            <h5 class="modal-title">Rejection Details</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+
+                                            <p>
+                                                <strong>Rejected By:</strong>
+                                                <t t-esc="doc['refusal_by']"/>
+                                            </p>
+
+                                            <p>
+                                                <strong>Date:</strong>
+                                                <t t-esc="doc['refusal_date']"/>
+                                            </p>
+
+                                            <p>
+                                                <strong>Reason:</strong><br/>
+                                                <span class="text-danger">
+                                                    <t t-esc="doc['refusal_reason']"/>
+                                                </span>
+                                            </p>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Close
+                                            </button>
+                                        </div>
+
+                                        </div>
+                                    </div>
+
+                                    </div>
                                     </t>
+
 
                                 </td>
 
