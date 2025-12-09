@@ -99,7 +99,9 @@ class EmployeePortalSignDocs(CustomerPortal):
                 "workflow_status": self._compute_workflow_status(req),
                 "access_token": item.access_token,
             })
-
+        # Sort newest → oldest
+        documents = sorted(documents, key=lambda d: d["date"], reverse=True)
+        
         return request.render("employee_portal_suite.portal_sign_documents_page", {
             "documents": documents,
             "current_filter": filter,

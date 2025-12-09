@@ -102,6 +102,14 @@
                                             Download
                                         </a>
                                     </t>
+                                    <!-- DOWNLOAD REJECTED PDF -->
+                                    <t t-if="item.sign_request_id.state == 'canceled'">
+                                        <a class="btn btn-sm btn-outline-danger ms-1"
+                                        t-attf-href="/sign/download/{{ item.sign_request_id.id }}/{{ item.sign_request_id.access_token }}/rejected"
+                                        target="_blank">
+                                            Rejected PDF
+                                        </a>
+                                    </t>
 
                                 </td>
 
