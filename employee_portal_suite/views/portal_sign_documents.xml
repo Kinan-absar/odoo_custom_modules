@@ -146,27 +146,27 @@
 
 <script>
 function showRefusalReason(btn) {
-    const item_id = btn.getAttribute("data-item");
+    const itemId = btn.dataset.item;
 
-    fetch(`/my/employee/sign/refusal_reason/${item_id}`, {
+    fetch(`/my/employee/sign/refusal_reason/${itemId}`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({})
     })
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
-        if (data.ok && data.reason) {
+
+        if (data.ok and data.reason) {
             alert("Rejection Reason:\n\n" + data.reason);
         } else {
             alert("No refusal reason found.");
         }
+
     })
-    .catch(err => {
-        console.error(err);
-        alert("Error retrieving refusal reason.");
-    });
+    .catch(() => alert("Error retrieving refusal reason."));
 }
 </script>
+
 
 
 
