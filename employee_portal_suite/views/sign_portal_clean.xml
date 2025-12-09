@@ -3,23 +3,36 @@
 
     <template id="clean_sign_summary"
               inherit_id="sign.sign_portal_my_request">
-        
-        <!-- Inject CSS to hide header, footer, breadcrumbs ONLY on this page -->
+
+        <!-- Inject CSS to hide unwanted elements -->
         <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
             <style>
-                /* Hide website header */
                 header.o_header_standard {
                     display: none !important;
                 }
-                /* Hide website footer */
                 footer.o_footer {
                     display: none !important;
                 }
-                /* Hide breadcrumbs */
-                .o_portal_breadcrumb {
+                .o_portal_submenu.breadcrumb {
                     display: none !important;
                 }
+                .o_portal_pager {
+                    display: none !important;
+                }
+
+                /* Spacing for back button */
+                .ep-back-btn {
+                    margin-bottom: 20px;
+                }
             </style>
+        </xpath>
+
+        <!-- Insert the BACK BUTTON right before the document title -->
+        <xpath expr="//h3" position="before">
+            <a href="/my/employee"
+               class="btn btn-secondary ep-back-btn">
+                ← Back to Employee Portal
+            </a>
         </xpath>
 
     </template>
