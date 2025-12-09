@@ -1,14 +1,12 @@
-/** Safe Signature Redirect Override for Odoo 18 */
+/** Final working redirect for Odoo 18 Sign */
 odoo.define('employee_portal_suite.sign_redirect', function (require) {
     "use strict";
 
     let DocumentSignable;
-
     try {
-        // Load ONLY inside sign page assets
         DocumentSignable = require("@sign/components/sign_request/document_signable");
     } catch (err) {
-        // If module is missing (login, portal, etc.) → do nothing
+        // Not on a signing page → do nothing
         return;
     }
 
@@ -16,15 +14,16 @@ odoo.define('employee_portal_suite.sign_redirect', function (require) {
         return;
     }
 
-    const Original = DocumentSignable.default.prototype.onCompleteSignature;
+    const Original = DocumentSignable.default.prototype.onSignatureCompleted;
 
-    DocumentSignable.default.prototype.onCompleteSignature = function () {
+    DocumentSignable.default.prototype.onSignatureCompleted = async function () {
 
-        // Redirect employee portal after signing
-        window.location.href = "/my/employee/sign";
-
+        // Wait for Odoo to finish saving the signature
         if (Original) {
-            return Original.apply(this, arguments);
+            await Original.apply(this, arguments);
         }
+
+        // Now redirect safely
+        window.location.href = "/my/employee/sign";
     };
 });
