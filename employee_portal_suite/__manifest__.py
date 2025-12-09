@@ -113,9 +113,7 @@
         'web.assets_frontend': [
             'employee_portal_suite/static/src/js/attendance_geo.js',
         ],
-        'sign.assets_public_sign': [
-            'employee_portal_suite/static/src/js/sign_redirect.js',
-    ],
+        
     },
     'images': ['static/description/icon.png'],
 
