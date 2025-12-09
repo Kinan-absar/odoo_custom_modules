@@ -3,25 +3,23 @@
 
     <template id="clean_sign_summary"
               inherit_id="sign.sign_portal_my_request">
-
-        <!-- Hide the website header -->
-        <xpath expr="//header" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-
-        <!-- Hide the footer -->
-        <xpath expr="//footer" position="replace">
-            <footer t-if="False"/>
-        </xpath>
-
-        <!-- Hide the breadcrumbs -->
-        <xpath expr="//div[contains(@class,'o_portal_breadcrumb')]" position="replace">
-            <div t-if="False"/>
-        </xpath>
-
-        <!-- Remove top margin caused by removing header -->
-        <xpath expr="//div[@id='wrap']" position="attributes">
-            <attribute name="style">margin-top:0 !important;</attribute>
+        
+        <!-- Inject CSS to hide header, footer, breadcrumbs ONLY on this page -->
+        <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
+            <style>
+                /* Hide website header */
+                header.o_header_standard {
+                    display: none !important;
+                }
+                /* Hide website footer */
+                footer.o_footer {
+                    display: none !important;
+                }
+                /* Hide breadcrumbs */
+                .o_portal_breadcrumb {
+                    display: none !important;
+                }
+            </style>
         </xpath>
 
     </template>
