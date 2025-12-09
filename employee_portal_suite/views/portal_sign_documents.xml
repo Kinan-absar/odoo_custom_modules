@@ -148,18 +148,23 @@
 function showRefusalReason(btn) {
     const itemId = btn.dataset.item;
 
-    // Load ajax module correctly (OWL)
-    const ajax = owl.require("web.ajax");
-
-    ajax.jsonRpc(
-        "/my/employee/sign/refusal_reason/" + itemId,
-        "call",
-        {}
-    ).then(function (res) {
+    fetch(`/my/employee/sign/refusal_reason/${itemId}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({})
+    })
+    .then(r => r.json())
+    .then(res => {
         document.getElementById("refusalText").innerText =
-            res.ok ? res.reason : "No reason found.";
+            res.ok ? res.reason : "No refusal reason found.";
 
         document.getElementById("refusalModal").style.display = "block";
+    })
+    .catch(err => {
+        console.error("Fetch error:", err);
+        alert("Failed to load refusal reason.");
     });
 }
 
@@ -167,6 +172,7 @@ function hideRefusalModal() {
     document.getElementById("refusalModal").style.display = "none";
 }
 </script>
+
 
 
 </template>
