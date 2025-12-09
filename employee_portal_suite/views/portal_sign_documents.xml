@@ -95,7 +95,7 @@
                                     </a>
 
                                     <!-- DOWNLOAD FINAL PDF (FIXED TOKEN!) -->
-                                    <t t-if="'🟢' in your_status">
+                                    <t t-if="item.sign_request_id.state == 'signed'">
                                         <a class="btn btn-sm btn-outline-secondary ms-1"
                                            t-attf-href="/sign/download/{{ item.sign_request_id.id }}/{{ item.sign_request_id.access_token }}/completed"
                                            target="_blank">
