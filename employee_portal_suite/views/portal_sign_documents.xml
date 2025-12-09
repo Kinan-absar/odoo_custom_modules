@@ -30,7 +30,8 @@
                                     <td><t t-esc="item.sign_request_id.display_name"/></td>
                                     <td><t t-esc="item.state"/></td>
                                     <td>
-                                        <a t-attf-href="/sign/document/{{ item.sign_request_id.id }}/{{ item.access_token }}?portal=1&redirect=/my/employee/sign"
+                                        <a t-attf-href="/sign/document/{{ item.sign_request_id.id }}/{{ item.access_token }}?portal=1&amp;redirect=/my/employee/sign"
+
                                         class="btn btn-primary btn-sm"
                                         target="_blank">
                                             Sign
