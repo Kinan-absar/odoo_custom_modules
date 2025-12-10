@@ -332,6 +332,79 @@ class MaterialRequest(models.Model):
             "rejected": "Rejected",
         }
         return mapping.get(self.state, "Unknown")
+
+#Purchase Extention 
+    def action_create_po(self):
+        self.ensure_one()
+
+        # Create a new Purchase Order linked to this MR
+        po = self.env["purchase.order"].create({
+            "material_request_id": self.id,
+            # Vendor left empty so user selects supplier manually
+            # You can prefill more fields here if needed
+        })
+
+        # Return action to open the PO form
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Purchase Order",
+            "res_model": "purchase.order",
+            "res_id": po.id,
+            "view_mode": "form",
+            "target": "current",
+        }
+        
+    # LINK TO PURCHASE ORDERS (required)
+    purchase_order_ids = fields.One2many(
+        "purchase.order",
+        "material_request_id",
+        string="Purchase Orders",
+    )
+
+    # SHOW PO NUMBER(S) IN LIST VIEW
+    po_name = fields.Char(
+        string="Purchase Order",
+        compute="_compute_po_name",
+        store=False,
+    )
+
+    def _compute_po_name(self):
+        for rec in self:
+            if len(rec.purchase_order_ids) == 1:
+                rec.po_name = rec.purchase_order_ids.name
+            elif len(rec.purchase_order_ids) > 1:
+                rec.po_name = ", ".join(rec.purchase_order_ids.mapped("name"))
+            else:
+                rec.po_name = ""
+
+    def action_open_po(self):
+        self.ensure_one()
+
+        if not self.purchase_order_ids:
+            return
+
+        # If exactly one PO → open directly in form view
+        if len(self.purchase_order_ids) == 1:
+            po = self.purchase_order_ids[0]
+            return {
+                "type": "ir.actions.act_window",
+                "name": "Purchase Order",
+                "res_model": "purchase.order",
+                "res_id": po.id,
+                "view_mode": "form",
+                "target": "current",
+            }
+
+        # If multiple POs → open list + form views (Odoo 17+ syntax)
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Purchase Orders",
+            "res_model": "purchase.order",
+            "domain": [("id", "in", self.purchase_order_ids.ids)],
+            "view_mode": "list,form",
+            "target": "current",
+        }
+
         
 from odoo import models, api
 

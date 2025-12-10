@@ -50,6 +50,12 @@
                                 class="btn-primary"
                                 icon="fa-print"
                                 string="Print PDF"/>
+                        <button name="action_create_po"
+                                type="object"
+                                string="Create Purchase Order"
+                                class="btn btn-primary"
+                                invisible="['|', ('state', '!=', 'approved'), ('purchase_order_count', '>', 0)]"/>
+
                     </header>
                 <sheet>
 
@@ -153,6 +159,13 @@
                 <field name="delivery_date"/>
                 <field name="state"/>
                 <field name="request_date"/>
+                <button name="action_open_po"
+                        type="object"
+                        string=""
+                        icon="fa-external-link"
+                        invisible="['|', ('po_name', '=', False), ('po_name', '=', '')]"/>
+
+                <field name="po_name" string="Purchase Order"/>
             </list>
         </field>
     </record>

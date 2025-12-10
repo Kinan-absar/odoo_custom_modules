@@ -103,7 +103,7 @@
 /* Odoo primary button style for Logout */
 .ep-logout {
     margin-left: auto;
-    background: #017e84; /* Odoo primary button */
+    background: #a08a8aff; /* Odoo primary button */
     padding: 8px 18px;
     border-radius: 6px;
     color: white;
@@ -113,7 +113,7 @@
 }
 
 .ep-logout:hover {
-    background: #016a71;
+    background: #8d5353ff;
 }
 
 /* ========== MOBILE BEHAVIOR ========== */
