@@ -402,27 +402,24 @@ class MaterialRequest(models.Model):
                 #status badge
     def _compute_po_status(self):
         for rec in self:
-            pos = rec.purchase_order_ids
-            if not pos:
-                rec.po_status = ""
-                return
 
-            # If ONE PO → return normal state label
-            if len(pos) == 1:
-                state = pos.state or ""
-                rec.po_status = state.replace("_", " ").title()
-                return
+            # Always assign something (avoid crash)
+            if not rec.purchase_order_ids:
+                rec.po_status = False
+                continue
 
-            # If MULTIPLE POs → summarize counts
-            state_map = {}
-            for po in pos:
-                state_map[po.state] = state_map.get(po.state, 0) + 1
+            po = rec.purchase_order_ids[0]  # Usually only 1 PO
 
-            # Example output: "Draft (2) | Purchase (1) | Done (1)"
-            rec.po_status = " | ".join(
-                f"{s.replace('_',' ').title()} ({c})"
-                for s, c in state_map.items()
-            )
+            mapping = {
+                "draft": "RFQ",
+                "sent": "RFQ Sent",
+                "to approve": "Waiting Approval",
+                "purchase": "Purchase Order",
+                "done": "Received",
+                "cancel": "Cancelled",
+            }
+
+            rec.po_status = mapping.get(po.state, po.state)
 
     def action_open_po(self):
         self.ensure_one()
