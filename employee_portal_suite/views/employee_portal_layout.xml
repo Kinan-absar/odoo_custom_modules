@@ -7,141 +7,148 @@
 
     <style>
 
-        /* ===== BASE NAVBAR ===== */
-        .ep-navbar {
-            background: #0f1b2b;
-            padding: 14px 0;
-            border-bottom: 2px solid #1abc9c;
-            font-family: 'Inter', sans-serif;
-        }
+/* =======================================
+   PROFESSIONAL LIGHT BLUE NAVBAR (NO PURPLE)
+   ======================================= */
 
-        .ep-navbar .nav-container {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
+.ep-navbar {
+    background: #E6F4FF; /* Light blue */
+    padding: 14px 0;
+    border-bottom: 2px solid #B8D8FF;
+    font-family: 'Inter', sans-serif;
+}
 
-        /* ===== LINKS ===== */
-        .ep-link {
-            color: #d9e2ec;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 4px;
-            transition: 0.2s;
-            text-decoration: none;
-            font-size: 15px;
-            white-space: nowrap;
-        }
+.nav-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
 
-        .ep-link:hover {
-            color: white;
-            background: rgba(255, 255, 255, 0.12);
-        }
+/* ===== NAV BUTTON STYLE — CLEAN WHITE PILLS ===== */
+.ep-link,
+.ep-dropdown-toggle {
+    background: white;
+    color: #1F2937; /* dark slate text */
+    border: 1px solid #CDD5DF;
+    padding: 8px 16px;
+    border-radius: 999px; /* pill */
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s;
+    cursor: pointer;
+}
 
-        .ep-approve {
-            background: #f7c843;
-            color: #0f1b2b !important;
-            font-weight: 600;
-        }
+.ep-link:hover,
+.ep-dropdown-toggle:hover {
+    background: #DCEBFF; /* soft hover blue */
+    border-color: #AFC8FF;
+}
 
-        .ep-approve:hover {
-            background: #ffdd57;
-        }
+/* ACTIVE PAGE */
+.ep-link.active {
+    background: #DCEBFF;
+    border-color: #AFC8FF;
+}
 
-        /* ===== LOGOUT BUTTON ===== */
-        .ep-logout {
-            background: #e74c3c;
-            padding: 8px 15px;
-            border-radius: 4px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.2s;
-            margin-left: auto;
-            white-space: nowrap;
-        }
+/* ===== DROPDOWN MENU ===== */
+.ep-dropdown {
+    position: relative;
+}
 
-        .ep-logout:hover {
-            background: #ff6b6b;
-        }
+.ep-dropdown-menu {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    min-width: 200px;
+    padding: 6px 0;
+    margin-top: 6px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    z-index: 100;
+}
 
-        /* ===== MOBILE RESPONSIVE ===== */
-        .ep-nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 26px;
-            color: white;
-            cursor: pointer;
-        }
+.ep-dropdown:hover .ep-dropdown-menu {
+    display: block;
+}
 
-        @media (max-width: 768px) {
-            .ep-nav-toggle {
-                display: block;
-            }
+.ep-sub-link {
+    display: block;
+    padding: 10px 16px;
+    color: #1F2937 !important;
+    font-size: 14px;
+    text-decoration: none;
+}
 
-            .ep-nav-links {
-                display: none;
-                flex-direction: column;
-                background: #0e1829;
-                width: 100%;
-                padding: 10px 0;
-            }
+.ep-sub-link:hover {
+    background: #DCEBFF;
+}
 
-            body.nav-open .ep-nav-links {
-                display: flex;
-            }
+/* ===== LOGOUT BUTTON (PROFESSIONAL BLUE) ===== */
+.ep-logout {
+    margin-left: auto;
+    background: #1D4ED8; /* BLUE */
+    color: white;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
 
-            .ep-link, .ep-sub-link {
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-            }
+.ep-logout:hover {
+    background: #1E40AF;
+}
 
-            .ep-dropdown-menu {
-                width: 100% !important;
-                position: relative;
-            }
+/* ===== MOBILE RESPONSIVE ===== */
+.ep-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #1F2937;
+    cursor: pointer;
+}
 
-            .ep-logout {
-                width: 100%;
-                text-align: center;
-                margin-left: 0;
-            }
-        }
+@media (max-width: 768px) {
+    .ep-nav-toggle {
+        display: block;
+    }
 
-        /* ===== DROPDOWN ===== */
-        .ep-dropdown {
-            position: relative;
-        }
+    .ep-nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: #E6F4FF;
+        padding: 10px 0;
+        border-top: 1px solid #B8D8FF;
+    }
 
-        .ep-dropdown-toggle {
-            background: none;
-            border: none;
-            color: gold;
-            cursor: pointer;
-            font-weight: bold;
-            padding: 8px 12px;
-        }
+    body.nav-open .ep-nav-links {
+        display: flex;
+    }
 
-        .ep-dropdown-menu {
-            display: none;
-            position: absolute;
-            background: #1c2a3b;
-            padding: 5px 0;
-            min-width: 180px;
-            z-index: 100;
-        }
+    .ep-link,
+    .ep-dropdown-toggle,
+    .ep-sub-link {
+        width: 100%;
+        text-align: center;
+    }
 
-        .ep-dropdown:hover .ep-dropdown-menu {
-            display: block;
-        }
+    .ep-dropdown-menu {
+        position: relative;
+        min-width: 100%;
+        box-shadow: none;
+    }
 
-        .ep-sub-link {
-            display: block;
-            padding: 8px 15px !important;
-        }
+    .ep-logout {
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+    }
+}
 
     </style>
 
