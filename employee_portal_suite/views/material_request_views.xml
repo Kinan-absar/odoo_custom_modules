@@ -62,23 +62,40 @@
                     <field name="can_create_po" invisible="1"/>
 
                     <!-- 🔥 SMART BUTTON BOX -->
-                    <div class="oe_button_box" name="button_box">
+                   <div class="oe_button_box" name="button_box">
 
                         <!-- OPEN PO BUTTON -->
                         <button name="action_open_po"
                                 type="object"
-                                string="Purchase Order"
                                 class="oe_stat_button"
                                 icon="fa-external-link"
-                                invisible="po_name == False"/>
+                                invisible="po_name == False">
 
-                        <!-- PO STATUS BADGE -->
-                        <field name="po_status"
-                            widget="badge"
-                            class="oe_stat_button"
-                            invisible="po_status == False"/>
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">PO</span>
+                                <span class="o_stat_value">
+                                    <field name="po_name"/>
+                                </span>
+                            </div>
+
+                        </button>
+
+                        <!-- PO STATUS BADGE AS NON-CLICKABLE SMART BUTTON -->
+                        <button class="oe_stat_button"
+                                invisible="po_status == False"
+                                disabled="1"
+                                style="cursor: default;">
+
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">
+                                    <field name="po_status" widget="badge"/>
+                                </span>
+                            </div>
+
+                        </button>
 
                     </div>
+
                      <!-- TITLE + STATUS -->
                     <div class="oe_title">
                         <h1>
