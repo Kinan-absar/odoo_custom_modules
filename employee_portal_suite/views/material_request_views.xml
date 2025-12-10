@@ -10,24 +10,6 @@
 
         <field name="arch" type="xml">
             <form string="Material Request">
-                            <!-- SMART BUTTONS -->
-                    <div class="oe_buttons">
-
-                        <!-- Open PO button -->
-                        <button name="action_open_po"
-                                type="object"
-                                string="Purchase Order"
-                                class="oe_stat_button oe_button"
-                                icon="fa-external-link"
-                                invisible="po_name == False"/>
-
-                        <!-- PO Status Badge -->
-                        <field  name="po_status"
-                                widget="badge"
-                                class="oe_stat_button oe_button"
-                                invisible="po_status == False"/>
-
-                    </div>
                     <header>
                         <button name="action_submit" type="object"
                                 string="Submit"
@@ -79,7 +61,25 @@
                 <sheet>
                     <field name="can_create_po" invisible="1"/>
 
-                    <!-- TITLE + STATUS -->
+                    <!-- 🔥 SMART BUTTON BOX -->
+                    <div class="oe_button_box" name="button_box">
+
+                        <!-- OPEN PO BUTTON -->
+                        <button name="action_open_po"
+                                type="object"
+                                string="Purchase Order"
+                                class="oe_stat_button"
+                                icon="fa-external-link"
+                                invisible="po_name == False"/>
+
+                        <!-- PO STATUS BADGE -->
+                        <field name="po_status"
+                            widget="badge"
+                            class="oe_stat_button"
+                            invisible="po_status == False"/>
+
+                    </div>
+                     <!-- TITLE + STATUS -->
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>
@@ -180,6 +180,9 @@
                 <field name="delivery_date"/>
                 <field name="state"
                      widget="badge"
+                        decoration-info="state in ('draft','purchase','store','project_manager','director','ceo')"
+                        decoration-success="state == 'approved'"
+                        decoration-danger="state == 'rejected'"
                      string="Status"
                      class="fw-bold"/>
                 <!-- CLICKABLE PO ICON - visible ONLY if po_name has something -->
@@ -193,6 +196,10 @@
                 <field name="po_name" string="Purchase Order"/>
                 <field name="po_status"
                    widget="badge"
+                    decoration-info="po_status in ('draft', 'sent')"
+                    decoration-warning="po_status == 'to approve'"
+                    decoration-success="po_status in ('purchase', 'done')"
+                    decoration-danger="po_status == 'cancel'"
                    string="PO Status"
                    invisible="po_status == False"/>
             </list>
