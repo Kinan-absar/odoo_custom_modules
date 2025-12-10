@@ -333,7 +333,8 @@ class MaterialRequest(models.Model):
         }
         return mapping.get(self.state, "Unknown")
 
-#Purchase Extention 
+   
+    #Purchase Extension 
     def action_create_po(self):
         self.ensure_one()
 
@@ -341,7 +342,6 @@ class MaterialRequest(models.Model):
         po = self.env["purchase.order"].create({
             "material_request_id": self.id,
             # Vendor left empty so user selects supplier manually
-            # You can prefill more fields here if needed
         })
 
         # Return action to open the PO form
@@ -353,7 +353,7 @@ class MaterialRequest(models.Model):
             "view_mode": "form",
             "target": "current",
         }
-        
+
     # LINK TO PURCHASE ORDERS (required)
     purchase_order_ids = fields.One2many(
         "purchase.order",
@@ -367,6 +367,21 @@ class MaterialRequest(models.Model):
         compute="_compute_po_name",
         store=False,
     )
+
+    # ❗❗ INSERTED HERE — BUTTON VISIBILITY BOOLEAN ❗❗
+    can_create_po = fields.Boolean(
+        compute="_compute_can_create_po",
+        store=False,
+    )
+
+    def _compute_can_create_po(self):
+        for rec in self:
+            rec.can_create_po = (
+                rec.state == "approved"
+                and not rec.purchase_order_ids
+            )
+
+    # END OF INSERTION
 
     def _compute_po_name(self):
         for rec in self:
@@ -395,7 +410,7 @@ class MaterialRequest(models.Model):
                 "target": "current",
             }
 
-        # If multiple POs → open list + form views (Odoo 17+ syntax)
+        # If multiple POs → open list + form views
         return {
             "type": "ir.actions.act_window",
             "name": "Purchase Orders",

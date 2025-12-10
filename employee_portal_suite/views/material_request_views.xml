@@ -50,6 +50,12 @@
                                 class="btn-primary"
                                 icon="fa-print"
                                 string="Print PDF"/>
+                        <button name="action_create_po"
+                                type="object"
+                                string="Create Purchase Order"
+                                class="btn btn-primary"
+                                invisible="['|', ('can_create_po', '=', False), ('state', '!=', 'approved')]"/>
+
                     </header>
                 <sheet>
 
