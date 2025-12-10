@@ -53,8 +53,8 @@
                         <button name="action_create_po"
                                 type="object"
                                 string="Create Purchase Order"
-                                class="btn btn-primary"/>
-                                
+                                class="btn btn-primary"
+                                invisible="['state', '!=', 'approved']"/>
 
                     </header>
                 <sheet>
