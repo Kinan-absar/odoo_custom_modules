@@ -86,13 +86,9 @@
                                 <!-- ACTIONS -->
                                 <td class="text-end">
 
-                                    <!-- REJECTED -->
+                                  <!-- REJECTED -->
                                     <t t-if="'🔴' in your_status">
-                                        <a class="btn btn-sm btn-primary"
-                                        t-attf-href="/my/signature/{{ item.id }}?access_token={{ doc['access_token'] }}"
-                                        target="_blank">
-                                            View Details
-                                        </a>
+                                        <span class="text-danger fw-bold">Rejected</span>
                                     </t>
 
                                     <!-- PENDING -->
