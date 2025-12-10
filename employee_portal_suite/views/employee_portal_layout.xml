@@ -7,78 +7,46 @@
 
     <style>
 
-/* =======================================
-   PROFESSIONAL LIGHT BLUE NAVBAR (NO PURPLE)
-   ======================================= */
-
-.ep-navbar {
-    background: #E6F4FF; /* Light blue */
-    padding: 14px 0;
-    border-bottom: 2px solid #B8D8FF;
-    font-family: 'Inter', sans-serif;
-}
-
-.nav-container {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-/* ===== NAV BUTTON STYLE — CLEAN WHITE PILLS ===== */
-.ep-link,
-.ep-dropdown-toggle {
-    background: white;
-    color: #1F2937; /* dark slate text */
-    border: 1px solid #CDD5DF;
-    padding: 8px 16px;
-    border-radius: 999px; /* pill */
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: 0.2s;
-    cursor: pointer;
-}
-
-.ep-link:hover,
-.ep-dropdown-toggle:hover {
-    background: #DCEBFF; /* soft hover blue */
-    border-color: #AFC8FF;
-}
-
-/* ACTIVE PAGE */
-.ep-link.active {
-    background: #DCEBFF;
-    border-color: #AFC8FF;
-}
-
-/* ===== DROPDOWN MENU ===== */
+/* UNIVERSAL DROPDOWN PANEL */
 .ep-dropdown {
     position: relative;
 }
 
+.ep-dropdown-toggle {
+    background: white;
+    color: #1F2937;
+    border: 1px solid #CDD5DF;
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.ep-dropdown-toggle:hover {
+    background: #DCEBFF;
+    border-color: #AFC8FF;
+}
+
+/* DROPDOWN MENU */
 .ep-dropdown-menu {
     display: none;
     position: absolute;
+    top: 48px; /* stays under button */
     background: white;
     border: 1px solid #E5E7EB;
     border-radius: 8px;
-    min-width: 200px;
-    padding: 6px 0;
-    margin-top: 6px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    z-index: 100;
-}
-
-.ep-dropdown:hover .ep-dropdown-menu {
-    display: block;
+    min-width: 230px;
+    padding: 8px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    z-index: 200;
 }
 
 .ep-sub-link {
+    padding: 10px 18px;
     display: block;
-    padding: 10px 16px;
-    color: #1F2937 !important;
-    font-size: 14px;
+    color: #1F2937;
     text-decoration: none;
 }
 
@@ -86,67 +54,28 @@
     background: #DCEBFF;
 }
 
-/* ===== LOGOUT BUTTON (PROFESSIONAL BLUE) ===== */
-.ep-logout {
-    margin-left: auto;
-    background: #1D4ED8; /* BLUE */
-    color: white;
-    padding: 8px 18px;
-    border-radius: 999px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-.ep-logout:hover {
-    background: #1E40AF;
-}
-
-/* ===== MOBILE RESPONSIVE ===== */
-.ep-nav-toggle {
-    display: none;
-    background: none;
+/* Divider inside dropdown */
+.ep-divider {
     border: none;
-    font-size: 28px;
-    color: #1F2937;
-    cursor: pointer;
+    border-top: 1px solid #E5E7EB;
+    margin: 6px 0;
 }
 
+/* MOBILE */
 @media (max-width: 768px) {
-    .ep-nav-toggle {
-        display: block;
-    }
 
-    .ep-nav-links {
-        display: none;
-        flex-direction: column;
+    .ep-dropdown-menu {
+        position: relative;
+        top: 0;
+        box-shadow: none;
+        border: none;
         width: 100%;
-        background: #E6F4FF;
-        padding: 10px 0;
-        border-top: 1px solid #B8D8FF;
     }
 
-    body.nav-open .ep-nav-links {
-        display: flex;
-    }
-
-    .ep-link,
     .ep-dropdown-toggle,
     .ep-sub-link {
         width: 100%;
         text-align: center;
-    }
-
-    .ep-dropdown-menu {
-        position: relative;
-        min-width: 100%;
-        box-shadow: none;
-    }
-
-    .ep-logout {
-        width: 100%;
-        text-align: center;
-        margin-left: 0;
     }
 }
 
@@ -166,11 +95,20 @@
 
                 <a href="/my" class="ep-link">Dashboard</a>
 
-                <a href="/my/employee/requests" class="ep-link">Employee Requests</a>
-                <a href="/my/employee/requests/new" class="ep-link">New Employee Request</a>
+                <!-- REQUESTS DROPDOWN -->
+                <div class="ep-dropdown">
+                    <button class="ep-dropdown-toggle" onclick="toggleDropdown(event, 'requests-menu')">Requests ▾</button>
 
-                <a href="/my/employee/material" class="ep-link">Material Requests</a>
-                <a href="/my/employee/material/new" class="ep-link">New Material Request</a>
+                    <div id="requests-menu" class="ep-dropdown-menu">
+                        <a href="/my/employee/requests" class="ep-sub-link">Employee Requests</a>
+                        <a href="/my/employee/requests/new" class="ep-sub-link">New Employee Request</a>
+
+                        <hr class="ep-divider"/>
+
+                        <a href="/my/employee/material" class="ep-sub-link">Material Requests</a>
+                        <a href="/my/employee/material/new" class="ep-sub-link">New Material Request</a>
+                    </div>
+                </div>
 
                 <a href="/my/employee/attendance" class="ep-link">Attendance</a>
 
@@ -186,9 +124,9 @@
                     or request.env.user.has_group('employee_portal_suite.group_mr_projects_director')
                 ">
                     <div class="ep-dropdown">
-                        <button class="ep-dropdown-toggle">Approvals ▾</button>
+                            <button class="ep-dropdown-toggle" onclick="toggleDropdown(event, 'approvals-menu')">Approvals ▾</button>
 
-                        <div class="ep-dropdown-menu">
+                            <div id="approvals-menu" class="ep-dropdown-menu">
 
                             <!-- Employee Approvals -->
                             <t t-if="
@@ -197,7 +135,7 @@
                                 or request.env.user.has_group('employee_portal_suite.group_employee_portal_finance')
                                 or request.env.user.has_group('employee_portal_suite.group_employee_portal_ceo')
                             ">
-                                <a href="/my/employee/approvals" class="ep-sub-link ep-link">Employee Approvals</a>
+                                <a href="/my/employee/approvals" class="ep-sub-link">Employee Approvals</a>
                             </t>
 
                             <!-- Material Approvals -->
@@ -208,7 +146,7 @@
                                 or request.env.user.has_group('employee_portal_suite.group_mr_projects_director')
                                 or request.env.user.has_group('employee_portal_suite.group_employee_portal_ceo')
                             ">
-                                <a href="/my/employee/material/approvals" class="ep-sub-link ep-link">Material Approvals</a>
+                                <a href="/my/employee/material/approvals" class="ep-sub-link">Material Approvals</a>
                             </t>
 
                         </div>
@@ -232,6 +170,26 @@
 
 
 </t>
+<script>
+function toggleDropdown(event, id) {
+    event.stopPropagation();
+
+    // Close all dropdowns first
+    document.querySelectorAll('.ep-dropdown-menu').forEach(menu => {
+        if (menu.id !== id) menu.style.display = 'none';
+    });
+
+    let menu = document.getElementById(id);
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+}
+
+document.addEventListener('click', function() {
+    document.querySelectorAll('.ep-dropdown-menu').forEach(menu => {
+        menu.style.display = 'none';
+    });
+});
+</script>
+
 </template>
 
 </odoo>
