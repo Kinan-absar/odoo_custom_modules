@@ -78,11 +78,11 @@ class EmployeePortalSignDocs(CustomerPortal):
                 if it.state not in ("completed", "canceled")
             ), None)
 
-            FILTER LOGIC
+            # FILTER LOGIC
             if filter == "pending":
                 # user ONLY sees docs when it's their turn
-               if not first_pending or first_pending.id != item.id:
-                  continue
+                if not first_pending or first_pending.id != item.id:
+                    continue
 
             if filter == "signed" and item.state != "completed":
                 continue
