@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <template id="clean_sign_summary"
-              inherit_id="sign.sign_portal_my_request">
+    <template id="clean_sign_summary" inherit_id="sign.sign_portal_my_request">
 
-        <!-- Inject CSS inside the portal layout block -->
+        <!-- Inject CSS safely into the main layout call -->
         <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
             <style>
                 header.o_header_standard {
@@ -13,9 +12,9 @@
                 footer.o_footer {
                     display: none !important;
                 }
-                .o_portal_submenu.breadcrumb {
-                    display: none !important;
-                }
+                .o_portal_submenu,
+                .o_portal_breadcrumb,
+                nav.breadcrumb,
                 .o_portal_pager {
                     display: none !important;
                 }
@@ -25,10 +24,9 @@
             </style>
         </xpath>
 
-        <!-- Insert BACK BUTTON before the document title -->
-        <xpath expr="//h3[@class='mb-3']" position="before">
-            <a href="/my/employee"
-               class="btn btn-secondary ep-back-btn">
+        <!-- Insert BACK button before the main title -->
+        <xpath expr="//h3[1]" position="before">
+            <a href="/my/employee" class="btn btn-secondary ep-back-btn">
                 ← Back to Employee Portal
             </a>
         </xpath>
