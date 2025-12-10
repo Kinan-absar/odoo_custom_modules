@@ -61,12 +61,10 @@
                                 class="oe_stat_button"
                                 icon="fa-external-link"
                                 invisible="po_name == False"/>
-                        <span t-if="po_status"
-                            class="badge bg-info text-dark"
-                            style="margin-left: 8px; font-size: 13px;">
-                            <field name="po_status"/>
-                        </span>
-
+                        <field  name="po_status"
+                                widget="badge"
+                                class="oe_stat_button"
+                                invisible="po_status == False"/>
 
                     </header>
                 <sheet>
