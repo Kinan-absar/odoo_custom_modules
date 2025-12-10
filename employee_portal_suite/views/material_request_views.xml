@@ -193,6 +193,8 @@
         <field name="name">Material Requests</field>
         <field name="res_model">material.request</field>
         <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_material_request_form"/>
+
     </record>
 
 </odoo>
