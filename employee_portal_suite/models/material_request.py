@@ -370,6 +370,12 @@ class MaterialRequest(models.Model):
         compute="_compute_po_name",
         store=False,
     )
+    po_status = fields.Char(
+        string="PO Status",
+        compute="_compute_po_status",
+        store=False,
+    )
+
     # ❗❗ INSERTED HERE — BUTTON VISIBILITY BOOLEAN ❗❗
     can_create_po = fields.Boolean(
         compute="_compute_can_create_po",
@@ -393,6 +399,30 @@ class MaterialRequest(models.Model):
                 rec.po_name = ", ".join(rec.purchase_order_ids.mapped("name"))
             else:
                 rec.po_name = ""
+                #status badge
+    def _compute_po_status(self):
+        for rec in self:
+            pos = rec.purchase_order_ids
+            if not pos:
+                rec.po_status = ""
+                return
+
+            # If ONE PO → return normal state label
+            if len(pos) == 1:
+                state = pos.state or ""
+                rec.po_status = state.replace("_", " ").title()
+                return
+
+            # If MULTIPLE POs → summarize counts
+            state_map = {}
+            for po in pos:
+                state_map[po.state] = state_map.get(po.state, 0) + 1
+
+            # Example output: "Draft (2) | Purchase (1) | Done (1)"
+            rec.po_status = " | ".join(
+                f"{s.replace('_',' ').title()} ({c})"
+                for s, c in state_map.items()
+            )
 
     def action_open_po(self):
         self.ensure_one()

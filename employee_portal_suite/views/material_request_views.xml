@@ -55,6 +55,18 @@
                                 string="Create Purchase Order"
                                 class="btn btn-primary"
                                 invisible="not can_create_po"/>
+                        <button name="action_open_po"
+                                type="object"
+                                string="Purchase Order"
+                                class="oe_stat_button"
+                                icon="fa-external-link"
+                                invisible="po_name == False"/>
+                        <span t-if="po_status"
+                            class="badge bg-info text-dark"
+                            style="margin-left: 8px; font-size: 13px;">
+                            <field name="po_status"/>
+                        </span>
+
 
                     </header>
                 <sheet>
@@ -167,6 +179,7 @@
                 name="action_open_po"
                 class="text-primary fw-bold"
                 invisible="po_name == False"/>
+                <field name="po_status" string="PO Status"/>
             </list>
         </field>
     </record>
