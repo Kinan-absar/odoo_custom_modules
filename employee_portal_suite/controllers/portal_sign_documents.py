@@ -79,10 +79,10 @@ class EmployeePortalSignDocs(CustomerPortal):
             ), None)
 
             # FILTER LOGIC
-            if filter == "pending":
+            #if filter == "pending":
                 # user ONLY sees docs when it's their turn
-                if not first_pending or first_pending.id != item.id:
-                    continue
+            #   if not first_pending or first_pending.id != item.id:
+            #      continue
 
             if filter == "signed" and item.state != "completed":
                 continue
@@ -97,7 +97,7 @@ class EmployeePortalSignDocs(CustomerPortal):
                 "date": req.create_date.date(),
                 "your_status": self._compute_personal_status(item),
                 "workflow_status": self._compute_workflow_status(req),
-                "access_token": item.access_token,
+                "sign_url": item._get_share_url()  # Odoo official signer URL
             })
         # Sort newest → oldest
         documents = sorted(documents, key=lambda d: d["date"], reverse=True)

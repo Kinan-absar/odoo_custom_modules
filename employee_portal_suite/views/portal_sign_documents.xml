@@ -88,7 +88,7 @@
 
                                     <!-- SIGN / VIEW -->
                                     <a class="btn btn-sm btn-primary"
-                                       t-attf-href="/sign/document/{{ item.sign_request_id.id }}/{{ token }}?portal=1"
+                                       <a t-att-href="doc['sign_url']">Sign</a>
                                        target="_blank">
                                         <t t-if="'🟡' in your_status">Sign</t>
                                         <t t-else="">View</t>
