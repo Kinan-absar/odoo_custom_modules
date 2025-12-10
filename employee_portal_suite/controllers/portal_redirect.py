@@ -10,6 +10,10 @@ class EmployeePortalRedirect(CustomerPortal):
         """Redirect employees away from customer portal."""
         user = request.env.user
 
+        # ALLOW signature summary and related routes
+        if request.httprequest.path.startswith('/my/signature'):
+            return super().account(**kw)
+
         # Employees → always redirect to employee portal
         if user.employee_id:
             return request.redirect('/my/employee')
