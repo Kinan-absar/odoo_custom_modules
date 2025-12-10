@@ -87,14 +87,14 @@
                                 <td class="text-end">
 
                                   <!-- REJECTED -->
-                                    <t t-if="'🔴' in your_status">
+                                    <t t-if="'🔴' in workflow_status">
                                         <span class="text-danger fw-bold">Rejected</span>
                                     </t>
 
                                     <!-- PENDING -->
                                     <t t-elif="'🟡' in your_status">
                                         <a class="btn btn-sm btn-primary"
-                                        t-att-href="doc['sign_url']"
+                                           t-attf-href="/sign/document/{{ item.sign_request_id.id }}/{{ doc['access_token'] }}?portal=1"
                                         target="_blank">
                                             Sign
                                         </a>
