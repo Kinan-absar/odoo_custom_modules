@@ -88,7 +88,7 @@
 
                                   <!-- REJECTED -->
                                     <t t-if="'🔴' in workflow_status">
-                                        <span class="text-danger fw-bold">Rejected</span>
+                                        <span class="badge bg-danger">Rejected</span>
                                     </t>
 
                                     <!-- PENDING -->
