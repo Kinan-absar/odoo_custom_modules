@@ -173,12 +173,14 @@
                 <field name="state"/>
                 <field name="request_date"/>
                 <!-- CLICKABLE PO ICON - visible ONLY if po_name has something -->
-                <field name="po_name"
-                string="Purchase Order"
-                type="object"
-                name="action_open_po"
-                class="text-primary fw-bold"
-                invisible="po_name == False"/>
+                <button name="action_open_po"
+                        type="object"
+                        string="Open"
+                        icon="fa-external-link"
+                        class="text-primary fw-bold"
+                        invisible="po_name == False"/>
+                        
+                <field name="po_name" string="Purchase Order"/>
                 <field name="po_status" string="PO Status"/>
             </list>
         </field>
