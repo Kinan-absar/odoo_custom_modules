@@ -54,11 +54,12 @@
                                 type="object"
                                 string="Create Purchase Order"
                                 class="btn btn-primary"
-                                invisible="state != 'approved'"/>
+                                invisible="not can_create_po"/>
 
                     </header>
                 <sheet>
-                    
+                    <field name="can_create_po" invisible="1"/>
+
                     <!-- TITLE + STATUS -->
                     <div class="oe_title">
                         <h1>
