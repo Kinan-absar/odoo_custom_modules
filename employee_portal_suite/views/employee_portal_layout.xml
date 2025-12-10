@@ -13,9 +13,9 @@
 
 /* BASE NAVBAR */
 .ep-navbar {
-    background: #E6F4FF;
+    background: #F6F7F9;  /* Odoo light grey */
     padding: 14px 0;
-    border-bottom: 2px solid #B8D8FF;
+    border-bottom: 1px solid #E5E7EB;
     font-family: 'Inter', sans-serif;
     position: relative;
     z-index: 1000;
@@ -53,12 +53,12 @@
 /* Hover effect (soft highlight) */
 .ep-link:hover,
 .ep-dropdown-toggle:hover {
-    background: #E0EDFF;
+    background: #EBECF0;  /* light Odoo grey hover */
 }
 
 /* Active state */
 .ep-link.active {
-    background: #D2E6FF;
+    background: #E1E2E5;
     font-weight: 600;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .ep-sub-link:hover {
-    background: #E0EDFF;
+    background: #EBECF0;
 }
 
 /* Divider */
@@ -103,7 +103,7 @@
 /* Odoo primary button style for Logout */
 .ep-logout {
     margin-left: auto;
-    background: #017e84;   /* Odoo primary blue */
+    background: #017e84; /* Odoo primary button */
     padding: 8px 18px;
     border-radius: 6px;
     color: white;
@@ -113,7 +113,7 @@
 }
 
 .ep-logout:hover {
-    background: #016a71;  /* darker on hover */
+    background: #016a71;
 }
 
 /* ========== MOBILE BEHAVIOR ========== */
