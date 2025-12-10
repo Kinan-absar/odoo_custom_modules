@@ -97,7 +97,7 @@ class EmployeePortalSignDocs(CustomerPortal):
                 "date": req.create_date.date(),
                 "your_status": self._compute_personal_status(item),
                 "workflow_status": self._compute_workflow_status(req),
-                "sign_url": item._get_share_url()  # Odoo official signer URL
+                "sign_url": item._get_share_url(),  # Odoo official signer URL
                 "access_token": item.access_token,   # NECESSARY for summary
             })
         # Sort newest → oldest
