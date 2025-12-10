@@ -54,7 +54,7 @@
                                 type="object"
                                 string="Create Purchase Order"
                                 class="btn btn-primary"
-                                invisible="['state', '!=', 'approved']"/>
+                                invisible="0"/>
 
                     </header>
                 <sheet>
