@@ -7,68 +7,140 @@
 
     <style>
 
-        /* ===== CORPORATE NAVBAR ===== */
+        /* ===== BASE NAVBAR ===== */
         .ep-navbar {
-            background: #0F172A; /* deep slate */
+            background: #0f1b2b;
             padding: 14px 0;
-            border-bottom: 2px solid #10B981; /* green-teal accent */
+            border-bottom: 2px solid #1abc9c;
             font-family: 'Inter', sans-serif;
         }
 
+        .ep-navbar .nav-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        /* ===== LINKS ===== */
         .ep-link {
-            color: #CBD5E1;
+            color: #d9e2ec;
             font-weight: 500;
-            padding: 8px 14px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: 4px;
             transition: 0.2s;
+            text-decoration: none;
+            font-size: 15px;
+            white-space: nowrap;
         }
 
         .ep-link:hover {
             color: white;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.12);
         }
 
-        /* Active section */
-        .ep-link.active {
-            background: #10B981;
-            color: #0F172A !important;
-        }
-
-        /* Approvals tag */
         .ep-approve {
-            background: #10B981;
-            color: #0F172A !important;
+            background: #f7c843;
+            color: #0f1b2b !important;
             font-weight: 600;
         }
 
-        /* Logout button */
+        .ep-approve:hover {
+            background: #ffdd57;
+        }
+
+        /* ===== LOGOUT BUTTON ===== */
         .ep-logout {
-            background: #EF4444;
-            padding: 8px 16px;
-            border-radius: 6px;
+            background: #e74c3c;
+            padding: 8px 15px;
+            border-radius: 4px;
             color: white;
+            text-decoration: none;
             font-weight: 600;
+            transition: 0.2s;
+            margin-left: auto;
+            white-space: nowrap;
         }
 
         .ep-logout:hover {
-            background: #F87171;
+            background: #ff6b6b;
         }
 
-        /* Dropdown */
+        /* ===== MOBILE RESPONSIVE ===== */
+        .ep-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .ep-nav-toggle {
+                display: block;
+            }
+
+            .ep-nav-links {
+                display: none;
+                flex-direction: column;
+                background: #0e1829;
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            body.nav-open .ep-nav-links {
+                display: flex;
+            }
+
+            .ep-link, .ep-sub-link {
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+            }
+
+            .ep-dropdown-menu {
+                width: 100% !important;
+                position: relative;
+            }
+
+            .ep-logout {
+                width: 100%;
+                text-align: center;
+                margin-left: 0;
+            }
+        }
+
+        /* ===== DROPDOWN ===== */
+        .ep-dropdown {
+            position: relative;
+        }
+
+        .ep-dropdown-toggle {
+            background: none;
+            border: none;
+            color: gold;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 8px 12px;
+        }
+
         .ep-dropdown-menu {
-            background: #1E293B;
-            border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-            padding: 6px 0;
+            display: none;
+            position: absolute;
+            background: #1c2a3b;
+            padding: 5px 0;
+            min-width: 180px;
+            z-index: 100;
+        }
+
+        .ep-dropdown:hover .ep-dropdown-menu {
+            display: block;
         }
 
         .ep-sub-link {
-            padding: 10px 16px;
-            color: #E2E8F0;
-        }
-
-        .ep-sub-link:hover {
-            background: rgba(255,255,255,0.06);
+            display: block;
+            padding: 8px 15px !important;
         }
 
     </style>
