@@ -339,19 +339,22 @@ class MaterialRequest(models.Model):
         self.ensure_one()
 
         # Create a new Purchase Order linked to this MR
-        po = self.env["purchase.order"].create({
-            "material_request_id": self.id,
+        #po = self.env["purchase.order"].create({
+         #   "material_request_id": self.id,
             # Vendor left empty so user selects supplier manually
-        })
+        #})
 
         # Return action to open the PO form
+         # Open a new PO form without saving (avoids vendor validation error)
         return {
             "type": "ir.actions.act_window",
             "name": "Purchase Order",
             "res_model": "purchase.order",
-            "res_id": po.id,
             "view_mode": "form",
             "target": "current",
+            "context": {
+                "default_material_request_id": self.id,
+            },
         }
 
     # LINK TO PURCHASE ORDERS (required)
@@ -367,7 +370,6 @@ class MaterialRequest(models.Model):
         compute="_compute_po_name",
         store=False,
     )
-
     # ❗❗ INSERTED HERE — BUTTON VISIBILITY BOOLEAN ❗❗
     can_create_po = fields.Boolean(
         compute="_compute_can_create_po",
