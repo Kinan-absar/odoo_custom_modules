@@ -54,7 +54,7 @@
                                 type="object"
                                 string="Create Purchase Order"
                                 class="btn btn-primary"
-                                invisible="['|', ('state', '!=', 'approved'), ('purchase_order_count', '>', 0)]"/>
+                                invisible="['|', ('state', '!=', 'approved'), ('purchase_order_ids', '!=', False)]"/>
 
                     </header>
                 <sheet>
