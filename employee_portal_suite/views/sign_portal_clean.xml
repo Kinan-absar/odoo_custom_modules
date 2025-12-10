@@ -4,8 +4,8 @@
     <template id="clean_sign_summary"
               inherit_id="sign.sign_portal_my_request">
 
-        <!-- Inject CSS to hide unwanted elements -->
-        <xpath expr="//t[@t-call]" position="inside">
+        <!-- Inject CSS inside the portal layout block -->
+        <xpath expr="//t[@t-call='portal.portal_layout']" position="inside">
             <style>
                 header.o_header_standard {
                     display: none !important;
@@ -19,16 +19,14 @@
                 .o_portal_pager {
                     display: none !important;
                 }
-
-                /* Spacing for back button */
                 .ep-back-btn {
                     margin-bottom: 20px;
                 }
             </style>
         </xpath>
 
-        <!-- Insert the BACK BUTTON right before the document title -->
-        <xpath expr="(//h3)[1]" position="before">
+        <!-- Insert BACK BUTTON before the document title -->
+        <xpath expr="//h3[@class='mb-3']" position="before">
             <a href="/my/employee"
                class="btn btn-secondary ep-back-btn">
                 ← Back to Employee Portal
