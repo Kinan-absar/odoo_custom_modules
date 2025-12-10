@@ -51,7 +51,7 @@
                             <t t-set="date" t-value="doc['date']"/>
                             <t t-set="your_status" t-value="doc['your_status']"/>
                             <t t-set="workflow_status" t-value="doc['workflow_status']"/>
-                            <t t-set="token" t-value="doc['access_token']"/>
+                            
 
                             <tr>
 
