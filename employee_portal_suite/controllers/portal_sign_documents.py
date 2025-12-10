@@ -98,6 +98,7 @@ class EmployeePortalSignDocs(CustomerPortal):
                 "your_status": self._compute_personal_status(item),
                 "workflow_status": self._compute_workflow_status(req),
                 "sign_url": item._get_share_url()  # Odoo official signer URL
+                "access_token": item.access_token,   # NECESSARY for summary
             })
         # Sort newest → oldest
         documents = sorted(documents, key=lambda d: d["date"], reverse=True)
