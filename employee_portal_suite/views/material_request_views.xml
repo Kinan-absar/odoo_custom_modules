@@ -133,29 +133,32 @@
 
                         <!-- MATERIAL LINES TAB -->
                         <page string="Materials">
+                            <field name="line_ids">
+                                <list editable="bottom" class="o_list_view o_list_no_column_border">
 
-                            <field name="line_ids" class="o_list_view o_list_no_column_border">
-                                <list editable="bottom">
-
+                                    <!-- MATERIAL NAME -->
                                     <field name="item_name"
                                         string="Material"
+                                        class="fw-bold"
                                         required="1"
-                                        class="fw-bold"/>
+                                        style="width:60%"/>
 
+                                    <!-- QTY -->
                                     <field name="qty_required"
                                         string="Qty"
                                         class="text-center"
-                                        required="1"/>
+                                        required="1"
+                                        style="width:15%; text-align:center"/>
 
+                                    <!-- UOM -->
                                     <field name="uom_id"
                                         string="UoM"
-                                        options="{'no_create': True}"/>
+                                        options="{'no_create': True}"
+                                        style="width:15%"/>
 
                                 </list>
                             </field>
-
                         </page>
-
 
                         <!-- APPROVAL TIMELINE TAB -->
                         <page string="Approval Timeline">
