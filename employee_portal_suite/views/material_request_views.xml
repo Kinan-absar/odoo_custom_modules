@@ -133,16 +133,29 @@
 
                         <!-- MATERIAL LINES TAB -->
                         <page string="Materials">
-                            <group>
-                                <field name="line_ids">
-                                    <list editable="bottom">
-                                        <field name="item_name"/>
-                                        <field name="qty_required"/>
-                                        <field name="uom_id"/>
-                                    </list>
-                                </field>
-                            </group>
+
+                            <field name="line_ids" class="o_list_view o_list_no_column_border">
+                                <list editable="bottom">
+
+                                    <field name="item_name"
+                                        string="Material"
+                                        required="1"
+                                        class="fw-bold"/>
+
+                                    <field name="qty_required"
+                                        string="Qty"
+                                        class="text-center"
+                                        required="1"/>
+
+                                    <field name="uom_id"
+                                        string="UoM"
+                                        options="{'no_create': True}"/>
+
+                                </list>
+                            </field>
+
                         </page>
+
 
                         <!-- APPROVAL TIMELINE TAB -->
                         <page string="Approval Timeline">
