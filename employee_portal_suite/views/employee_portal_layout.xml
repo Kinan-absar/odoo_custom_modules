@@ -259,6 +259,40 @@
                 </t>
 
             </div>
+            <div class="ep-user-info d-flex align-items-center gap-3">
+
+                <!-- Avatar -->
+                <img class="o_portal_contact_img rounded"
+                    width="48"
+                    t-att-src="image_data_uri(request.env.user.partner_id.avatar_1024)"
+                    alt="User"/>
+
+                <!-- Name + Company + Contact -->
+                <div class="d-flex flex-column">
+
+                    <!-- Name -->
+                    <h5 class="mb-0" t-out="request.env.user.partner_id.name"/>
+
+                    <!-- Company -->
+                    <p class="mb-0 text-muted small"
+                    t-out="request.env.user.partner_id.company_name"/>
+
+                    <!-- Email -->
+                    <p class="mb-0 text-muted small d-flex align-items-center">
+                        <i class="fa fa-envelope me-1"></i>
+                        <span t-out="request.env.user.partner_id.email"/>
+                    </p>
+
+                    <!-- Phone -->
+                    <p class="mb-0 text-muted small d-flex align-items-center"
+                    t-if="request.env.user.partner_id.phone">
+                        <i class="fa fa-phone me-1"></i>
+                        <span t-out="request.env.user.partner_id.phone"/>
+                    </p>
+
+                </div>
+
+            </div>
 
             <!-- LOGOUT BUTTON -->
             <a class="ep-logout" href="/web/session/logout">Logout</a>
