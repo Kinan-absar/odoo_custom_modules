@@ -116,7 +116,14 @@
                         <page string="Request Details">
                             <group>
                                 <group>
-                                    <field name="employee_id"/>
+                                    <!-- Readonly for normal portal employees -->
+                                    <field name="employee_id"
+                                        readonly="1"
+                                        groups="employee_portal_suite.group_employee_portal_employee"/>
+
+                                    <!-- Editable ONLY for Portal Admins -->
+                                    <field name="employee_id"
+                                        groups="employee_portal_suite.group_employee_portal_admin"/>
                                     <field name="request_date"/>
                                     <field name="worksite"/>
                                     <field name="delivery_date"/>
