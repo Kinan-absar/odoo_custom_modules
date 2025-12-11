@@ -104,6 +104,7 @@
         'views/portal_manager_request_detail.xml',
         'views/portal_sign_documents.xml',
         'views/purchase_order_views.xml',
+        'views/sign_portal_clean.xml',
 
     ],
 
