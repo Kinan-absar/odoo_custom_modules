@@ -1,6 +1,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-
+from datetime import timedelta
+from odoo.exceptions import ValidationError
 
 class MaterialRequest(models.Model):
     _name = 'material.request'
@@ -103,6 +104,21 @@ class MaterialRequest(models.Model):
     def _compute_manager(self):
         for rec in self:
             rec.manager_id = rec.employee_id.parent_id
+    # ---------------------------------------------------------
+    # DATE VALIDATION (Delivery Date must be 3+ days after Request Date)
+    # ---------------------------------------------------------
+    @api.onchange('request_date', 'delivery_date')
+    def _onchange_delivery_date(self):
+        if self.request_date and self.delivery_date:
+            min_allowed = self.request_date + timedelta(days=3)
+            if self.delivery_date < min_allowed:
+                warning = {
+                    'title': "Invalid Delivery Date",
+                    'message': "Delivery Date must be at least 3 days after the Request Date."
+                }
+                # Reset delivery date so portal doesn't crash
+                self.delivery_date = False
+                return {'warning': warning}
 
     # ---------------------------------------------------------
     # CREATE SEQUENCE
@@ -333,19 +349,11 @@ class MaterialRequest(models.Model):
         }
         return mapping.get(self.state, "Unknown")
 
-   
+
     #Purchase Extension 
     def action_create_po(self):
         self.ensure_one()
 
-        # Create a new Purchase Order linked to this MR
-        #po = self.env["purchase.order"].create({
-         #   "material_request_id": self.id,
-            # Vendor left empty so user selects supplier manually
-        #})
-
-        # Return action to open the PO form
-         # Open a new PO form without saving (avoids vendor validation error)
         return {
             "type": "ir.actions.act_window",
             "name": "Purchase Order",

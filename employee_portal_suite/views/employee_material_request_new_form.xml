@@ -25,10 +25,18 @@
         </div>
 
         <!-- Delivery Date -->
+        <t t-set="min_delivery" t-value="(datetime.date.today() + datetime.timedelta(days=3)).isoformat()" />
+
         <div class="form-group mt-3">
             <label>Delivery Date <span class="text-danger">*</span></label>
-            <input type="date" name="delivery_date" class="form-control" required="1"/>
+
+            <input type="date"
+                name="delivery_date"
+                class="form-control"
+                required="1"
+                t-att-min="min_delivery"/>
         </div>
+
 
         <!-- MATERIAL TABLE -->
         <h4 class="mt-4">Materials</h4>
