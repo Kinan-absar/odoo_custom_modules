@@ -116,7 +116,7 @@
                         <page string="Request Details">
                             <group>
                                 <group>
-                                    <field name="employee_id" readonly="1"/>
+                                    <field name="employee_id"/>
                                     <field name="request_date"/>
                                     <field name="worksite"/>
                                     <field name="delivery_date"/>

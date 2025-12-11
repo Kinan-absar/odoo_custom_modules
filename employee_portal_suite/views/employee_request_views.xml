@@ -73,12 +73,17 @@
                                     <field name="request_date"/>
                                     <field name="description"/>
                                 </group>
-                                <group>
-                                    <div invisible="request_type != 'leave'">
-                                        <field name="leave_from"/>
-                                        <field name="leave_to"/>
-                                    </div>
+                                <group invisible="request_type != 'leave'">
+                                    <group string="Leave Period">
+                                        <label for="leave_from" string="From"/>
+                                        <div class="o_row">
+                                            <field name="leave_from" class="oe_inline"/>
+                                            <label for="leave_to" string="To" class="oe_inline" style="margin-left: 20px;"/>
+                                            <field name="leave_to" class="oe_inline"/>
+                                        </div>
+                                    </group>
                                 </group>
+
 
                             </group>
                         </page>
