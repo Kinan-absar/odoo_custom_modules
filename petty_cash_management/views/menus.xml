@@ -1,0 +1,16 @@
+<odoo>
+    <menuitem id="menu_petty_cash_root"
+              name="Petty Cash"
+              parent="account.menu_finance"
+              sequence="30"/>
+
+    <menuitem id="menu_petty_cash_reports"
+              name="Petty Cash Reports"
+              parent="menu_petty_cash_root"
+              action="action_petty_cash"/>
+
+    <menuitem id="menu_petty_cash_categories"
+              name="Categories"
+              parent="menu_petty_cash_root"
+              action="action_petty_cash_category"/>
+</odoo>

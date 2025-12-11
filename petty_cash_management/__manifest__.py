@@ -1,0 +1,20 @@
+{
+    'name': 'Petty Cash Management',
+    'version': '1.0',
+    'author': 'Your Name',
+    'website': 'https://yourcompany.com',
+    'category': 'Accounting',
+    'summary': 'Manage petty cash expenses with approval workflow and draft journal entry creation.',
+    'depends': ['base', 'account', 'mail', 'web'],
+    'data': [
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'data/petty_cash_sequence.xml',
+        'views/menus.xml',
+        'views/petty_cash_category_views.xml',
+        'views/petty_cash_line_views.xml',
+        'views/petty_cash_views.xml',
+    ],
+    'installable': True,
+    'application': True,
+}

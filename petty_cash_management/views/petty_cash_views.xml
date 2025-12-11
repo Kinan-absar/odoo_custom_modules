@@ -1,0 +1,76 @@
+<odoo>
+
+    <record id="view_petty_cash_form" model="ir.ui.view">
+        <field name="name">petty.cash.form</field>
+        <field name="model">petty.cash</field>
+        <field name="arch" type="xml">
+            <form string="Petty Cash Report">
+                <sheet>
+
+                    <header>
+                        <button name="action_submit" string="Submit" type="object"
+                                states="draft" class="oe_highlight"/>
+                        <button name="action_approve" string="Approve" type="object"
+                                states="submitted" class="oe_highlight"/>
+                        <button name="action_refuse" string="Refuse" type="object"
+                                states="submitted"/>
+
+                        <button name="action_reset_to_draft" string="Reset to Draft"
+                                type="object" states="refused,approved"/>
+
+                        <button name="action_create_journal_entry"
+                                string="Create Draft Journal Entry"
+                                type="object" states="approved"
+                                class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,refused"/>
+                    </header>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="date"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Expense Lines">
+                            <field name="line_ids" mode="tree,form"
+                                   context="{'default_petty_cash_id': active_id}"
+                                   colspan="4"/>
+                        </page>
+
+                        <page string="Totals">
+                            <group>
+                                <field name="amount_untaxed" readonly="1"/>
+                                <field name="amount_vat" readonly="1"/>
+                                <field name="amount_total" readonly="1"/>
+                                <field name="journal_entry_id" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_petty_cash_tree" model="ir.ui.view">
+        <field name="name">petty.cash.tree</field>
+        <field name="model">petty.cash</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_petty_cash" model="ir.actions.act_window">
+        <field name="name">Petty Cash Reports</field>
+        <field name="res_model">petty.cash</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
