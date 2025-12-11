@@ -9,23 +9,14 @@
                 <sheet>
 
                     <header>
-                        <button name="action_submit" string="Submit" type="object"
-                                states="draft" class="oe_highlight"/>
-                        <button name="action_approve" string="Approve" type="object"
-                                states="submitted" class="oe_highlight"/>
-                        <button name="action_refuse" string="Refuse" type="object"
-                                states="submitted"/>
-
-                        <button name="action_reset_to_draft" string="Reset to Draft"
-                                type="object" states="refused,approved"/>
-
-                        <button name="action_create_journal_entry"
-                                string="Create Draft Journal Entry"
-                                type="object" states="approved"
-                                class="oe_highlight"/>
-
-                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,refused"/>
+                        <button name="action_submit" string="Submit" type="object" class="oe_highlight"/>
+                        <button name="action_approve" string="Approve" type="object" class="oe_highlight"/>
+                        <button name="action_refuse" string="Refuse" type="object"/>
+                        <button name="action_reset_to_draft" string="Reset to Draft" type="object"/>
+                        <button name="action_create_journal_entry" string="Create Draft Journal Entry" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
                     </header>
+
 
                     <group>
                         <field name="name"/>
