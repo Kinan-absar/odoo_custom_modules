@@ -14,11 +14,12 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/petty_cash_sequence.xml',
-        'views/menus.xml',
         'views/petty_cash_category_views.xml',
         'views/petty_cash_line_views.xml',
-        'views/petty_cash_views.xml',
+        'views/petty_cash_views.xml',     # <-- action defined here (must load first)
+        'views/menus.xml',                # <-- menu referencing action (must load last)
     ],
+
     'license': 'LGPL-3',
     'installable': True,
     'application': True,
