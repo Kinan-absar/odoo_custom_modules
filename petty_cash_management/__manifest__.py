@@ -19,7 +19,7 @@
         'views/petty_cash_views.xml',     # <-- action defined here (must load first)
         'views/menus.xml',                # <-- menu referencing action (must load last)
     ],
-
+    'images': ['static/description/icon.png'],   # <-- App icon
     'license': 'LGPL-3',
     'installable': True,
     'application': True,
