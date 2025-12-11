@@ -76,3 +76,23 @@ class PettyCash(models.Model):
             rec.amount_untaxed = sum(rec.line_ids.mapped('amount_before_vat'))
             rec.amount_vat = sum(rec.line_ids.mapped('vat_amount'))
             rec.amount_total = sum(rec.line_ids.mapped('amount_total'))
+            
+    def action_submit(self):
+        for rec in self:
+            rec.state = 'submitted'
+
+    def action_approve(self):
+        for rec in self:
+            rec.state = 'approved'
+
+    def action_refuse(self):
+        for rec in self:
+            rec.state = 'refused'
+
+    def action_reset_to_draft(self):
+        for rec in self:
+            rec.state = 'draft'
+
+    def action_create_journal_entry(self):
+        # Temporary placeholder to avoid validation errors
+        return True
