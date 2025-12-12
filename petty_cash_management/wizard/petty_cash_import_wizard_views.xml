@@ -7,14 +7,12 @@
         <field name="arch" type="xml">
             <form string="Import Excel">
             <group>
-            <label string="Required Columns:" class="o_form_label"/>
+                <div class="o_form_label">Required Columns:</div>
                 <div class="text-muted">
                     date, description, invoice_number, amount_before_vat, vat_applicable,
                     category_name, supplier, po_number, mr_number, zone
                 </div>
             </group>
-
-
                 <group>
                     <field name="file" filename="filename" widget="binary"/>
                 </group>
