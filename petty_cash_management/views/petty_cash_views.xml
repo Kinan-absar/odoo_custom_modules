@@ -8,7 +8,7 @@
             <form string="Petty Cash Report">
 
                     <header>
-                    <button name="action_open_import_wizard" string="Import Excel" type="object" class="btn-primary" states="draft,submitted"/>
+                    <button name="action_open_import_wizard" string="Import Excel" type="object" class="btn-primary" invisible="state != 'draft'"/>
                         <button name="action_submit" string="Submit" type="object" class="oe_highlight"/>
                         <button name="action_approve" string="Approve" type="object" class="oe_highlight"/>
                         <button name="action_refuse" string="Refuse" type="object"/>

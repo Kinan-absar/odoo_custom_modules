@@ -256,6 +256,9 @@ class PettyCash(models.Model):
         return super().create(vals)
         #import
     def action_open_import_wizard(self):
+        if self.state != 'draft':
+            raise UserError("You can only import lines while the report is in Draft.")
+
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'petty.cash.import.wizard',
