@@ -85,3 +85,54 @@ class PettyCashImportWizard(models.TransientModel):
             'type': 'ir.actions.client',
             'tag': 'reload',
         }
+        #template
+    template_file = fields.Binary("Template File")
+    template_filename = fields.Char(default="PettyCashTemplate.xlsx")
+
+    def action_download_template(self):
+        import openpyxl
+        from openpyxl.styles import Font
+
+        workbook = openpyxl.Workbook()
+        sheet = workbook.active
+        sheet.title = "Petty Cash Template"
+
+        headers = [
+            'date',
+            'description',
+            'invoice_number',
+            'amount_before_vat',
+            'vat_applicable',
+            'category_name',
+            'supplier',
+            'po_number',
+            'mr_number',
+            'zone',
+        ]
+        sheet.append(headers)
+
+        # Make header bold
+        for cell in sheet[1]:
+            cell.font = Font(bold=True)
+
+        # Optional example row
+        sheet.append([
+            '2025-01-01', 'Fuel purchase', 'INV123', 100.0, 'Yes',
+            'Transportation', 'Gas Station', 'PO445', 'MR112', 'Zone A'
+        ])
+
+        # Convert to binary
+        import io, base64
+        stream = io.BytesIO()
+        workbook.save(stream)
+        file_data = base64.b64encode(stream.getvalue())
+
+        self.template_file = file_data  # store file temporarily
+
+        # Download
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f"/web/content/?model=petty.cash.import.wizard&id={self.id}&field=template_file&filename={self.template_filename}&download=true",
+            'target': 'self',
+        }
+

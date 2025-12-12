@@ -6,8 +6,23 @@
         <field name="model">petty.cash.import.wizard</field>
         <field name="arch" type="xml">
             <form string="Import Excel">
+            <group>
+                <label string="Columns required in the Excel file:"/>
+                <p>
+                    date • description • invoice_number • amount_before_vat • vat_applicable
+                    • category_name • supplier • po_number • mr_number • zone
+                </p>
+            </group>
+
                 <group>
-                    <field name="file" filename="filename"/>
+                    <field name="file" filename="filename" widget="binary"/>
+                </group>
+
+                <group>
+                    <button name="action_download_template"
+                            type="object"
+                            string="Download Template"
+                            class="btn-secondary"/>
                 </group>
 
                 <footer>
