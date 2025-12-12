@@ -2,6 +2,7 @@ from odoo import models, fields, api
 from odoo.exceptions import UserError
 import base64
 import openpyxl
+import io
 
 class PettyCashImportWizard(models.TransientModel):
     _name = 'petty.cash.import.wizard'
@@ -15,14 +16,17 @@ class PettyCashImportWizard(models.TransientModel):
         if not self.file:
             raise UserError("Please upload an Excel file.")
 
+        # ----------------------------------------
+        # Decode and load workbook correctly
+        # ----------------------------------------
         try:
             data = base64.b64decode(self.file)
-            workbook = openpyxl.load_workbook(filename=self.filename, data_only=True)
+            workbook = openpyxl.load_workbook(filename=io.BytesIO(data), data_only=True)
             sheet = workbook.active
-        except:
-            raise UserError("Invalid file format. Please upload a valid .xlsx file.")
+        except Exception as e:
+            raise UserError("Invalid file format. Please upload a valid .xlsx file.") from e
 
-        # Expected column positions (0-based)
+        # Expected columns
         COL_DATE = 0
         COL_DESCRIPTION = 1
         COL_INVOICE = 2
@@ -36,13 +40,14 @@ class PettyCashImportWizard(models.TransientModel):
 
         line_model = self.env['petty.cash.line']
 
-        for row in sheet.iter_rows(min_row=2):  # skip header row
+        for row in sheet.iter_rows(min_row=2):  # skip header
             date = row[COL_DATE].value
             description = row[COL_DESCRIPTION].value
             invoice = row[COL_INVOICE].value
             amount = row[COL_AMOUNT].value
             vat_app = row[COL_VAT_APPLICABLE].value
             category_name = row[COL_CATEGORY].value
+
             supplier = row[COL_SUPPLIER].value if len(row) > COL_SUPPLIER else False
             po = row[COL_PO].value if len(row) > COL_PO else False
             mr = row[COL_MR].value if len(row) > COL_MR else False
@@ -55,11 +60,13 @@ class PettyCashImportWizard(models.TransientModel):
             if not category:
                 raise UserError(f"Category '{category_name}' not found in system.")
 
+            # Convert VAT to boolean
             vat_bool = False
             if vat_app:
                 vat_str = str(vat_app).strip().lower()
                 vat_bool = vat_str in ['yes', 'y', 'true', '1', '15%', 'vat']
 
+            # Create line
             line_model.create({
                 'petty_cash_id': self.petty_cash_id.id,
                 'date': date,
