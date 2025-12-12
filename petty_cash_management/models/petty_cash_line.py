@@ -84,6 +84,12 @@ class PettyCashLine(models.Model):
         readonly=True
     )
 
+    label = fields.Char(
+        string="Label",
+        compute="_compute_label",
+        store=True
+    )
+
     # ---------------- COMPUTATION ----------------
     @api.depends('amount_before_vat', 'vat_applicable', 'category_id.tax_id')
     def _compute_amounts(self):
@@ -102,3 +108,19 @@ class PettyCashLine(models.Model):
 
             # Total = amount_before_vat + real VAT
             line.amount_total = line.amount_before_vat + line.vat_amount
+
+    @api.depends('description', 'po_number', 'mr_number', 'zone')
+    def _compute_label(self):
+        for line in self:
+            parts = []
+
+            if line.description:
+                parts.append(line.description)
+            if line.po_number:
+                parts.append(f"PO {line.po_number}")
+            if line.mr_number:
+                parts.append(f"MR {line.mr_number}")
+            if line.zone:
+                parts.append(f"Zone {line.zone}")
+
+            line.label = " / ".join(parts) if parts else "/"

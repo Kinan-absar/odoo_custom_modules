@@ -171,7 +171,7 @@ class PettyCash(models.Model):
             for line in rec.line_ids:
 
                 if not line.category_id:
-                    raise UserError(f"Line '{line.description}' has no category.")
+                    raise UserError(f"Line '{line.label or line.description}' has no category.")
 
                 if not line.category_id.account_id:
                     raise UserError(f"Category '{line.category_id.name}' has no expense account.")
@@ -190,7 +190,7 @@ class PettyCash(models.Model):
                 # Add debit line for expense
                 move_vals['line_ids'].append((0, 0, {
                     'account_id': line.category_id.account_id.id,
-                    'name': line.description or '/',
+                    'name': line.label or '/',
                     'debit': line.amount_before_vat,
                     'credit': 0.0,
                     'tax_ids': tax_ids,
@@ -244,3 +244,9 @@ class PettyCash(models.Model):
             res['journal_id'] = int(journal)
 
         return res
+        
+    @api.model
+    def create(self, vals):
+        if vals.get('name', '/') == '/' or not vals.get('name'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('petty.cash') or '/'
+        return super().create(vals)
