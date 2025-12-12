@@ -11,6 +11,7 @@
                         <field name="account_id"/>
                         <field name="sequence"/>
                         <field name="tax_id"/>
+                        <field name="analytic_account_id"/>
                     </group>
                 </sheet>
             </form>
@@ -26,6 +27,7 @@
                 <field name="name"/>
                 <field name="account_id"/>
                 <field name="tax_id"/>
+                <field name="analytic_account_id"/>
             </list>
         </field>
     </record>
