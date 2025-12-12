@@ -19,6 +19,7 @@
         'views/petty_cash_views.xml',     # <-- action defined here (must load first)
         'views/res_config_settings_views.xml',
         'views/menus.xml',                # <-- menu referencing action (must load last)
+        'wizard/petty_cash_import_wizard_views.xml',
     ],
     'images': ['static/description/icon.png'],   # <-- App icon
     'license': 'LGPL-3',

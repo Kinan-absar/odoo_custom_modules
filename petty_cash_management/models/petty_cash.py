@@ -248,9 +248,20 @@ class PettyCash(models.Model):
             res['journal_id'] = int(journal)
 
         return res
-
+    #reference
     @api.model
     def create(self, vals):
         if vals.get('name', '/') == '/' or not vals.get('name'):
             vals['name'] = self.env['ir.sequence'].next_by_code('petty.cash') or '/'
         return super().create(vals)
+        #import
+    def action_open_import_wizard(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'petty.cash.import.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_petty_cash_id': self.id,
+            }
+        }
