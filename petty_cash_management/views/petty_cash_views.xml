@@ -22,6 +22,9 @@
                         <field name="name"/>
                         <field name="user_id"/>
                         <field name="date"/>
+                        <field name="petty_cash_account_id"/>
+                        <field name="input_vat_account_id"/>
+                        <field name="journal_id"/>
                     </group>
 
                     <notebook>
