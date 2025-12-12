@@ -5,7 +5,7 @@
         <field name="name">petty.cash.line.tree</field>
         <field name="model">petty.cash.line</field>
         <field name="arch" type="xml">
-            <list editable="bottom">
+            <list editable="bottom" import_enabled="1">
                 <field name="date"/>
                 <field name="description"/>
                 <field name="invoice_number"/>

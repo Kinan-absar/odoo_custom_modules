@@ -28,7 +28,7 @@
 
                     <notebook>
                         <page string="Expense Lines">
-                           <field name="line_ids" mode="list,form"/>
+                           <field name="line_ids" context="{'default_petty_cash_id': active_id}" mode="list,form"/>
                         </page>
 
                         <page string="Totals">
