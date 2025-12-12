@@ -8,6 +8,7 @@
             <list editable="bottom">
                 <field name="date"/>
                 <field name="supplier"/>
+                <field name="description"/>
                 <field name="invoice_number"/>
                 <field name="po_number"/>
                 <field name="mr_number"/>
