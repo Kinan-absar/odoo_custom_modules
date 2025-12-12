@@ -7,49 +7,18 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
 
-            <!-- Correct Odoo 17/18 insertion point -->
-            <xpath expr="//div[@id='app_settings']" position="inside">
+            <!-- Insert directly inside form because no wrapper exists -->
+            <xpath expr="//form" position="inside">
 
-                <div class="app_settings_block" string="Petty Cash Settings">
-                    <h2>Petty Cash Configuration</h2>
+                <group string="Petty Cash Settings">
 
-                    <div class="row mt16 o_settings_container">
+                    <group>
+                        <field name="petty_cash_account_id"/>
+                        <field name="input_vat_account_id"/>
+                        <field name="petty_cash_journal_id"/>
+                    </group>
 
-                        <div class="col-6">
-                            <div class="o_setting_box">
-                                <div class="o_setting_left">
-                                    <span class="o_form_label">Petty Cash Account</span>
-                                </div>
-                                <div class="o_setting_right">
-                                    <field name="petty_cash_account_id"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-6">
-                            <div class="o_setting_box">
-                                <div class="o_setting_left">
-                                    <span class="o_form_label">Input VAT Account</span>
-                                </div>
-                                <div class="o_setting_right">
-                                    <field name="input_vat_account_id"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-6">
-                            <div class="o_setting_box">
-                                <div class="o_setting_left">
-                                    <span class="o_form_label">Petty Cash Journal</span>
-                                </div>
-                                <div class="o_setting_right">
-                                    <field name="petty_cash_journal_id"/>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                </group>
 
             </xpath>
 
