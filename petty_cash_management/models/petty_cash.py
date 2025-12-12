@@ -186,7 +186,10 @@ class PettyCash(models.Model):
                             f"Category '{line.category_id.name}' has no tax configured but line VAT is marked as applicable."
                         )
                     tax_ids = [(6, 0, [line.category_id.tax_id.id])]
-                analytic = line.category_id.analytic_account_id.id if line.category_id.analytic_account_id else False
+
+                analytic = line.category_id.analytic_account_id
+                analytic_dist = {analytic.id: 100} if analytic else {}
+
                 # Add debit line for expense
                 move_vals['line_ids'].append((0, 0, {
                     'account_id': line.category_id.account_id.id,
@@ -194,7 +197,7 @@ class PettyCash(models.Model):
                     'debit': line.amount_before_vat,
                     'credit': 0.0,
                     'tax_ids': tax_ids,
-                    'analytic_account_id': analytic,
+                    'analytic_distribution': analytic_dist,
                 }))
 
                 # Total amount includes VAT if applicable
