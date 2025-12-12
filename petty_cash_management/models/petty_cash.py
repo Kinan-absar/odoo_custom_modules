@@ -112,16 +112,6 @@ class PettyCash(models.Model):
             rec.state = 'draft'
             rec.message_post(body="Petty Cash Report moved back to draft.")
 
-    def action_create_journal_entry(self):
-        """ Temporary placeholder, real logic will be added in Step 7 """
-        for rec in self:
-            if rec.state != 'approved':
-                raise UserError("Only approved reports can generate a draft journal entry.")
-
-            # Placeholder message
-            rec.message_post(body="Draft Journal Entry will be generated in the next step.")
-        return True
-
     def write(self, vals):
         for rec in self:
             if rec.state not in ['draft'] and any(field in vals for field in ['line_ids', 'name', 'date']):
@@ -165,68 +155,64 @@ class PettyCash(models.Model):
             if not rec.petty_cash_account_id:
                 raise UserError("Please configure the Petty Cash Account.")
 
-            if not rec.input_vat_account_id:
-                raise UserError("Please configure the Input VAT Account.")
-
-            # ----------------------
-            # GROUP EXPENSES BY CATEGORY
-            # ----------------------
-            category_groups = {}
-            total_vat = 0.0
-            total_amount = 0.0
-
-            for line in rec.line_ids:
-                # Group amount_before_vat by category account
-                account = line.category_id.account_id
-                category_groups.setdefault(account, 0.0)
-                category_groups[account] += line.amount_before_vat
-
-                # Collect VAT separately
-                total_vat += line.vat_amount
-                total_amount += line.amount_total
-
-            # ----------------------
-            # BUILD MOVE LINES
-            # ----------------------
-            move_lines = []
-
-            # Debit per category
-            for account, amount in category_groups.items():
-                move_lines.append((0, 0, {
-                    'name': rec.name,
-                    'account_id': account.id,
-                    'debit': amount,
-                    'credit': 0.0,
-                }))
-
-            # Debit VAT (if any)
-            if total_vat > 0:
-                move_lines.append((0, 0, {
-                    'name': rec.name + " - VAT",
-                    'account_id': rec.input_vat_account_id.id,
-                    'debit': total_vat,
-                    'credit': 0.0,
-                }))
-
-            # Credit Petty Cash Account
-            move_lines.append((0, 0, {
-                'name': rec.name,
-                'account_id': rec.petty_cash_account_id.id,
-                'credit': total_amount,
-                'debit': 0.0,
-            }))
-
-            # ----------------------
-            # CREATE DRAFT MOVE
-            # ----------------------
-            move = self.env['account.move'].create({
+            move_vals = {
                 'date': rec.date,
                 'ref': rec.name,
                 'journal_id': rec.journal_id.id,
                 'move_type': 'entry',
-                'line_ids': move_lines,
-            })
+                'line_ids': [],
+            }
 
+            total_credit = 0
+
+            # -----------------------------------------------------
+            # ONE ACCOUNTING LINE PER PETTY CASH LINE (CORRECT)
+            # -----------------------------------------------------
+            for line in rec.line_ids:
+
+                if not line.category_id:
+                    raise UserError(f"Line '{line.description}' has no category.")
+
+                if not line.category_id.account_id:
+                    raise UserError(f"Category '{line.category_id.name}' has no expense account.")
+
+                # VAT Logic:
+                # - use category tax only if line VAT is applicable
+                # - allows same category with different VAT behavior
+                tax_ids = []
+                if line.vat_applicable:
+                    if not line.category_id.tax_id:
+                        raise UserError(
+                            f"Category '{line.category_id.name}' has no tax configured but line VAT is marked as applicable."
+                        )
+                    tax_ids = [(6, 0, [line.category_id.tax_id.id])]
+
+                # Add debit line for expense
+                move_vals['line_ids'].append((0, 0, {
+                    'account_id': line.category_id.account_id.id,
+                    'name': line.description or '/',
+                    'debit': line.amount_before_vat,
+                    'credit': 0.0,
+                    'tax_ids': tax_ids,
+                }))
+
+                # Total amount includes VAT if applicable
+                total_credit += line.amount_total
+
+            # -----------------------------------------------------
+            # CREDIT LINE — Petty Cash Account
+            # -----------------------------------------------------
+            move_vals['line_ids'].append((0, 0, {
+                'account_id': rec.petty_cash_account_id.id,
+                'name': rec.name,
+                'debit': 0.0,
+                'credit': total_credit,
+            }))
+
+            # -----------------------------------------------------
+            # CREATE THE DRAFT MOVE
+            # -----------------------------------------------------
+            move = self.env['account.move'].create(move_vals)
             rec.journal_entry_id = move.id
             rec.message_post(body=f"Draft Journal Entry <b>{move.name}</b> created.")
 
@@ -236,6 +222,7 @@ class PettyCash(models.Model):
                 'res_id': move.id,
                 'view_mode': 'form',
             }
+
 
     @api.model
     def default_get(self, fields):

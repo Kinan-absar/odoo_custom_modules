@@ -10,6 +10,7 @@
                         <field name="name"/>
                         <field name="account_id"/>
                         <field name="sequence"/>
+                        <field name="tax_id"/>
                     </group>
                 </sheet>
             </form>
@@ -24,6 +25,7 @@
                 <field name="sequence"/>
                 <field name="name"/>
                 <field name="account_id"/>
+                <field name="tax_id"/>
             </list>
         </field>
     </record>

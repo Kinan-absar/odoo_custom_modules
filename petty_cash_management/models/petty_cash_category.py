@@ -22,3 +22,9 @@ class PettyCashCategory(models.Model):
         default=10,
         help="Used to order categories in dropdown lists."
     )
+
+    tax_id = fields.Many2one(
+        'account.tax',
+        string="Tax",
+        help="Tax to apply when VAT Applicable is True."
+    )

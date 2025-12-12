@@ -85,12 +85,20 @@ class PettyCashLine(models.Model):
     )
 
     # ---------------- COMPUTATION ----------------
-    @api.depends('amount_before_vat', 'vat_applicable')
+   @api.depends('amount_before_vat', 'vat_applicable', 'category_id.tax_id')
     def _compute_amounts(self):
         for line in self:
-            if line.vat_applicable:
-                line.vat_amount = line.amount_before_vat * 0.15
-            else:
-                line.vat_amount = 0.0
+            # Default VAT = 0
+            line.vat_amount = 0.0
 
+            if line.vat_applicable and line.category_id.tax_id:
+                # Use Odoo tax engine to compute VAT properly
+                taxes_data = line.category_id.tax_id.compute_all(
+                    line.amount_before_vat,
+                    currency=line.currency_id,
+                    quantity=1.0
+                )
+                line.vat_amount = taxes_data['taxes'][0]['amount']
+
+            # Total = amount_before_vat + real VAT
             line.amount_total = line.amount_before_vat + line.vat_amount
