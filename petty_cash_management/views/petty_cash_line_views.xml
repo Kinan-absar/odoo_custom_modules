@@ -6,18 +6,23 @@
         <field name="model">petty.cash.line</field>
         <field name="arch" type="xml">
             <list editable="bottom">
+                <!-- MAIN CLEAN COLUMNS -->
                 <field name="date"/>
-                <field name="supplier"/>
                 <field name="description"/>
                 <field name="invoice_number"/>
-                <field name="po_number"/>
-                <field name="mr_number"/>
-                <field name="zone"/>
-                <field name="category_id"/>
                 <field name="amount_before_vat"/>
                 <field name="vat_applicable"/>
                 <field name="vat_amount" readonly="1"/>
                 <field name="amount_total" readonly="1"/>
+                <field name="category_id"/>
+
+                <!-- COLLAPSIBLE EXTRA FIELDS -->
+                <group expand="0" optional="show">
+                    <field name="supplier"/>
+                    <field name="po_number"/>
+                    <field name="mr_number"/>
+                    <field name="zone"/>
+                </group>
             </list>
         </field>
     </record>
