@@ -123,7 +123,7 @@ class PettyCash(models.Model):
         return True
 
     def write(self, vals):
-    for rec in self:
-        if rec.state not in ['draft'] and any(field in vals for field in ['line_ids', 'name', 'date']):
-            raise UserError("You cannot modify a petty cash report unless it is in Draft state.")
-    return super(PettyCash, self).write(vals)
+        for rec in self:
+            if rec.state not in ['draft'] and any(field in vals for field in ['line_ids', 'name', 'date']):
+                raise UserError("You cannot modify a petty cash report unless it is in Draft state.")
+        return super(PettyCash, self).write(vals)
