@@ -8,7 +8,7 @@
             <list editable="bottom">
                 <field name="date"/>
                 <field name="description"/>
-                <field name="invoice_number" optional="hide"/>
+                <field name="invoice_number"/>
                 <field name="amount_before_vat"/>
                 <field name="vat_applicable"/>
                 <field name="vat_amount" readonly="1"/>
@@ -16,6 +16,7 @@
                 <field name="category_id"/>
 
                 <!-- OPTIONAL FIELDS (hidden by default) -->
+                <field name="analytic_distribution" widget="analytic_distribution" optional="hide"/>
                 <field name="supplier" optional="hide"/>
                 <field name="po_number" optional="hide"/>
                 <field name="mr_number" optional="hide"/>

@@ -194,6 +194,7 @@ class PettyCash(models.Model):
                     'debit': line.amount_before_vat,
                     'credit': 0.0,
                     'tax_ids': tax_ids,
+                    'analytic_distribution': line.analytic_distribution,
                 }))
 
                 # Total amount includes VAT if applicable
@@ -244,7 +245,7 @@ class PettyCash(models.Model):
             res['journal_id'] = int(journal)
 
         return res
-        
+
     @api.model
     def create(self, vals):
         if vals.get('name', '/') == '/' or not vals.get('name'):
