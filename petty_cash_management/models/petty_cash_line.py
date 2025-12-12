@@ -85,7 +85,7 @@ class PettyCashLine(models.Model):
     )
 
     # ---------------- COMPUTATION ----------------
-   @api.depends('amount_before_vat', 'vat_applicable', 'category_id.tax_id')
+    @api.depends('amount_before_vat', 'vat_applicable', 'category_id.tax_id')
     def _compute_amounts(self):
         for line in self:
             # Default VAT = 0
