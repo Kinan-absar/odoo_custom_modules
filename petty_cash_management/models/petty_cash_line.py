@@ -90,10 +90,6 @@ class PettyCashLine(models.Model):
         store=True
     )
 
-    analytic_distribution = fields.Json(
-        string="Analytic Distribution"
-    )
-
     # ---------------- COMPUTATION ----------------
     @api.depends('amount_before_vat', 'vat_applicable', 'category_id.tax_id')
     def _compute_amounts(self):

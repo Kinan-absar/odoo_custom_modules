@@ -28,3 +28,8 @@ class PettyCashCategory(models.Model):
         string="Tax",
         help="Tax to apply when VAT Applicable is True."
     )
+    
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        string="Analytic Account"
+    )

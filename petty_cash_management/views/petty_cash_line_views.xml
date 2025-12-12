@@ -16,7 +16,6 @@
                 <field name="category_id"/>
 
                 <!-- OPTIONAL FIELDS (hidden by default) -->
-                <field name="analytic_distribution" widget="analytic_distribution" optional="hide"/>
                 <field name="supplier" optional="hide"/>
                 <field name="po_number" optional="hide"/>
                 <field name="mr_number" optional="hide"/>
