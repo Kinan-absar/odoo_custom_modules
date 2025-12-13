@@ -7,15 +7,56 @@
         <field name="arch" type="xml">
             <form string="Petty Cash Report">
 
-                    <header>
-                    <button name="action_open_import_wizard" string="Import Excel" type="object" class="btn-primary" invisible="state != 'draft'"/>
-                        <button name="action_submit" string="Submit" type="object" class="oe_highlight"/>
-                        <button name="action_approve" string="Approve" type="object" class="oe_highlight"/>
-                        <button name="action_refuse" string="Refuse" type="object"/>
-                        <button name="action_reset_to_draft" string="Reset to Draft" type="object"/>
-                        <button name="action_create_journal_entry" string="Create Draft Journal Entry" type="object" class="oe_highlight"/>
+            <header>
+            <!-- IMPORT EXCEL (Users only, Draft only) -->
+            <button name="action_open_import_wizard"
+                    type="object"
+                    string="Import Excel"
+                    class="btn-primary"
+                    groups="petty_cash_management.group_petty_cash_user"
+                    invisible="state != 'draft'"/>
+
+            <!-- SUBMIT (Users only, Draft only) -->
+            <button name="action_submit"
+                    type="object"
+                    string="Submit"
+                    class="btn-primary"
+                    groups="petty_cash_management.group_petty_cash_user"
+                    invisible="state != 'draft'"/>
+
+            <!-- APPROVE (Accountants only, Submitted only) -->
+            <button name="action_approve"
+                    type="object"
+                    string="Approve"
+                    class="btn-success"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="state != 'submitted'"/>
+
+            <!-- REJECT (Accountants only, Submitted only) -->
+            <button name="action_refuse"
+                    type="object"
+                    string="Reject"
+                    class="btn-secondary"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="state != 'submitted'"/>
+
+            <!-- RESET TO DRAFT (Accountants only, Approved or Refused) -->
+            <button name="action_reset_to_draft"
+                    type="object"
+                    string="Reset to Draft"
+                    class="btn-secondary"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="not(state in ['approved','refused'])"/>
+
+            <!-- CREATE JOURNAL ENTRY (Accountants only, Approved only, not already created) -->
+            <button name="action_create_journal_entry"
+                    type="object"
+                    string="Create Journal Entry"
+                    class="btn-primary"
+                    groups="petty_cash_management.group_petty_cash_accountant"
+                    invisible="state != 'approved' or journal_entry_id"/>
                         <field name="state" widget="statusbar"/>
-                    </header>
+            </header>
                 <sheet>
                     <group>
                         <field name="name"/>

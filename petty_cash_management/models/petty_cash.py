@@ -90,6 +90,8 @@ class PettyCash(models.Model):
                 raise UserError("Only drafts can be submitted.")
             rec.state = 'submitted'
             rec.message_post(body="Petty Cash Report submitted for approval.")
+            if not self.env.user.has_group('petty_cash_management.group_petty_cash_user'):
+                raise UserError("You do not have permission to submit petty cash reports.")
 
     def action_approve(self):
         for rec in self:
@@ -97,6 +99,9 @@ class PettyCash(models.Model):
                 raise UserError("Only submitted reports can be approved.")
             rec.state = 'approved'
             rec.message_post(body="Petty Cash Report approved.")
+             if not self.env.user.has_group('petty_cash_management.group_petty_cash_accountant'):
+                raise UserError("Only accountants can approve petty cash reports.")
+
 
     def action_refuse(self):
         for rec in self:
@@ -104,6 +109,9 @@ class PettyCash(models.Model):
                 raise UserError("Only submitted reports can be refused.")
             rec.state = 'refused'
             rec.message_post(body="Petty Cash Report was refused.")
+            if not self.env.user.has_group('petty_cash_management.group_petty_cash_accountant'):
+                raise UserError("Only accountants can reject petty cash reports.")
+
 
     def action_reset_to_draft(self):
         for rec in self:
@@ -111,6 +119,9 @@ class PettyCash(models.Model):
                 raise UserError("Only refused or approved reports can be reset to draft.")
             rec.state = 'draft'
             rec.message_post(body="Petty Cash Report moved back to draft.")
+            if not self.env.user.has_group('petty_cash_management.group_petty_cash_accountant'):
+                raise UserError("Only accountants can reset reports to draft.")
+
 
     def write(self, vals):
         for rec in self:
