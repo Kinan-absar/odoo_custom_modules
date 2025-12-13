@@ -99,7 +99,7 @@ class PettyCash(models.Model):
                 raise UserError("Only submitted reports can be approved.")
             rec.state = 'approved'
             rec.message_post(body="Petty Cash Report approved.")
-             if not self.env.user.has_group('petty_cash_management.group_petty_cash_accountant'):
+            if not self.env.user.has_group('petty_cash_management.group_petty_cash_accountant'):
                 raise UserError("Only accountants can approve petty cash reports.")
 
 
