@@ -69,15 +69,15 @@
                                         <td><t t-esc="line.category_id.name"/></td>
 
                                         <td class="text-right">
-                                            <t t-esc="format_amount(line.amount_before_vat, o.currency_id)"/>
+                                           <t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % line.amount_before_vat)"/>
                                         </td>
 
                                         <td class="text-right">
-                                            <t t-esc="format_amount(line.vat_amount, o.currency_id)"/>
+                                            <t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % line.vat_amount)"/>
                                         </td>
 
                                         <td class="text-right">
-                                            <t t-esc="format_amount(line.amount_total, o.currency_id)"/>
+                                            <t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % line.amount_total)"/>
                                         </td>
                                     </tr>
                                 </t>
@@ -90,15 +90,15 @@
                         <table class="table table-sm">
                             <tr>
                                 <th>Untaxed:</th>
-                                <td><t t-esc="format_amount(o.amount_untaxed, o.currency_id)"/></td>
+                                <td><t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % o.amount_untaxed)"/></td>
                             </tr>
                             <tr>
                                 <th>VAT:</th>
-                                <td><t t-esc="format_amount(o.amount_vat, o.currency_id)"/></td>
+                                <td><t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % o.amount_vat)"/></td>
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td><t t-esc="format_amount(o.amount_total, o.currency_id)"/></td>
+                                <td><t t-esc="o.currency_id.symbol + ' ' + ('%.2f' % o.amount_total)"/></td>
                             </tr>
                         </table>
 
