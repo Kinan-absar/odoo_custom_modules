@@ -14,14 +14,15 @@
         'security/security.xml',
         'security/ir.model.access.csv',
         'data/petty_cash_sequence.xml',
+        # REPORTS MUST COME BEFORE VIEWS THAT USE THEM
+        'reports/petty_cash_report_action.xml',
+        'reports/petty_cash_report_templates.xml',
         'views/petty_cash_category_views.xml',
         'views/petty_cash_line_views.xml',
         'views/petty_cash_views.xml',     # <-- action defined here (must load first)
         'views/res_config_settings_views.xml',
         'views/menus.xml',                # <-- menu referencing action (must load last)
         'wizard/petty_cash_import_wizard_views.xml',
-        'reports/petty_cash_report_action.xml',
-        'reports/petty_cash_report_templates.xml',
     ],
     'images': ['static/description/icon.png'],   # <-- App icon
     'license': 'LGPL-3',
