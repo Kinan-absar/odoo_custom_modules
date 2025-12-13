@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report
+        id="petty_cash_report_action"
+        model="petty.cash"
+        string="Petty Cash Report"
+        report_type="qweb-pdf"
+        name="petty_cash_management.petty_cash_report_pdf"
+        file="petty_cash_management.petty_cash_report_pdf"
+        print_report_name="'Petty Cash - %s' % (object.name)"
+    />
+
+</odoo>

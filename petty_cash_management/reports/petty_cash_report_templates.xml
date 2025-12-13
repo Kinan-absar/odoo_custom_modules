@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="petty_cash_report_pdf">
+
+        <t t-call="web.external_layout">
+
+            <!-- TITLE -->
+            <div class="text-center mb-4">
+                <h2><strong>Petty Cash Report</strong></h2>
+                <h4 t-esc="doc.name"/>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Date:</strong>
+                    <span t-esc="doc.date"/>
+                </div>
+                <div class="col-6">
+                    <strong>Submitted By:</strong>
+                    <span t-esc="doc.user_id.name"/>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-6">
+                    <strong>Petty Cash Account:</strong>
+                    <span t-esc="doc.petty_cash_account_id.code"/> -
+                    <span t-esc="doc.petty_cash_account_id.name"/>
+                </div>
+                <div class="col-6">
+                    <strong>Journal:</strong>
+                    <span t-esc="doc.journal_id.name"/>
+                </div>
+            </div>
+
+            <!-- LINE TABLE -->
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Invoice</th>
+                        <th>PO</th>
+                        <th>MR</th>
+                        <th>Zone</th>
+                        <th>Category</th>
+                        <th class="text-right">Before VAT</th>
+                        <th class="text-right">VAT</th>
+                        <th class="text-right">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.line_ids" t-as="line">
+                        <tr>
+                            <td t-esc="line.date"/>
+                            <td t-esc="line.description"/>
+                            <td t-esc="line.invoice_number"/>
+                            <td t-esc="line.po_number"/>
+                            <td t-esc="line.mr_number"/>
+                            <td t-esc="line.zone"/>
+                            <td t-esc="line.category_id.name"/>
+                            <td class="text-right">
+                                <span t-esc="format_amount(line.amount_before_vat, doc.currency_id)"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="format_amount(line.vat_amount, doc.currency_id)"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="format_amount(line.amount_total, doc.currency_id)"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <!-- TOTALS -->
+            <div class="row mt-4">
+                <div class="col-6"></div>
+                <div class="col-6 text-right">
+                    <p><strong>Untaxed:</strong> <span t-esc="format_amount(doc.amount_untaxed, doc.currency_id)"/></p>
+                    <p><strong>VAT:</strong> <span t-esc="format_amount(doc.amount_vat, doc.currency_id)"/></p>
+                    <p><strong>Total:</strong> <span t-esc="format_amount(doc.amount_total, doc.currency_id)"/></p>
+                </div>
+            </div>
+
+            <!-- SIGNATURES -->
+            <div class="row mt-5">
+                <div class="col-6 text-center">
+                    <p><strong>Submitted By</strong></p>
+                    <div style="height: 60px;"></div>
+                    <p t-esc="doc.user_id.name"/>
+                </div>
+
+                <div class="col-6 text-center">
+                    <p><strong>Approved By</strong></p>
+                    <div style="height: 60px;"></div>
+                    <!-- If you want accountant signature, we can add field later -->
+                </div>
+            </div>
+
+        </t>
+    </template>
+
+</odoo>

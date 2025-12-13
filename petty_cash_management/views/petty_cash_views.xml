@@ -24,6 +24,12 @@
                     groups="petty_cash_management.group_petty_cash_user"
                     invisible="state != 'draft'"/>
 
+            <!-- Print -->
+            <button name="%(petty_cash_report_action)d"
+                    string="Print"
+                    type="action"
+                    class="btn-primary"/>
+
             <!-- APPROVE (Accountants only, Submitted only) -->
             <button name="action_approve"
                     type="object"
