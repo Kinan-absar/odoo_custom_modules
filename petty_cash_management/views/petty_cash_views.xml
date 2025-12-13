@@ -65,6 +65,9 @@
                         <field name="petty_cash_account_id"/>
                         <field name="input_vat_account_id"/>
                         <field name="journal_id"/>
+                        <field name="journal_entry_id" 
+                               readonly="1"
+                               groups="petty_cash_management.group_petty_cash_accountant"/>
                     </group>
 
                     <notebook>
