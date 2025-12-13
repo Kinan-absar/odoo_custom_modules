@@ -229,6 +229,19 @@ class PettyCash(models.Model):
             # -----------------------------------------------------
             move = self.env['account.move'].create(move_vals)
             rec.journal_entry_id = move.id
+            # ----------------------------------------
+            # COPY ATTACHMENTS FROM PETTY CASH TO JE
+            # ----------------------------------------
+            attachments = self.env['ir.attachment'].search([
+                ('res_model', '=', 'petty.cash'),
+                ('res_id', '=', rec.id)
+            ])
+
+            for att in attachments:
+                att.copy({
+                    'res_model': 'account.move',
+                    'res_id': move.id,
+                })
             rec.message_post(body=f"Draft Journal Entry <b>{move.name}</b> created.")
 
             return {
