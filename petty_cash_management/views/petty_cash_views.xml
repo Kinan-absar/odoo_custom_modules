@@ -71,14 +71,6 @@
                         <page string="Expense Lines">
                            <field name="line_ids" context="{'default_petty_cash_id': id}" mode="list,form"/>
                            </page>
-                        <page string="Totals">
-                            <group>
-                                <field name="amount_untaxed" readonly="1"/>
-                                <field name="amount_vat" readonly="1"/>
-                                <field name="amount_total" readonly="1"/>
-                                <field name="journal_entry_id" readonly="1"/>
-                            </group>
-                        </page>
                     </notebook>
                 </sheet>
                 <chatter/>
