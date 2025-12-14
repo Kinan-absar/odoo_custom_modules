@@ -6,14 +6,6 @@
             <t t-if="request.env.user.partner_id.supplier_rank > 0">
 
             <div class="col-md-3 mb-3">
-                <a href="/vendor/pos"
-                class="btn btn-primary">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span t-translate="yes">My Purchase Orders</span>
-                </a>
-            </div>
-
-            <div class="col-md-3 mb-3">
                 <a href="/vendor/invoices"
                 class="btn btn-secondary w-100">
                     <i class="fa fa-file-text-o"></i>
@@ -33,104 +25,6 @@
             </t>
         </xpath>
     </template>
-
-
-    <!-- ============================
-         VENDOR PO LIST
-    =============================== -->
-    <template id="vendor_po_list" name="Vendor PO List">
-        <t t-call="portal.portal_layout">
-            <div class="container mt-4 mb-4">
-
-                <h3 t-translate="yes">My Purchase Orders</h3>
-
-                <table class="table table-bordered table-striped mt-3">
-                    <thead>
-                        <tr>
-                            <th t-translate="yes">PO Number</th>
-                            <th t-translate="yes">Date</th>
-                            <th t-translate="yes">Total</th>
-                            <th t-translate="yes">Status</th>
-                            <th t-translate="yes">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="pos" t-as="po">
-                            <tr>
-                                <td><t t-esc="po.name"/></td>
-                                <td><t t-esc="po.date_order"/></td>
-                                <td><t t-esc="po.amount_total"/></td>
-                                <td><t t-esc="po.state"/></td>
-                                <td>
-                                    <a t-att-href="'/vendor/po/%s' % po.id"
-                                       class="btn btn-sm btn-primary">
-                                        <span t-translate="yes">View</span>
-                                    </a>
-                                </td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
-
-                <t t-call="portal.pager"/>
-            </div>
-        </t>
-    </template>
-
-
-    <!-- ============================
-         VENDOR PO DETAIL
-    =============================== -->
-    <template id="vendor_po_detail" name="Vendor PO Detail">
-        <t t-call="portal.portal_layout">
-            <div class="container mt-4 mb-4">
-
-                <h3>
-                    <span t-translate="yes">Purchase Order</span>:
-                    <t t-esc="po.name"/>
-                </h3>
-
-                <p>
-                    <span t-translate="yes">Date:</span>
-                    <t t-esc="po.date_order"/>
-                </p>
-
-                <p>
-                    <span t-translate="yes">Vendor:</span>
-                    <t t-esc="po.partner_id.name"/>
-                </p>
-
-                <h4 t-translate="yes">Order Lines</h4>
-
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th t-translate="yes">Product</th>
-                            <th t-translate="yes">Quantity</th>
-                            <th t-translate="yes">Unit Price</th>
-                            <th t-translate="yes">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="po.order_line" t-as="line">
-                            <tr>
-                                <td><t t-esc="line.name"/></td>
-                                <td><t t-esc="line.product_qty"/></td>
-                                <td><t t-esc="line.price_unit"/></td>
-                                <td><t t-esc="line.price_subtotal"/></td>
-                            </tr>
-                        </t>
-                    </tbody>
-                </table>
-
-                <a t-att-href="'/vendor/po/%s/pdf' % po.id"
-                   class="btn btn-primary mt-3">
-                    <span t-translate="yes">Download PDF</span>
-                </a>
-            </div>
-        </t>
-    </template>
-
 
     <!-- ============================
          VENDOR INVOICE LIST
