@@ -30,6 +30,7 @@
         'views/purchase_order_view.xml',
         'views/res_company_view.xml',
         'views/report_purchaseorder_inherit.xml',
+        
         ],
 
     'installable': True,
