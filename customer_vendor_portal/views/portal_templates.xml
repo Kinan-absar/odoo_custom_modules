@@ -2,10 +2,10 @@
            
         <!-- VENDOR buttons (Only visible to vendors) -->
     <template id="vendor_buttons" inherit_id="portal.portal_my_home">
-        <xpath expr="//div[contains(@class,'o_portal_my_docs')]" position="before">
+        <xpath expr="//div[@id='portal_vendor_category']" position="inside">
             <t t-if="request.env.user.partner_id.supplier_rank > 0">
 
-            <div class="col-md-3 mb-3">
+            <div class="col-md-6mb-3">
                 <a href="/vendor/invoices"
                 class="btn btn-secondary w-100">
                     <i class="fa fa-file-text-o"></i>
@@ -13,14 +13,13 @@
                 </a>
             </div>
 
-            <div class="col-md-3 mb-3">
+            <div class="col-md-6 mb-3">
                 <a href="/vendor/invoice/upload"
                 class="btn btn-info w-100">
                     <i class="fa fa-upload"></i>
                     <span t-translate="yes">Upload Invoice</span>
                 </a>
         </div>
-
 
             </t>
         </xpath>
