@@ -7,7 +7,9 @@
         <field name="arch" type="xml">
             <form string="Choose Report" version="17.0">
                 <group>
-                    <field name="report_id"/>
+                    <field name="report_id"
+                           domain="[('model','=','purchase.order'), ('report_type','=','qweb-pdf')]"
+                           required="1"/>
                 </group>
 
                 <footer>
