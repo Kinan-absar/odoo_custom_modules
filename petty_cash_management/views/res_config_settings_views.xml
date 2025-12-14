@@ -1,7 +1,7 @@
 <odoo>
     <record id="view_petty_cash_settings_form" model="ir.ui.view">
         <field name="name">petty.cash.settings.form</field>
-        <field name="model">petty.cash.settings</field>
+        <field name="model">res.config.settings</field>
         <field name="arch" type="xml">
             <form string="Petty Cash Settings">
                 <group>

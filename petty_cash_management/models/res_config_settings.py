@@ -1,7 +1,6 @@
 from odoo import models, fields, api
 
 class PettyCashSettings(models.TransientModel):
-    _name = "petty.cash.settings"
     _inherit = "res.config.settings"
     _description = "Petty Cash Settings"
 
