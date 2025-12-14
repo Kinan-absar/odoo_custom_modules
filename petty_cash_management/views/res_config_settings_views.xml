@@ -7,12 +7,11 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
 
-            <!-- Insert Petty Cash block AFTER the General Settings block -->
-            <xpath expr="//div[@class='app_settings_block' and @string='General Settings']"
+            <!-- Insert AFTER General Settings block -->
+            <xpath expr="//div[@class='app_settings_block' and @data-key='general_settings']"
                    position="after">
 
-                <div class="app_settings_block" string="Petty Cash Settings">
-
+                <div class="app_settings_block" data-key="petty_cash">
                     <h2>Petty Cash Settings</h2>
 
                     <div class="o_settings_container">
@@ -45,6 +44,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
             </xpath>
