@@ -19,17 +19,4 @@
               parent="petty_cash_main_app"
               action="action_petty_cash_category"/>
 
-    <record id="action_petty_cash_settings" model="ir.actions.act_window">
-        <field name="name">Petty Cash Settings</field>
-        <field name="res_model">res.config.settings</field>
-        <field name="view_mode">form</field>
-        <field name="target">inline</field>
-    </record>
-
-    <menuitem id="menu_petty_cash_settings"
-          name="Settings"
-          parent="petty_cash_main_app"
-          action="action_petty_cash_settings"
-          sequence="99"/>
-
 </odoo>
