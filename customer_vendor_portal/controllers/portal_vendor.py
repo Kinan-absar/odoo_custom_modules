@@ -192,3 +192,11 @@ class VendorPortal(CustomerPortal):
             'portal.portal_my_details',
             {}
         )
+    # ---------------------------------------------------------
+    # FIX CORE PORTAL "EDIT INFORMATION" ROUTE
+    # ---------------------------------------------------------
+    @http.route('/my/account', type='http', auth='user', website=True)
+    def portal_my_account_redirect(self, **kw):
+        # Always redirect to vendor details page
+        return request.redirect('/my/vendor/details')
+
