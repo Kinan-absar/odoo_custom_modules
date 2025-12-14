@@ -106,6 +106,19 @@ class PurchaseOrder(models.Model):
             "url": f'/odoo/sign/{template.id}/action-sign.Template?id={template.id}&name=Template%20"PO%20{self.name}"',
             "target": "self",
         }
+    def action_open_send_to_sign_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Send Report to Sign',
+            'res_model': 'send.to.sign.report.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_purchase_id': self.id
+            }
+        }
+
 
     # ---------------------------------------------------------------------
     # CRON SYNC STATUS (Director → CEO → Completed → Rejected)

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_send_to_sign_report_wizard" model="ir.ui.view">
+        <field name="name">send.to.sign.report.wizard.form</field>
+        <field name="model">send.to.sign.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Choose Report" version="17.0">
+                <group>
+                    <field name="report_id"/>
+                </group>
+
+                <footer>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="action_send" string="Send to Sign"
+                            class="btn-primary" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_send_to_sign_report_wizard" model="ir.actions.act_window">
+        <field name="name">Send PO to Sign</field>
+        <field name="res_model">send.to.sign.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
