@@ -27,6 +27,7 @@ Features:
         'portal',
         'website',
         'purchase',
+        'sale', 
         'account',
         'mail'
     ],

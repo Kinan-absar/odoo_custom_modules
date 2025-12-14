@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import http, _, fields
+from odoo import http
 from odoo.http import request
 from odoo.addons.portal.controllers.portal import CustomerPortal, pager as portal_pager
 
@@ -7,37 +7,35 @@ from odoo.addons.portal.controllers.portal import CustomerPortal, pager as porta
 class VendorPortal(CustomerPortal):
 
     # ---------------------------------------------------------
-    # VENDOR HOME
+    # VENDOR ENTRY POINT
     # ---------------------------------------------------------
-    @http.route(['/vendor'], type='http', auth='public', website=True)
+    @http.route(['/vendor'], type='http', auth='user', website=True)
     def vendor_home(self, **kw):
         user = request.env.user
 
+        # Not a vendor → normal portal home
         if not user.partner_id.supplier_rank:
-            return request.redirect('/my')  # not a vendor
+            return request.redirect('/my/home')
 
-        values = {
-            'vendor_name': user.partner_id.name,
-        }
+        # Vendor → portal home (dashboard)
         return request.redirect('/my/home')
 
     # ---------------------------------------------------------
     # PURCHASE ORDER LIST
     # ---------------------------------------------------------
-    @http.route(['/vendor/pos'], type='http', auth='public', website=True)
+    @http.route(['/vendor/pos'], type='http', auth='user', website=True)
     def vendor_po_list(self, page=1, **kw):
         user = request.env.user
         partner = user.partner_id
 
         if not partner.supplier_rank:
-            return request.redirect('/my')
+            return request.redirect('/my/home')
 
         PurchaseOrder = request.env['purchase.order']
         domain = [
             ('partner_id', '=', partner.id),
-            ('state', 'in', ['purchase', 'done'])
-]
-
+            ('state', 'in', ['purchase', 'done']),
+        ]
 
         pos_count = PurchaseOrder.search_count(domain)
         pager = portal_pager(
@@ -58,7 +56,7 @@ class VendorPortal(CustomerPortal):
     # ---------------------------------------------------------
     # PURCHASE ORDER DETAIL
     # ---------------------------------------------------------
-    @http.route(['/vendor/po/<int:po_id>'], type='http', auth='public', website=True)
+    @http.route(['/vendor/po/<int:po_id>'], type='http', auth='user', website=True)
     def vendor_po_detail(self, po_id, **kw):
         user = request.env.user
         partner = user.partner_id
@@ -68,22 +66,21 @@ class VendorPortal(CustomerPortal):
         if po.partner_id.id != partner.id or po.state not in ['purchase', 'done']:
             return request.redirect('/vendor/pos')
 
-
-        values = {
-            'po': po,
-        }
-        return request.render('customer_vendor_portal.vendor_po_detail', values)
+        return request.render(
+            'customer_vendor_portal.vendor_po_detail',
+            {'po': po}
+        )
 
     # ---------------------------------------------------------
     # VENDOR INVOICE LIST
     # ---------------------------------------------------------
-    @http.route(['/vendor/invoices'], type='http', auth='public', website=True)
+    @http.route(['/vendor/invoices'], type='http', auth='user', website=True)
     def vendor_invoice_list(self, page=1, **kwargs):
         user = request.env.user
         partner = user.partner_id
 
         if not partner.supplier_rank:
-            return request.redirect('/my')
+            return request.redirect('/my/home')
 
         Invoice = request.env['portal.vendor.invoice']
         domain = [('partner_id', '=', partner.id)]
@@ -107,25 +104,27 @@ class VendorPortal(CustomerPortal):
     # ---------------------------------------------------------
     # UPLOAD VENDOR INVOICE (FORM)
     # ---------------------------------------------------------
-    @http.route(['/vendor/invoice/upload'], type='http', auth='public', methods=['GET'], website=True)
+    @http.route(['/vendor/invoice/upload'], type='http', auth='user', methods=['GET'], website=True)
     def vendor_invoice_upload_form(self, **kwargs):
         user = request.env.user
         partner = user.partner_id
 
         if not partner.supplier_rank:
-            return request.redirect('/my')
+            return request.redirect('/my/home')
 
-        purchase_orders = request.env['purchase.order'].sudo().search([('partner_id', '=', partner.id)])
+        purchase_orders = request.env['purchase.order'].sudo().search([
+            ('partner_id', '=', partner.id)
+        ])
 
-        values = {
-            'purchase_orders': purchase_orders,
-        }
-        return request.render('customer_vendor_portal.vendor_invoice_upload_form', values)
+        return request.render(
+            'customer_vendor_portal.vendor_invoice_upload_form',
+            {'purchase_orders': purchase_orders}
+        )
 
     # ---------------------------------------------------------
     # SUBMIT INVOICE (POST)
     # ---------------------------------------------------------
-    @http.route(['/vendor/invoice/upload'], type='http', auth='public',
+    @http.route(['/vendor/invoice/upload'], type='http', auth='user',
                 methods=['POST'], website=True, csrf=True)
     def vendor_invoice_upload(self, **post):
         import base64
@@ -134,23 +133,17 @@ class VendorPortal(CustomerPortal):
         partner = user.partner_id
 
         if not partner.supplier_rank:
-            return request.redirect('/my')
+            return request.redirect('/my/home')
 
         po_id = int(post.get('po_id') or 0)
-        amount = post.get('amount_total')
-        date = post.get('invoice_date')
-        notes = post.get('notes')
 
-        # HANDLE FILE UPLOAD
         file = post.get('invoice_file')
         attachment_id = False
 
         if file:
-            file_content = file.read()
-
             attachment_id = request.env['ir.attachment'].sudo().create({
                 'name': file.filename,
-                'datas': base64.b64encode(file_content).decode(),
+                'datas': base64.b64encode(file.read()).decode(),
                 'type': 'binary',
                 'res_model': 'portal.vendor.invoice',
                 'res_id': 0,
@@ -159,13 +152,51 @@ class VendorPortal(CustomerPortal):
         request.env['portal.vendor.invoice'].sudo().create({
             'partner_id': partner.id,
             'po_id': po_id,
-            'amount_total': amount,
-            'invoice_date': date,
-            'notes': notes,
+            'amount_total': post.get('amount_total'),
+            'invoice_date': post.get('invoice_date'),
+            'notes': post.get('notes'),
             'attachment_id': attachment_id,
             'portal_user_id': user.id,
             'vendor_invoice_number': post.get('vendor_invoice_number'),
         })
 
+        # ✅ After save → vendor invoice list (safe)
         return request.redirect('/vendor/invoices?submitted=1')
+    # ---------------------------------------------------------
+    # VENDOR DETAILS (EDIT INFORMATION)
+    # ---------------------------------------------------------
+    @http.route('/my/vendor/details', type='http', auth='user', website=True)
+    def vendor_details(self, **post):
+        partner = request.env.user.partner_id
+
+        # POST → save changes
+        if request.httprequest.method == 'POST':
+            partner.sudo().write({
+                'name': post.get('name'),
+                'email': post.get('email'),
+                'phone': post.get('phone'),
+                'street': post.get('street'),
+                'street2': post.get('street2'),
+                'city': post.get('city'),
+                'zip': post.get('zip'),
+                'country_id': int(post.get('country_id')) if post.get('country_id') else False,
+                'state_id': int(post.get('state_id')) if post.get('state_id') else False,
+                'vat': post.get('vat'),
+            })
+
+            # ✅ AFTER SAVE → ALWAYS GO HOME
+            return request.redirect('/my/home')
+
+        # GET → show Odoo's standard details form
+        return request.render(
+            'portal.portal_my_details',
+            {}
+        )
+    # ---------------------------------------------------------
+    # FIX CORE PORTAL "EDIT INFORMATION" ROUTE
+    # ---------------------------------------------------------
+    @http.route('/my/account', type='http', auth='user', website=True)
+    def portal_my_account_redirect(self, **kw):
+        # Always redirect to vendor details page
+        return request.redirect('/my/vendor/details')
 
