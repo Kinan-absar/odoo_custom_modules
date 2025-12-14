@@ -166,12 +166,12 @@ class VendorPortal(CustomerPortal):
     # ---------------------------------------------------------
     # FIX SAVE REDIRECT FOR PORTAL DETAILS
     # ---------------------------------------------------------
-    @http.route(['/my'], type='http', auth='user', website=True)
+    @http.route(['/my', '/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
-        # POST = Save details
+        # POST → Save details
         if post:
             super().account(redirect=None, **post)
             return request.redirect('/my/home')
 
-        # GET = keep Odoo default behavior
+        # GET → keep Odoo behavior
         return super().account(redirect=redirect, **post)
