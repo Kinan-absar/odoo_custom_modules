@@ -19,7 +19,7 @@ class SendToSignReportWizard(models.TransientModel):
         self.ensure_one()
 
         # Generate PDF using selected report
-        pdf_content, content_type = self.report_id._render_qweb_pdf(self.purchase_id.id)
+        pdf_content, content_type = self.report_id._render_qweb_pdf([self.purchase_id.id])
 
         # Create attachment
         attachment = self.env['ir.attachment'].create({
@@ -30,5 +30,6 @@ class SendToSignReportWizard(models.TransientModel):
             'res_id': self.purchase_id.id,
         })
 
-        # Call your Send-to-Sign logic (replace with your real method)
+        # Call your Send-to-Sign logic
         return self.purchase_id._send_to_sign(attachment)
+
