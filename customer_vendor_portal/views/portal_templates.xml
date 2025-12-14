@@ -5,7 +5,7 @@
         <xpath expr="//div[@id='portal_vendor_category']" position="inside">
             <t t-if="request.env.user.partner_id.supplier_rank > 0">
 
-            <div class="col-md-6mb-3">
+            <div class="col-md-6 mb-3">
                 <a href="/vendor/invoices"
                 class="btn btn-secondary w-100">
                     <i class="fa fa-file-text-o"></i>
