@@ -118,6 +118,28 @@ class PurchaseOrder(models.Model):
                 'default_purchase_id': self.id
             }
         }
+    def _send_to_sign(self, attachment):
+        """Called by the wizard after selecting a report."""
+        self.ensure_one()
+
+        # Create Sign Template with the chosen attachment
+        template = self.env['sign.template'].create({
+            'name': f"PO {self.name}",
+            'attachment_id': attachment.id,
+        })
+
+        # Update PO fields
+        self.sign_template_id = template.id
+        self.signature_state = "director_pending"
+        self.message_post(body="PO sent for Director Signature (via report selection).")
+
+        # Return the Odoo Sign URL
+        return {
+            "type": "ir.actions.act_url",
+            "url": f'/odoo/sign/{template.id}/action-sign.Template'
+                f'?id={template.id}&name=Template%20"PO%20{self.name}"',
+            "target": "self",
+        }
 
 
     # ---------------------------------------------------------------------
