@@ -445,11 +445,11 @@
     <template id="portal_my_home_edit_info_fix"
             inherit_id="portal.portal_my_home">
 
-        <xpath expr="//a[.//t[normalize-space()='Edit information']]" position="attributes">
+        <xpath expr="//div[contains(@class,'o_portal_my_details')]//a"
+            position="attributes">
             <attribute name="t-attf-href">/my/vendor/details</attribute>
         </xpath>
 
     </template>
-
 
 </odoo>
