@@ -1,8 +1,7 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
-class PettyCashSettings(models.TransientModel):
-    _inherit = "res.config.settings"
-    _description = "Petty Cash Settings"
+class ResConfigSettings(models.TransientModel):
+    _inherit = 'res.config.settings'
 
     petty_cash_account_id = fields.Many2one(
         'account.account',
@@ -19,5 +18,6 @@ class PettyCashSettings(models.TransientModel):
     petty_cash_journal_id = fields.Many2one(
         'account.journal',
         string="Petty Cash Journal",
+        domain="[('type','=','general')]",
         config_parameter='petty_cash_management.petty_cash_journal_id'
     )

@@ -23,7 +23,7 @@
         <field name="name">Petty Cash Settings</field>
         <field name="res_model">res.config.settings</field>
         <field name="view_mode">form</field>
-        <field name="target">new</field>
+        <field name="target">inline</field>
     </record>
 
     <menuitem id="menu_petty_cash_settings"
@@ -31,19 +31,5 @@
           parent="petty_cash_main_app"
           action="action_petty_cash_settings"
           sequence="99"/>
-    
-        <!-- Create Petty Cash category inside Settings -->
-    <menuitem id="menu_settings_petty_cash_root"
-              name="Petty Cash"
-              parent="base.menu_administration"
-              sequence="30"
-              groups="base.group_system"/>
 
-    <!-- Open your petty cash settings form -->
-    <menuitem id="menu_settings_petty_cash_config"
-              name="Configuration"
-              parent="menu_settings_petty_cash_root"
-              action="action_petty_cash_settings"
-              sequence="1"
-              groups="base.group_system"/>
 </odoo>
