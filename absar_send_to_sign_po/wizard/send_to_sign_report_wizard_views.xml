@@ -8,9 +8,8 @@
             <form string="Choose Report" version="17.0">
                 <group>
                     <field name="report_id"
-                            domain="[('model_id.model','=','purchase.order'), ('report_type','=','qweb-pdf')]"
-                            required="1"/>
-
+                           domain="[('model','=','purchase.order'), ('report_type','=','qweb-pdf')]"
+                           required="1"/>
                 </group>
 
                 <footer>
