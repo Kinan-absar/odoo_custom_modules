@@ -7,13 +7,11 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
 
-           <xpath expr="//form" position="inside">
+            <!-- Insert clean Petty Cash block -->
+            <xpath expr="//form" position="inside">
 
-                <div class="app_settings_block"
-                    string="Petty Cash"
-                    app="base">
-
-                    <h2>Petty Cash</h2>
+                <div class="app_settings_block" string="Petty Cash">
+                    <h2>Petty Cash Settings</h2>
 
                     <div class="o_settings_container">
 
@@ -45,14 +43,12 @@
                         </div>
 
                     </div>
+
                 </div>
 
             </xpath>
 
-
         </field>
     </record>
-
-
 
 </odoo>
