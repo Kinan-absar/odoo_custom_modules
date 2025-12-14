@@ -4,44 +4,38 @@
     <record id="res_config_settings_view_petty_cash" model="ir.ui.view">
         <field name="name">res.config.settings.view.petty.cash</field>
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>  <!-- IMPORTANT -->
         <field name="arch" type="xml">
 
-            <!-- Insert Petty Cash section INSIDE correct container -->
-            <xpath expr="//div[@id='settings']" position="inside">
+            <!-- Insert inside Accounting settings -->
+            <xpath expr="//div[contains(@class, 'o_setting_container')]" position="inside">
 
                 <div class="app_settings_block" data-string="Petty Cash">
                     <h2>Petty Cash</h2>
 
-                    <div class="row mt16 o_settings_container">
+                    <div class="row mt16">
 
-                        <!-- Petty Cash Account -->
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_left">
                                 <label for="petty_cash_account_id"/>
-                                <span class="text-muted">Account used for petty cash credit entries.</span>
                             </div>
                             <div class="o_setting_right">
                                 <field name="petty_cash_account_id"/>
                             </div>
                         </div>
 
-                        <!-- VAT Account -->
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_left">
                                 <label for="input_vat_account_id"/>
-                                <span class="text-muted">Account used for input VAT from petty cash expenses.</span>
                             </div>
                             <div class="o_setting_right">
                                 <field name="input_vat_account_id"/>
                             </div>
                         </div>
 
-                        <!-- Journal -->
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_left">
                                 <label for="petty_cash_journal_id"/>
-                                <span class="text-muted">Journal where draft entries will be posted.</span>
                             </div>
                             <div class="o_setting_right">
                                 <field name="petty_cash_journal_id"/>
@@ -49,6 +43,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
             </xpath>
