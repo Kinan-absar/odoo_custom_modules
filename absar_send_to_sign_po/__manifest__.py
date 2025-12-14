@@ -26,6 +26,7 @@
     'category': 'Purchases',
     'depends': ['purchase', 'sign', 'mail'],
     'data': [
+        'security/ir.model.access.csv',
         'data/cron.xml',
         'wizard/send_to_sign_report_wizard_views.xml',
         'views/purchase_order_view.xml',
