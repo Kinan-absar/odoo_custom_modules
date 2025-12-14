@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="res_config_settings_view_petty_cash" model="ir.ui.view">
-        <field name="name">res.config.settings.view.petty.cash</field>
-        <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
-        <field name="arch" type="xml">
+        <record id="view_petty_cash_config_form" model="ir.ui.view">
+            <field name="name">petty.cash.config.form</field>
+            <field name="model">petty.cash.config</field>
+            <field name="groups_id" eval="[(4, ref('petty_cash_management.group_petty_cash_accountant'))]"/>
+            <field name="arch" type="xml">
+                <form string="Petty Cash Configuration">
+                    <sheet>
+                        <group>
+                            <field name="petty_cash_account_id"/>
+                            <field name="input_vat_account_id"/>
+                            <field name="petty_cash_journal_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-            <xpath expr="//form" position="inside">
-
-                <setting string="Petty Cash"
-                         help="Configure default accounts and journals for petty cash operations"
-                         module="base">
-
-                    <group>
-
-                        <field name="petty_cash_account_id"/>
-                        <field name="input_vat_account_id"/>
-                        <field name="petty_cash_journal_id"/>
-
-                    </group>
-
-                </setting>
-
-            </xpath>
-
-        </field>
-    </record>
 
 </odoo>
