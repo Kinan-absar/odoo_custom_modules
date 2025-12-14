@@ -44,7 +44,6 @@
         'views/petty_cash_category_views.xml',
         'views/petty_cash_line_views.xml',
         'views/petty_cash_views.xml',     # <-- action defined here (must load first)
-        'views/res_config_settings_views.xml',
         'views/menus.xml',                # <-- menu referencing action (must load last)
         'wizard/petty_cash_import_wizard_views.xml',
     ],
