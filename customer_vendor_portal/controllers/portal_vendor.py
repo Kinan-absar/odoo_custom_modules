@@ -162,44 +162,16 @@ class VendorPortal(CustomerPortal):
 
         # ✅ After save → vendor invoice list (safe)
         return request.redirect('/vendor/invoices?submitted=1')
-    # ---------------------------------------------------------
-    # VENDOR DETAILS (EDIT INFORMATION)
-    # ---------------------------------------------------------
-    @http.route('/my/vendor/details', type='http', auth='user', website=True)
-    def vendor_details(self, **post):
-        partner = request.env.user.partner_id
 
-        # POST → save changes
-        if request.httprequest.method == 'POST':
-            partner.sudo().write({
-                'name': post.get('name'),
-                'email': post.get('email'),
-                'phone': post.get('phone'),
-                'street': post.get('street'),
-                'street2': post.get('street2'),
-                'city': post.get('city'),
-                'zip': post.get('zip'),
-                'country_id': int(post.get('country_id')) if post.get('country_id') else False,
-                'state_id': int(post.get('state_id')) if post.get('state_id') else False,
-                'vat': post.get('vat'),
-            })
-
-            # ✅ AFTER SAVE → ALWAYS GO HOME
+    # ---------------------------------------------------------
+    # FIX SAVE REDIRECT FOR PORTAL DETAILS
+    # ---------------------------------------------------------
+    @http.route(['/my'], type='http', auth='user', website=True)
+    def account(self, redirect=None, **post):
+        # POST = Save details
+        if post:
+            super().account(redirect=None, **post)
             return request.redirect('/my/home')
 
-        # GET → show Odoo's standard details form
-            return request.render(
-                'portal.portal_my_details',
-                {
-                    'error': {},
-                }
-            )
-
-    # ---------------------------------------------------------
-    # FIX CORE PORTAL "EDIT INFORMATION" ROUTE
-    # ---------------------------------------------------------
-    @http.route('/my/account', type='http', auth='user', website=True)
-    def portal_my_account_redirect(self, **kw):
-        # Always redirect to vendor details page
-        return request.redirect('/my/vendor/details')
-
+        # GET = keep Odoo default behavior
+        return super().account(redirect=redirect, **post)
