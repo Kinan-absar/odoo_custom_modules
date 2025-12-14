@@ -175,19 +175,3 @@ class VendorPortal(CustomerPortal):
 
         # GET → keep Odoo behavior
         return super().account(redirect=redirect, **post)
-    
-class PortalLoginRedirect(http.Controller):
-
-    @http.route('/web/login', type='http', auth='public', website=True)
-    def web_login_redirect(self, **kw):
-        response = request.env['ir.http']._dispatch()
-
-        user = request.env.user
-        if user and user._is_public():
-            return response
-
-        # Portal users → portal home
-        if user.has_group('base.group_portal'):
-            return request.redirect('/my/home')
-
-        return response
