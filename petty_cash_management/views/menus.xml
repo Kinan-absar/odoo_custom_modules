@@ -24,13 +24,11 @@
         <field name="res_model">petty.cash.config</field>
         <field name="view_mode">form</field>
         <field name="target">current</field>
-        <field name="groups_id" eval="[(4, ref('petty_cash_management.group_petty_cash_accountant'))]"/>
     </record>
 
     <menuitem id="menu_petty_cash_config"
             name="Configuration"
             parent="petty_cash_main_app"
-            action="action_petty_cash_config"
-            groups="petty_cash_management.group_petty_cash_accountant"/>
+            action="action_petty_cash_config"/>
           
 </odoo>
