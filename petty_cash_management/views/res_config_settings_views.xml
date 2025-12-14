@@ -8,10 +8,8 @@
         <field name="arch" type="xml">
 
             <!-- Insert AFTER General Settings block -->
-            <xpath expr="//div[@class='app_settings_block' and @data-key='general_settings']"
-                   position="after">
-
-                <div class="app_settings_block" data-key="petty_cash">
+           <xpath expr="//h2[contains(text(), 'General Settings')]" position="after">
+                <div class="app_settings_block">
                     <h2>Petty Cash Settings</h2>
 
                     <div class="o_settings_container">
@@ -44,10 +42,9 @@
                         </div>
 
                     </div>
-
                 </div>
-
             </xpath>
+
 
         </field>
     </record>
