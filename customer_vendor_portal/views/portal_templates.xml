@@ -442,10 +442,14 @@
         </xpath>
     </template>
 
-    <template inherit_id="portal.portal_my_home">
-        <xpath expr="//a[contains(@href, '/my/account')]" position="attributes">
-            <attribute name="href">/my/vendor/details</attribute>
+    <template id="portal_my_home_edit_info_fix"
+            inherit_id="portal.portal_my_home">
+
+        <xpath expr="//a[.//t[normalize-space()='Edit information']]" position="attributes">
+            <attribute name="t-attf-href">/my/vendor/details</attribute>
         </xpath>
+
     </template>
+
 
 </odoo>
