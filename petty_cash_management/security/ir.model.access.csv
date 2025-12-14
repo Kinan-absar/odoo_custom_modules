@@ -3,4 +3,4 @@ access_petty_cash_user,access_petty_cash_user,model_petty_cash,base.group_user,1
 access_petty_cash_line_user,access_petty_cash_line_user,model_petty_cash_line,base.group_user,1,1,1,1
 access_petty_cash_category_user,access_petty_cash_category_user,model_petty_cash_category,base.group_user,1,1,1,1
 access_petty_cash_import_wizard,access_petty_cash_import_wizard,model_petty_cash_import_wizard,,1,1,1,1
-access_petty_cash_settings,access_petty_cash_settings,model_petty_cash_settings,base.group_system,1,1,1,1
+access_petty_cash_config_accountant,petty.cash.config access,model_petty_cash_config,petty_cash_management.group_petty_cash_accountant,1,1,1,0

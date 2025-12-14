@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="view_petty_cash_settings_form" model="ir.ui.view">
-        <field name="name">petty.cash.settings.form</field>
-        <field name="model">petty.cash.settings</field>
+    <record id="view_petty_cash_config_form" model="ir.ui.view">
+        <field name="name">petty.cash.config.form</field>
+        <field name="model">petty.cash.config</field>
         <field name="arch" type="xml">
-            <form string="Petty Cash Settings">
-                <group>
-                    <field name="petty_cash_account_id"/>
-                    <field name="input_vat_account_id"/>
-                    <field name="petty_cash_journal_id"/>
-                </group>
-
-                <footer>
-                    <button string="Save"
-                            type="object"
-                            name="action_save"
-                            class="btn-primary"/>
-
-                    <button string="Cancel"
-                            special="cancel"
-                            class="btn-secondary"/>
-                </footer>
+            <form string="Petty Cash Configuration">
+                <sheet>
+                    <group>
+                        <field name="petty_cash_account_id"/>
+                        <field name="input_vat_account_id"/>
+                        <field name="petty_cash_journal_id"/>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
+
 </odoo>
