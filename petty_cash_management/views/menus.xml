@@ -18,12 +18,4 @@
               name="Categories"
               parent="petty_cash_main_app"
               action="action_petty_cash_category"/>
-
-    <record id="action_petty_cash_settings" model="ir.actions.act_window">
-        <field name="name">Petty Cash Settings</field>
-        <field name="res_model">res.config.settings</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-    </record>
-
 </odoo>
