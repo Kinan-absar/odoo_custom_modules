@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
 
-            <!-- Insert Petty Cash block at the bottom of the settings -->
-            <xpath expr="//form" position="after">
+            <!-- Insert Petty Cash block right before </form> -->
+            <xpath expr="//form" position="inside">
 
                 <div class="app_settings_block" string="Petty Cash">
                     <h2>Petty Cash Settings</h2>
@@ -43,6 +43,7 @@
                         </div>
 
                     </div>
+
                 </div>
 
             </xpath>
