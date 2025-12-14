@@ -32,6 +32,7 @@
               name="Settings"
               parent="petty_cash_main_app"
               action="action_petty_cash_settings"
-              sequence="99"/>
+              sequence="99"
+              groups="petty_cash_management.group_petty_cash_accountant"/>
 
 </odoo>
