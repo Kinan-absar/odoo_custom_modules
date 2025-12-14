@@ -188,10 +188,13 @@ class VendorPortal(CustomerPortal):
             return request.redirect('/my/home')
 
         # GET → show Odoo's standard details form
-        return request.render(
-            'portal.portal_my_details',
-            {}
-        )
+            return request.render(
+                'portal.portal_my_details',
+                {
+                    'error': {},
+                }
+            )
+
     # ---------------------------------------------------------
     # FIX CORE PORTAL "EDIT INFORMATION" ROUTE
     # ---------------------------------------------------------
