@@ -15,12 +15,6 @@
                     </li>
 
                     <li>
-                        <a href="/vendor/pos">
-                            <span t-translate="yes">My Purchase Orders</span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="/vendor/invoices">
                             <span t-translate="yes">My Invoices</span>
                         </a>

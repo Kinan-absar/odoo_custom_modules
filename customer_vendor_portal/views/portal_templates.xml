@@ -2,7 +2,7 @@
            
         <!-- VENDOR buttons (Only visible to vendors) -->
     <template id="vendor_buttons" inherit_id="portal.portal_my_home">
-        <xpath expr="//div[@id='portal_vendor_category']" position="inside">
+        <xpath expr="//div[contains(@class,'o_portal_my_docs')]" position="before">
             <t t-if="request.env.user.partner_id.supplier_rank > 0">
 
             <div class="col-md-3 mb-3">
