@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- Main App Menu -->
+    <!-- Main App Menu (Root Application) -->
     <menuitem id="petty_cash_main_app"
               name="Petty Cash"
               sequence="10"
               web_icon="petty_cash_management,static/description/icon.png"/>
 
-    <!-- Reports -->
+    <!-- Petty Cash Reports Menu -->
     <menuitem id="menu_petty_cash_reports"
               name="Petty Cash Reports"
               parent="petty_cash_main_app"
               action="action_petty_cash"/>
 
-    <!-- Categories -->
+    <!-- Categories Menu -->
     <menuitem id="menu_petty_cash_categories"
               name="Categories"
               parent="petty_cash_main_app"
               action="action_petty_cash_category"/>
+
+    <record id="action_petty_cash_settings" model="ir.actions.act_window">
+        <field name="name">Petty Cash Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+    </record>
+
+    <menuitem id="menu_petty_cash_settings"
+          name="Settings"
+          parent="petty_cash_main_app"
+          action="action_petty_cash_settings"
+          sequence="99"/>
+
 </odoo>
