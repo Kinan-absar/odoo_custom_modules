@@ -76,18 +76,18 @@ class StatementMixin(models.AbstractModel):
             move = line.move_id
 
             # -----------------------------------------
-            # Reference logic (FINAL & CORRECT)
+            # Reference logic (FINAL & SIMPLE)
             # -----------------------------------------
             if move.move_type in ("in_payment", "out_payment"):
-                # Any payment → use payment memo
-                reference = move.payment_id.memo if move.payment_id else ""
+                # Any payment → use journal entry reference
+                reference = move.ref or ""
             else:
-                # Not a payment → depends on statement type
+                # Invoice / Bill
                 if account_type == "asset_receivable":
-                    # Customer invoice → Payment Reference
+                    # Customer invoice
                     reference = move.payment_reference or ""
                 else:
-                    # Vendor bill → Bill Reference
+                    # Vendor bill
                     reference = move.ref or ""
 
             results.append({
@@ -101,6 +101,7 @@ class StatementMixin(models.AbstractModel):
             })
 
         return results
+
 
 
     # ------------------------------------------------------
