@@ -134,50 +134,6 @@
         </t>
     </template>
 
-
-    <!-- ============================
-         CUSTOMER STATEMENT PAGE
-    =============================== -->
-    <template id="customer_statement_page" name="Customer Statement Page">
-        <t t-call="portal.portal_layout">
-            <div class="container mt-4 mb-4">
-                <h3 t-translate="yes">My Financial Statement</h3>
-
-                <t t-if="statement_lines">
-                    <table class="table table-bordered mt-3">
-                        <thead>
-                            <tr>
-                                <th t-translate="yes">Date</th>
-                                <th t-translate="yes">Description</th>
-                                <th t-translate="yes">Debit</th>
-                                <th t-translate="yes">Credit</th>
-                                <th t-translate="yes">Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-foreach="statement_lines" t-as="line">
-                                <tr>
-                                    <td><t t-esc="line.date"/></td>
-                                    <td><t t-esc="line.description"/></td>
-                                    <td><t t-esc="line.debit"/></td>
-                                    <td><t t-esc="line.credit"/></td>
-                                    <td><t t-esc="line.balance"/></td>
-                                </tr>
-                            </t>
-                        </tbody>
-                    </table>
-                </t>
-
-                <t t-else="">
-                    <div class="alert alert-info mt-3">
-                        <span t-translate="yes">No statement found.</span>
-                    </div>
-                </t>
-            </div>
-        </t>
-    </template>
-
-    
     <template id="extend_account_portal_my_invoices"
           inherit_id="account.portal_my_invoices">
 
