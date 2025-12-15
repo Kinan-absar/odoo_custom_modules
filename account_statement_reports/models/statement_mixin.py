@@ -75,22 +75,20 @@ class StatementMixin(models.AbstractModel):
 
             move = line.move_id
 
-            # Decide reference explicitly
-            if account_type == "liability_payable":
-                # Vendor statement → Bill Reference
-                reference = move.ref
-            else:
-                # Customer statement → Payment Reference
-                reference = move.payment_reference
-            # --------------------------------------------------
-            # Reference logic (invoice/bill vs payment)
-            # --------------------------------------------------
+            # -----------------------------------------
+            # Reference logic (FINAL & CORRECT)
+            # -----------------------------------------
             if move.move_type in ("in_payment", "out_payment"):
-                # Payment → Memo from account.payment
+                # Any payment → use payment memo
                 reference = move.payment_id.communication if move.payment_id else ""
             else:
-                # Invoice / Bill → Reference field
-                reference = move.ref or ""
+                # Not a payment → depends on statement type
+                if account_type == "asset_receivable":
+                    # Customer invoice → Payment Reference
+                    reference = move.payment_reference or ""
+                else:
+                    # Vendor bill → Bill Reference
+                    reference = move.ref or ""
 
             results.append({
                 "date": line.date,
@@ -103,6 +101,7 @@ class StatementMixin(models.AbstractModel):
             })
 
         return results
+
 
     # ------------------------------------------------------
     # TOTALS (we don't use them in UI, but kept for compatibility)
