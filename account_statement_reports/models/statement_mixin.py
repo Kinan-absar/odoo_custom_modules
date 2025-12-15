@@ -82,6 +82,15 @@ class StatementMixin(models.AbstractModel):
             else:
                 # Customer statement → Payment Reference
                 reference = move.payment_reference
+            # --------------------------------------------------
+            # Reference logic (invoice/bill vs payment)
+            # --------------------------------------------------
+            if move.move_type in ("in_payment", "out_payment"):
+                # Payment → Memo from account.payment
+                reference = move.payment_id.communication if move.payment_id else ""
+            else:
+                # Invoice / Bill → Reference field
+                reference = move.ref or ""
 
             results.append({
                 "date": line.date,
