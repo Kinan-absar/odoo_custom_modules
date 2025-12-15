@@ -27,7 +27,7 @@
 
     This module enables a complete self-service environment for employees and a unified approval center for managers.
     """,
-
+    'license': 'LGPL-3',
     'author': 'Kinan',
     'category': 'Human Resources',
     'application': True,
@@ -113,7 +113,7 @@
     #  ASSETS (JS)
     # ------------------------------------------------------------------
     'assets': {
-        'web.assets_frontend': [
+        'website.assets_frontend': [
             'employee_portal_suite/static/src/js/attendance_geo.js',
         ],
         
