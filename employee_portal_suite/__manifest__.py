@@ -27,7 +27,7 @@
 
     This module enables a complete self-service environment for employees and a unified approval center for managers.
     """,
-
+    'license': 'LGPL-3',
     'author': 'Kinan',
     'category': 'Human Resources',
     'application': True,
@@ -59,7 +59,6 @@
 
         # --- DATA / SEQUENCES ---
         'data/request_sequence.xml',
-        'data/attendance_cron.xml',
 
         # --------------------------------------------------
         # REPORTS
@@ -71,9 +70,7 @@
         # --- BACKEND VIEWS ---
         'views/employee_request_views.xml',
         'views/material_request_views.xml',
-        'views/attendance_views.xml',
         'views/menus.xml',
-        'views/work_location_inherit.xml',
         
         # --------------------------------------------------
         # EMPLOYEE PORTAL (FRONTEND)
@@ -85,9 +82,6 @@
         'views/employee_requests_page.xml',
         'views/employee_request_detail_page.xml',
         'views/employee_request_new_form.xml',
-
-        # Attendance Page
-        'views/employee_attendance_page.xml',
 
         # --------------------------------------------------
         # MATERIAL REQUEST PORTAL (FRONTEND)
@@ -113,9 +107,6 @@
     #  ASSETS (JS)
     # ------------------------------------------------------------------
     'assets': {
-        'web.assets_frontend': [
-            'employee_portal_suite/static/src/js/attendance_geo.js',
-        ],
         
     },
     'images': ['static/description/icon.png'],

@@ -21,11 +21,4 @@
               action="action_material_request"
               sequence="20"/>
 
-    <!-- DIRECT: Geo Attendance -->
-    <menuitem id="menu_attendance_geo"
-              name="Geo Attendance"
-              parent="menu_employee_portal_root"
-              action="action_attendance_geo"
-              sequence="30"/>
-
 </odoo>

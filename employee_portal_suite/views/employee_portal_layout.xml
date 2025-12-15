@@ -241,8 +241,6 @@
                     </div>
                 </div>
 
-                <a href="/my/employee/attendance" class="ep-link">Attendance</a>
-
                 <!-- ===== DROPDOWN: APPROVALS ===== -->
                 <t t-if="
                     request.env.user.has_group('employee_portal_suite.group_employee_portal_manager')
