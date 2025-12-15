@@ -3,7 +3,7 @@
 
 <template id="employee_portal_layout">
 
-<t t-call="portal.portal_layout">
+<t t-call="web.layout">
 
     <style>
 
@@ -239,8 +239,6 @@
                         <a href="/my/employee/material/new" class="ep-sub-link">New Material Request</a>
                     </div>
                 </div>
-
-                <a href="/my/employee/attendance" class="ep-link">Attendance</a>
 
                 <!-- ===== DROPDOWN: APPROVALS ===== -->
                 <t t-if="
