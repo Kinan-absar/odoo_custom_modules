@@ -80,7 +80,7 @@ class StatementMixin(models.AbstractModel):
             # -----------------------------------------
             if move.move_type in ("in_payment", "out_payment"):
                 # Any payment → use payment memo
-                reference = move.payment_id.communication if move.payment_id else ""
+                reference = move.payment_id.memo if move.payment_id else ""
             else:
                 # Not a payment → depends on statement type
                 if account_type == "asset_receivable":
