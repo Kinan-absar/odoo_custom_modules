@@ -56,7 +56,7 @@ class CustomerStatement(models.Model):
                 "statement_id": self.id,
                 "date": l["date"],
                 "move": l["move"],
-                "journal": l["journal"],
+                "reference": l["reference"],
                 "due_date": l["due_date"],
                 "debit": l["debit"],
                 "credit": l["credit"],

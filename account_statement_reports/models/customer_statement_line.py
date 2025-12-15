@@ -14,7 +14,7 @@ class CustomerStatementLine(models.Model):
 
     date = fields.Date()
     move = fields.Char()
-    journal = fields.Char()
+    reference = fields.Char()
     due_date = fields.Date()
 
     debit = fields.Float()

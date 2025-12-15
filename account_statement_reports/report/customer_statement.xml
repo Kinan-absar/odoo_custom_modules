@@ -30,7 +30,7 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Move</th>
-                                    <th>Journal</th>
+                                    <th>Reference</th>
                                     <th>Due Date</th>
                                     <th class="text-end">Debit</th>
                                     <th class="text-end">Credit</th>
@@ -43,7 +43,7 @@
                                     <tr>
                                         <td><t t-esc="l.date"/></td>
                                         <td><t t-esc="l.move"/></td>
-                                        <td><t t-esc="l.journal"/></td>
+                                        <td><t t-esc="l.reference"/></td>
                                         <td><t t-esc="l.due_date"/></td>
 
                                         <td class="text-end">

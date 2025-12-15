@@ -12,7 +12,7 @@
             <list>
                 <field name="date"/>
                 <field name="move"/>
-                <field name="journal"/>
+                <field name="reference"/>
                 <field name="due_date"/>
                 <field name="debit"/>
                 <field name="credit"/>
@@ -31,7 +31,7 @@
                         <field name="statement_id"/>
                         <field name="date"/>
                         <field name="move"/>
-                        <field name="journal"/>
+                        <field name="reference"/>
                         <field name="due_date"/>
                         <field name="debit"/>
                         <field name="credit"/>
@@ -54,7 +54,7 @@
             <list>
                 <field name="date"/>
                 <field name="move"/>
-                <field name="journal"/>
+                <field name="reference"/>
                 <field name="due_date"/>
                 <field name="debit"/>
                 <field name="credit"/>
@@ -73,7 +73,7 @@
                         <field name="statement_id"/>
                         <field name="date"/>
                         <field name="move"/>
-                        <field name="journal"/>
+                        <field name="reference"/>
                         <field name="due_date"/>
                         <field name="debit"/>
                         <field name="credit"/>

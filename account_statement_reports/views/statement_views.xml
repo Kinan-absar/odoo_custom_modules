@@ -120,7 +120,7 @@
                         <list create="false" edit="false" delete="false" string="Statement Lines">
                             <field name="date"/>
                             <field name="move"/>
-                            <field name="journal"/>
+                            <field name="reference"/>
                             <field name="due_date"/>
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>
@@ -171,7 +171,7 @@
                         <list create="false" edit="false" delete="false" string="Statement Lines">
                             <field name="date"/>
                             <field name="move"/>
-                            <field name="journal"/>
+                            <field name="reference"/>
                             <field name="due_date"/>
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>

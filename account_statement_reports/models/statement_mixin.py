@@ -58,7 +58,7 @@ class StatementMixin(models.AbstractModel):
         results.append({
             "date": fake_date,
             "move": "Opening Balance",
-            "journal": "",
+            "reference": "",
             "due_date": None,
             "debit": opening_balance if opening_balance > 0 else 0.0,
             "credit": -opening_balance if opening_balance < 0 else 0.0,
@@ -73,16 +73,25 @@ class StatementMixin(models.AbstractModel):
             credit = line.credit or 0.0
             running_balance += (debit - credit)
 
-            results.append({
-                "date": line.date,
-                "move": line.move_id.name,
-                "journal": line.journal_id.name,
-                "due_date": line.date_maturity,
-                "debit": debit,
-                "credit": credit,
-                "balance": running_balance,
-            })
+        move = line.move_id
 
+        # Decide reference explicitly
+        if account_type == "liability_payable":
+            # Vendor statement → Bill Reference
+            reference = move.ref
+        else:
+            # Customer statement → Payment Reference
+            reference = move.payment_reference
+
+        results.append({
+            "date": line.date,
+            "move": move.name,
+            "reference": reference,
+            "due_date": line.date_maturity,
+            "debit": debit,
+            "credit": credit,
+            "balance": running_balance,
+        })
         return results
 
     # ------------------------------------------------------
