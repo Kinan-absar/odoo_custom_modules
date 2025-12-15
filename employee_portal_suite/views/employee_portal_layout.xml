@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-<t t-call="portal.portal_layout">
+<template id="employee_portal_layout">
 
-
-<t t-call="website.layout">
+<<t t-call="portal.portal_layout">
 
     <style>
 
