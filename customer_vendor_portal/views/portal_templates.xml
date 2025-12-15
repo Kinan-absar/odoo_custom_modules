@@ -256,19 +256,13 @@
         <xpath expr="//div[@id='portal_client_category']" position="inside">
             <t t-if="not request.env.user.has_group('customer_vendor_portal.group_vendor_portal')">
 
-                <div class="col-md-3 mb-3">
-                    <a href="/my/statements" class="btn btn-primary w-100">
-                        <span t-translate="yes">My Statement</span>
-                    </a>
-                </div>
-
-                <div class="col-md-3 mb-3">
+                <div class="col-md-6 mb-3">
                     <a href="/my/customer_invoices" class="btn btn-secondary w-100">
                         <span t-translate="yes">My Invoices</span>
                     </a>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-6 mb-3">
                     <a href="/my/sales_orders" class="btn btn-info w-100">
                         <span t-translate="yes">My Orders</span>
                     </a>
