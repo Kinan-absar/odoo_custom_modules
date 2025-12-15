@@ -73,25 +73,26 @@ class StatementMixin(models.AbstractModel):
             credit = line.credit or 0.0
             running_balance += (debit - credit)
 
-        move = line.move_id
+            move = line.move_id
 
-        # Decide reference explicitly
-        if account_type == "liability_payable":
-            # Vendor statement → Bill Reference
-            reference = move.ref
-        else:
-            # Customer statement → Payment Reference
-            reference = move.payment_reference
+            # Decide reference explicitly
+            if account_type == "liability_payable":
+                # Vendor statement → Bill Reference
+                reference = move.ref
+            else:
+                # Customer statement → Payment Reference
+                reference = move.payment_reference
 
-        results.append({
-            "date": line.date,
-            "move": move.name,
-            "reference": reference,
-            "due_date": line.date_maturity,
-            "debit": debit,
-            "credit": credit,
-            "balance": running_balance,
-        })
+            results.append({
+                "date": line.date,
+                "move": move.name,
+                "reference": reference,
+                "due_date": line.date_maturity,
+                "debit": debit,
+                "credit": credit,
+                "balance": running_balance,
+            })
+
         return results
 
     # ------------------------------------------------------
